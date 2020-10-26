@@ -8,6 +8,8 @@
   cm = push origin master
   push = push origin HEAD
   pull = pull origin HEAD
+  ss = stash show -p
+  sl = stash list
 [user]
   email = dghaehre@gmail.com
   name = Daniel

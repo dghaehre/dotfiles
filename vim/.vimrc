@@ -142,6 +142,8 @@ let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'}, {'s': '~/.ssh
 
 " ################ Coc language server #################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" bug: higlight only takes effect after sourcing .vimrc
+highlight CocFloating ctermfg=NONE
 function! s:check_back_space() abort
   let col = col('.') - 1
    return !col || getline('.')[col - 1]  =~ '\s'
