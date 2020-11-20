@@ -256,9 +256,9 @@ bindsym $mod+s exec --no-startup-id rofimoji
 # For facebook/messenger
 bindsym $mod+Shift+f [class="^firefox$" title="Messenger"] scratchpad show
 
+# Mark an GOTO
 # read 1 character and mark the current window with this character
 bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
-
 # read 1 character and go to the window with the character
 bindsym $mod+n exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
@@ -267,4 +267,11 @@ exec unclutter -b
 exec_always xset r rate 300 40
 exec_always picom -f
 exec_always feh --bg-scale ~/.config/i3/background-2.jpg
-exec_always setxkbmap -option caps:escape
+
+# Caps lock works as Esc
+# exec_always setxkbmap -option caps:escape
+
+# Caps lock works as Esc and Ctrl
+# and
+# set variant to mac
+exec_always setxkbmap -option 'caps:ctrl_modifier' -variant 'mac'; xcape -e '#66=Escape'

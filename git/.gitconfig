@@ -17,3 +17,5 @@
   rebase = false
 [includeIf "gitdir:~/Desktop/tomb/"]
   path = ~/Desktop/tomb/.gitconfig
+[merge]
+	summary = true

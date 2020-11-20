@@ -23,6 +23,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'LnL7/vim-nix'
 Plug 'mhinz/vim-startify'
+Plug 'ap/vim-css-color'
 call plug#end()
 
 
@@ -41,6 +42,10 @@ set linebreak
 set textwidth=0
 set wrapmargin=0
 " ^ word wrap
+
+" Store undoes
+set undodir=~/.vim/undo-dir
+set undofile
 
 set foldmethod=manual
 set foldlevel=0
@@ -100,6 +105,12 @@ let @d = ""
 " 2. q/p
 "
 " Search in file for hover over word: #
+
+
+
+" ################ Snippets #################
+""""""""""""""""""""""""""""""""""""""""""""
+abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
 
 
 
@@ -247,45 +258,6 @@ let g:vimwiki_list = [
 :vmap <Leader>tk <Plug>VimwikiDecrementListItem
 " Table
 :map <Leader>ta :VimwikiTable<Enter>
-
-
-
-" ################ Kanban #################
-""""""""""""""""""""""""""""""""""""""""""""
-" Init kanban
-let @k="i| -       Not started         - | -         Blocked         - | -        In progress       - | -          Done        - |\n|-------------------------------|-----------------------------|------------------------------|--------------------------|\n|                               |                             |                              |                          |\n\<Esc>k0la"
-" Navigation:
-" Using vimwiki native table mappings, normail naviagtion is done in insert
-" mode and tab/space-tab.
-" 
-" For moving columns you use these costum scripts:
-" TODO: write custom scripts
-
-" Get Column
-:command! KanbanGetColumn execute "normal! T\|lvt\|"
-
-" My custom mappings:
-" Move column to the right
-:nmap <Leader>kl T\|lvt\|df\|hpi<Esc>T\|l<Leader>k
-
-" Move column to the left
-:nmap <Leader>kh T\|lvt\|dF\|hpi<Esc>F\|;l<Leader>k
-
-" Move column down
-:nmap <Leader>kj T\|lvt\|djpi<Esc>F\|ll<Leader>k
-
-" Move column up
-:nmap <Leader>kk T\|lvt\|dkpi<Esc>F\|ll<Leader>k
-
-" Swap column down
-:nmap <Leader>ksj T\|lvt\|djT\|lvt\|pi<Esc>F\|llkT\|lvt\|pi<Esc>F\|llj<Leader>ks
-
-" Delete column
-:nmap <Leader>kd T\|lvt\|di<Esc>l
-
-" Swap column right
-" I should make all of the movings swap by default
-:nmap <Leader>ksl T\|lvt\|df\|hpi<Esc>T\|hhT\|lvt\|pi<Esc>F\|ll
 
 
 
