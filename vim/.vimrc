@@ -1,6 +1,5 @@
 " ################ Plugins #################
 """"""""""""""""""""""""""""""""""""""""""""
-
 call plug#begin('~/.vim/plugged')
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
@@ -98,6 +97,9 @@ let @d = ""
 :nnoremap <leader>qv :vsplit ~/.vimrc<cr>
 :nnoremap <leader>qs :source ~/.vimrc<cr>
 
+" Set currentfile as current dir
+nmap <Leader>cd :cd %:p:h<cr>
+
 " Helpers:
 "
 " Search for text in file:
@@ -107,11 +109,9 @@ let @d = ""
 " Search in file for hover over word: #
 
 
-
 " ################ Snippets #################
 """"""""""""""""""""""""""""""""""""""""""""
 abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
-
 
 
 
@@ -259,6 +259,20 @@ let g:vimwiki_list = [
 " Table
 :map <Leader>ta :VimwikiTable<Enter>
 
+" Search for todo's
+function! VimwikiFindIncompleteTasks()
+  lvimgrep /- \[ \]/ %:p
+  lopen
+endfunction
+
+function! VimwikiFindAllIncompleteTasks()
+  VimwikiSearch /- \[ \]/
+  lopen
+endfunction
+
+nmap <Leader>wa :call VimwikiFindAllIncompleteTasks()<CR>
+nmap <Leader>wx :call VimwikiFindIncompleteTasks()<CR>
+
 
 
 " ################ Vue #################
@@ -270,3 +284,4 @@ let g:vue_pre_processors = []
 """""""""""""""""""""""""""""""""""""""""
 " Fix crontab bug
 autocmd filetype crontab setlocal nobackup nowritebackup
+
