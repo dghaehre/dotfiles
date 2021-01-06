@@ -50,8 +50,9 @@ alias keys="cd ~/Desktop/keys"
 alias mamp="cd /Applications/MAMP/htdocs"
 alias zshconfig="vim ~/.zshrc"
 alias git='TZ=UTC git'
-alias go='git checkout'
+alias gl='git checkout'
 alias please='sudo !!'
+alias nmutt='cd ~/Desktop/mail && neomutt'
 alias cpwd="pwd | xsel -b"
 alias wiki="cd ~/vimwiki && nvim -c VimwikiIndex"
 alias pg="pget github"
@@ -62,6 +63,15 @@ alias spu="sudo pacman -Syu"
 alias l="exa -la --git --group"
 alias untar="tar -xvzf $x"
 alias ta="tmux attach"
+
+# todo.txt
+alias t="todo.sh -d ~/Dropbox/todotxt/config"
+alias frog="echo \"🐸\" && t lsp A"
+alias today="t lsp B"
+alias thisweek="t lsp B C"
+alias inbox="t ls -A -B -C -D -Z"
+alias later="t lsp Z"
+
 alias v="nvim"
 alias hindent="~/builds/hindent"
 alias a='echo "------------ Your aliases ---------------";alias;'
