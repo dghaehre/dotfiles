@@ -14,6 +14,7 @@ plugins=(
   yarn
   stack
 )
+source /usr/share/nvm/init-nvm.sh
 source $ZSH/oh-my-zsh.sh
 # source /usr/share/nvm/init-nvm.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -53,6 +54,7 @@ alias git='TZ=UTC git'
 alias gl='git checkout'
 alias please='sudo !!'
 alias nmutt='cd ~/Desktop/mail && neomutt'
+alias loadmail='cd ~/Desktop/mail && mbsync -a && notmuch new'
 alias cpwd="pwd | xsel -b"
 alias wiki="cd ~/vimwiki && nvim -c VimwikiIndex"
 alias pg="pget github"
@@ -68,6 +70,7 @@ alias ta="tmux attach"
 alias t="todo.sh -d ~/Dropbox/todotxt/config"
 alias frog="echo \"🐸\" && t lsp A"
 alias today="t lsp B"
+alias work="t ls @work"
 alias thisweek="t lsp B C"
 alias inbox="t ls -A -B -C -D -Z"
 alias later="t lsp Z"
@@ -204,6 +207,12 @@ function logind() {
 # USAGE: dmonitor right
 function dmonitor() {
   xrandr --output DP1 --auto --$1-of eDP1
+}
+
+# Display DP and turn off laptop screen
+function dmonitor-only() {
+  xrandr --output DP1 --auto --primary
+  xrandr --output eDP1 --off
 }
 
 # Display HDMI2 to either left or right

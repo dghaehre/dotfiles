@@ -4,7 +4,7 @@
 [alias]
   lg = log --stat --decorate --graph
   ca = ! git add . && git commit
-  b = branch -a --sort=committerdate
+  b = branch -a --sort=committerdate -v
   cm = push origin master
   push = push origin HEAD
   pull = pull origin HEAD

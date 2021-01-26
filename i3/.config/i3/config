@@ -236,6 +236,19 @@ bindsym $mod+Shift+e mode "$mode_system"
 bindsym $mod+q exec ~/.config/i3/toggleKeyboard.sh
 bindsym $mod+c exec clipmenu -i -b -nb '#2f343f' -sb '#2f343f' -fn Terminus:size=9
 
+set $mode_monitor Monitor laptop (l), HDMI only (h), DP1 only (d)
+mode "$mode_monitor" {
+    bindsym l exec --no-startup-id "xrandr --auto", mode "default"
+    bindsym h exec --no-startup-id "xrandr --output HDMI1 --primary && xrandr --output eDP1 --off", mode "default"
+    bindsym d exec --no-startup-id "xrandr --output DP1 --primary && xrandr --output eDP1 --off", mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+x mode "$mode_monitor"
+
 bindsym $mod+Shift+g exec ~/.config/i3/trans.sh
 bindsym $mod+g exec ~/.config/i3/explain.sh
 
