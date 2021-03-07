@@ -3,6 +3,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/usr/share/oh-my-zsh"
 export PATH=~/.local/bin:$PATH
+export GOPATH=~/Desktop/sider/golang
 # alias tmux="env TERM=screen-256color tmux"
 alias tmux="env TERM=myterm-it tmux"
 # ZSH_THEME="fwalch"
@@ -65,45 +66,74 @@ alias spu="sudo pacman -Syu"
 alias l="exa -la --git --group"
 alias untar="tar -xvzf $x"
 alias ta="tmux attach"
-
-# todo.txt
-alias t="todo.sh -d ~/Dropbox/todotxt/config"
-alias frog="echo \"🐸\" && t lsp A"
-alias today="t lsp B"
-alias work="t ls @work"
-alias thisweek="t lsp B C"
-alias inbox="t ls -A -B -C -D -Z"
-alias later="t lsp Z"
-
+alias ht="ht-rust"
 alias v="nvim"
 alias hindent="~/builds/hindent"
 alias a='echo "------------ Your aliases ---------------";alias;'
 alias topdf="pandoc -f markdown -t pdf -o doc.pdf -V mainfont=\"[source code pro]\" $x --pdf-engine wkhtmltopdf"
 alias sudov="sudo -E nvim"
+alias xsetrate="xset r rate 300 40 && feh --bg-scale ~/.config/i3/background-2.jpg"
+
+
 # Push personal diary to keybase
 alias push-diary="cd ~/wikis/personal && keybase login -s dghaehre_ && pushall"
 alias push-wikis="cd ~/wikis/work && pushall && push-diary"
 
-
+# todo.txt
+alias t="todo.sh -d ~/Dropbox/todotxt/config"
+alias today="t lsp A-B"
+alias work="t ls @work"
+alias worko="t lsp O @work"
+alias waiting="t lsp W"
+alias thisweek="t lsp B C"
+# Set and show 'now'
+function now() {
+  if [ -z "$1" ]; then
+    t lsp A
+  else
+    current=$(t lsp A | head -n 1 | awk '{print $1}')
+    if [ $current != "--" ]; then
+      number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
+      t -f p $number B
+    fi
+    t -f p $1 A
+  fi
+}
+# Complete 'now'
+function dnow() {
+  current=$(t lsp A | head -n 1 | awk '{print $1}')
+  if [ $current != "--" ]; then
+    number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
+    t do $number
+  else
+    echo "Nothing is registered as 'now'"
+  fi
+}
 
 
 
 
 ##################### Utilities ####################
 #--------------------------------------------------#
-function s() {
-  if [ -z "$2" ]; then
-    grep -rn ./ -e "$1"
-  else
-    grep -rn $1 -e "$2"
-  fi
-}
-
 function pushall() {
   branch=$(git branch --show-current)
   git add .
   git commit -a -m "update $(date +"%dth %B, %Y")"
   git push origin $branch
+}
+
+# Dispaly status on the processes I need/want to monitor
+function status() {
+  echo "USER@1000"
+  systemctl status user@1000
+}
+
+function makeKey() {
+  if [ -z $2 ]; then
+    echo "Usage: makeKey username password"
+  else
+    openssl sha256 -hmac "$2" -binary <(echo -n "$1") | base64
+  fi
 }
 
 ##################### FZF  ####################

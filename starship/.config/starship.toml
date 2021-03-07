@@ -1,13 +1,17 @@
 
 # Replace the "❯" symbol in the prompt with "➜"
-[character]      # The name of the module we are configuring is "character"
-symbol = "➜"     # The "symbol" segment is being set to "➜"
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
 vicmd_symbol = "λ"
+
+
 
 [time]
 disabled = false
 style = "white dimmed"
 time_format = "%T"
+format = '[ $time ]($style)'
 utc_time_offset = "+2"
 
 [cmd_duration]
@@ -15,7 +19,8 @@ disabled = true
 
 [haskell]
 disabled = true
+
 [status]
-style = "bg:blue"
-symbol = "💣 "
+# style = "bg:blue"
+symbol = "☠ "
 disabled = false

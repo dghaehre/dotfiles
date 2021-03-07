@@ -238,7 +238,7 @@ bindsym $mod+c exec clipmenu -i -b -nb '#2f343f' -sb '#2f343f' -fn Terminus:size
 
 set $mode_monitor Monitor laptop (l), HDMI only (h), DP1 only (d)
 mode "$mode_monitor" {
-    bindsym l exec --no-startup-id "xrandr --auto", mode "default"
+    bindsym l exec --no-startup-id "xrandr --output eDP1 --primary --auto", mode "default"
     bindsym h exec --no-startup-id "xrandr --output HDMI1 --primary && xrandr --output eDP1 --off", mode "default"
     bindsym d exec --no-startup-id "xrandr --output DP1 --primary && xrandr --output eDP1 --off", mode "default"
 
@@ -280,7 +280,8 @@ bindsym $mod+n exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 # Startup
 exec unclutter -b
 exec_always xset r rate 300 40
-exec_always picom -f
+# TODO: uninstall picom
+# exec_always picom -f
 exec_always feh --bg-scale ~/.config/i3/background-2.jpg
 
 # Caps lock works as Esc

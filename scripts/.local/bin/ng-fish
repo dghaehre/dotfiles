@@ -1,0 +1,47 @@
+#!/bin/fish
+#
+# Rewrite this to either
+# Python
+# Lua
+#
+# I want to get better at "shell" scripting. But using bash/fish seem clunky.
+# I think maybe getting good at scripting with python would be a good idea to become productive.
+
+set arg $argv
+set dir "/etc/nginx/tomb"
+set filename "/etc/nginx/tomb/$arg"
+set conf "/etc/nginx/nginx.conf"
+
+function helper
+  echo """
+Usage: ng {filename}
+
+
+Filenames can be found in $dir
+
+Current available filenames:
+  """
+  exa --oneline $dir
+end
+
+function check
+  if test "$arg" = ""
+    helper
+    exit 0
+  end
+  if test ! -e $filename
+    helper
+    exit 0
+  end
+end
+
+function run --description "update symlink and reload nginx"
+  sudo ln -sf $filename $conf
+  sudo systemctl reload nginx
+end
+
+check
+
+run
+
+echo Success

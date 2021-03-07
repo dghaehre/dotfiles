@@ -1,0 +1,10 @@
+[alias]
+b = "build"
+c = "check"
+t = "test"
+r = "run"
+
+[cargo-new]
+name = "Daniel Hæhre"
+email = "dghaehre@gmail.com"
+vcs = "git"

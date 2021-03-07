@@ -1,0 +1,40 @@
+#!/usr/bin/python
+
+import sys
+import os
+
+nginxdir = "/etc/nginx"
+nginxconf = nginxdir + "/nginx.conf"
+confdir = nginxdir + "/tomb"
+confiles = os.listdir(confdir)
+
+def helper():
+    print("""Usage: ng {filename}
+
+Filenames can be found in $dir
+
+Current available filenames:
+    """)
+    for f in confiles:
+        print(f)
+
+def check():
+    if len(sys.argv) == 2:
+        arg = sys.argv[1]
+        match = arg in confiles
+        if match:
+            return sys.argv[1]
+        else:
+            helper()
+            exit()
+    else:
+        helper()
+        exit()
+
+def run(filename):
+    updatesymlink = "sudo ln -sf {}/{} {}".format(confdir, filename, nginxconf)
+    os.system(updatesymlink)
+    os.system("sudo systemctl restart nginx")
+    print("Success")
+
+run(check())

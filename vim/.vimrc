@@ -23,6 +23,8 @@ Plug 'tpope/vim-surround'
 Plug 'LnL7/vim-nix'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-css-color'
+Plug 'tyru/open-browser.vim'
+Plug 'weirongxu/plantuml-previewer.vim'
 call plug#end()
 
 
@@ -33,6 +35,7 @@ call plug#end()
 :set expandtab
 :set shiftwidth=2
 :set softtabstop=2
+:set tabstop=2
 :set autoindent
 :set smartindent
 
@@ -116,6 +119,7 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 " ################ Snippets #################
 """"""""""""""""""""""""""""""""""""""""""""
 abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
+abbr iferr if err != nil {<CR><CR>}<esc>kddko
 
 
 
@@ -151,7 +155,7 @@ highlight CursorLine cterm=NONE ctermbg=Black ctermfg=NONE guibg=NONE guifg=NONE
 
 " #################### Startify ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'}, {'s': '~/.ssh/config'}, {'g': '~/.gitconfig'}, {'t': '~/Dropbox/todotxt/todo.txt' } ]
+let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'}, {'s': '~/.ssh/config'}, {'g': '~/.gitconfig'}, {'t': '~/Dropbox/todotxt/todo.txt' }, {'d': '~/Dropbox/todotxt/done.txt' } ]
 
 
 
