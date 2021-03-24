@@ -1,11 +1,11 @@
 ##################### ZSH  ####################
 #------------------------------------------------#
 # Path to your oh-my-zsh installation.
-export ZSH="/usr/share/oh-my-zsh"
+# export ZSH="/usr/share/oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
 export PATH=~/.local/bin:$PATH
 export GOPATH=~/Desktop/sider/golang
-# alias tmux="env TERM=screen-256color tmux"
-alias tmux="env TERM=myterm-it tmux"
 # ZSH_THEME="fwalch"
 plugins=(
   git
@@ -15,11 +15,15 @@ plugins=(
   yarn
   stack
 )
-source /usr/share/nvm/init-nvm.sh
-source $ZSH/oh-my-zsh.sh
-# source /usr/share/nvm/init-nvm.sh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/Desktop/tomb/.zshrc
+
+# Load nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if test -f "~/Desktop/tomb/.zshrc"; then
+  source ~/Desktop/tomb/.zshrc
+fi
 
 
 
@@ -73,6 +77,8 @@ alias a='echo "------------ Your aliases ---------------";alias;'
 alias topdf="pandoc -f markdown -t pdf -o doc.pdf -V mainfont=\"[source code pro]\" $x --pdf-engine wkhtmltopdf"
 alias sudov="sudo -E nvim"
 alias xsetrate="xset r rate 300 40 && feh --bg-scale ~/.config/i3/background-2.jpg"
+# alias tmux="env TERM=screen-256color tmux"
+alias tmux="env TERM=myterm-it tmux -u"
 
 
 # Push personal diary to keybase
