@@ -1,0 +1,9 @@
+configuration {
+	fullscreen: false;
+	width: 50;
+	lines: 15;
+	columns: 1;
+  theme: "Arc-Dark";
+	font: "mono 10";
+	show-icons: false;
+}
