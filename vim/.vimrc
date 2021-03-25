@@ -252,8 +252,8 @@ let g:haskell_backpack = 1                " to enable highlighting of backpack k
 " ################ Vimwiki #################
 """"""""""""""""""""""""""""""""""""""""""""
 let g:vimwiki_list = [
-      \{'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'},
-      \{'path': '~/wikis/personal/', 'syntax': 'markdown', 'ext': '.md'}]
+      \{'path': '~/wikis/personal/', 'syntax': 'markdown', 'ext': '.md'},
+      \{'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
 " let g:vimwiki_folding='expr'
 :nmap <Leader>wsp <Plug>VimwikiSplitLink
 " Create link
