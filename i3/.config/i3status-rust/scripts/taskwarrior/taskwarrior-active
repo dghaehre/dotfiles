@@ -1,0 +1,15 @@
+#!/bin/env bash
+
+set -e
+
+print_json() {
+  echo "{\"icon\":\"headphones\", \"text\": \"$@\", \"state\": \"Info\"}"
+}
+
+ACTIVE="$(task +ACTIVE ids)"
+
+if [[ -z $ACTIVE ]]; then
+  print_json
+else
+  print_json $(task _get $ACTIVE.description)
+fi

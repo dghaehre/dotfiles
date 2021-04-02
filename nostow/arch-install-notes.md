@@ -20,6 +20,7 @@ must install before reboot:
 - man-db
 - xdg-utils (for opening url's from alacritty)
 - feh
+- bc
 - fd
 - bat
 - exa

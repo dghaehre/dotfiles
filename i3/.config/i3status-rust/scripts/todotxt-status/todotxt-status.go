@@ -130,6 +130,7 @@ func main() {
 		return
 	}
 
+  // TODO: read file in chunks (bottom-up)
 	doneFile, err := os.ReadFile(usr.HomeDir + Donetxt)
 	if err != nil {
 		if verbose {

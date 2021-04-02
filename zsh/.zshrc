@@ -61,24 +61,23 @@ alias please='sudo !!'
 alias nmutt='cd ~/Desktop/mail && neomutt'
 alias loadmail='cd ~/Desktop/mail && mbsync -a && notmuch new'
 alias cpwd="pwd | xsel -b"
-alias wiki="cd ~/vimwiki && nvim -c VimwikiIndex"
+alias wiki="cd ~/wikis/personal && nvim -c VimwikiIndex"
 alias pg="pget github"
 alias dmenu="dmenu -b -nb '#2f343f' -sb '#2f343f'"
-alias wiki="cd ~/vimwiki && nvim -c VimwikiIndex"
 alias ls="exa"
 alias spu="sudo pacman -Syu"
 alias l="exa -la --git --group"
 alias untar="tar -xvzf $x"
+alias tmux="env TERM=screen-256color tmux -u"
+# alias tmux="env TERM=myterm-it tmux -u"
 alias ta="tmux attach"
 alias ht="ht-rust"
 alias v="nvim"
 alias hindent="~/builds/hindent"
 alias a='echo "------------ Your aliases ---------------";alias;'
-alias topdf="pandoc -f markdown -t pdf -o doc.pdf -V mainfont=\"[source code pro]\" $x --pdf-engine wkhtmltopdf"
+alias topdf="pandoc -f markdown -t pdf -o doc.pdf -V geometry:a4paper -V geometry:margin=2cm -V mainfont=\"[source code pro]\" $x --pdf-engine wkhtmltopdf"
 alias sudov="sudo -E nvim"
 alias xsetrate="xset r rate 300 40 && feh --bg-scale ~/.config/i3/background-2.jpg"
-# alias tmux="env TERM=screen-256color tmux"
-alias tmux="env TERM=myterm-it tmux -u"
 
 
 # Push personal diary to keybase
@@ -86,36 +85,41 @@ alias push-diary="cd ~/wikis/personal && keybase login -s dghaehre_ && pushall"
 alias push-wikis="cd ~/wikis/work && pushall && push-diary"
 
 # todo.txt
-alias t="todo.sh -d ~/Dropbox/todotxt/config"
-alias today="t lsp A-B"
-alias work="t ls @work"
-alias worko="t lsp O @work"
-alias waiting="t lsp W"
-alias thisweek="t lsp B C"
+alias todo="todo.sh -d ~/Dropbox/todotxt/config"
+# alias today="t lsp A-B"
+alias work="todo ls @work"
+alias worko="todo lsp O @work"
+alias waiting="todo lsp W"
+alias thisweek="todo lsp B C"
 # Set and show 'now'
 function now() {
   if [ -z "$1" ]; then
-    t lsp A
+    todo lsp A
   else
     current=$(t lsp A | head -n 1 | awk '{print $1}')
     if [ $current != "--" ]; then
       number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-      t -f p $number B
+      todo -f p $number B
     fi
-    t -f p $1 A
+    todo -f p $1 A
   fi
 }
 # Complete 'now'
 function dnow() {
-  current=$(t lsp A | head -n 1 | awk '{print $1}')
+  current=$(todo lsp A | head -n 1 | awk '{print $1}')
   if [ $current != "--" ]; then
     number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-    t do $number
+    todo do $number
   else
     echo "Nothing is registered as 'now'"
   fi
 }
 
+# taskwarrior
+alias t="task"
+alias pushtask="cd ~/.task && keybase login -s dghaehre_ && pushall"
+alias pulltask="cd ~/.task && keybase login -s dghaehre_ && git pull origin master"
+alias synctask="pulltask && pushtask"
 
 
 
