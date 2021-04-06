@@ -21,7 +21,7 @@ name = "awesome5"
 [[block]]
 block = "custom"
 command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-active"
-interval = 10
+interval = 25
 hide_when_empty = true
 json = true
 [block.theme_overrides]
