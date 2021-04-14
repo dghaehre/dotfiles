@@ -116,12 +116,15 @@ function dnow() {
 }
 
 # taskwarrior
-alias t="task"
-alias pushtask="cd ~/.task && keybase login -s dghaehre_ && pushall"
+# alias t="task"
+alias pushtask="cd ~/.task && keybase login -s dghaehre_ && pushall && push-task-website"
 alias pulltask="cd ~/.task && keybase login -s dghaehre_ && git pull origin master"
 alias synctask="pulltask && pushtask"
 
-
+# Todoist
+alias t="todoist --color"
+alias inbox="todoist --color l --filter '#Inbox'"
+alias today="todoist --color l --filter 'today'"
 
 ##################### Utilities ####################
 #--------------------------------------------------#
