@@ -85,31 +85,31 @@ alias push-diary="cd ~/wikis/personal && keybase login -s dghaehre_ && pushall"
 alias push-wikis="cd ~/wikis/work && pushall && push-diary"
 
 # todo.txt
-alias todo="todo.sh -d ~/Dropbox/todotxt/config"
-# alias today="t lsp A-B"
-alias work="todo ls @work"
-alias worko="todo lsp O @work"
-alias waiting="todo lsp W"
-alias thisweek="todo lsp B C"
+alias t="todo.sh -d ~/Dropbox/todotxt/config"
+alias today="t lsp A-B"
+alias work="t ls @work"
+alias worko="t lsp O @work"
+alias waiting="t lsp W"
+alias thisweek="t lsp B C"
 # Set and show 'now'
 function now() {
   if [ -z "$1" ]; then
-    todo lsp A
+    t lsp A
   else
     current=$(t lsp A | head -n 1 | awk '{print $1}')
     if [ $current != "--" ]; then
       number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-      todo -f p $number B
+      t -f p $number B
     fi
-    todo -f p $1 A
+    t -f p $1 A
   fi
 }
 # Complete 'now'
 function dnow() {
-  current=$(todo lsp A | head -n 1 | awk '{print $1}')
+  current=$(t lsp A | head -n 1 | awk '{print $1}')
   if [ $current != "--" ]; then
     number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-    todo do $number
+    t do $number
   else
     echo "Nothing is registered as 'now'"
   fi
@@ -117,14 +117,14 @@ function dnow() {
 
 # taskwarrior
 # alias t="task"
-alias pushtask="cd ~/.task && keybase login -s dghaehre_ && pushall && push-task-website"
-alias pulltask="cd ~/.task && keybase login -s dghaehre_ && git pull origin master"
-alias synctask="pulltask && pushtask"
+# alias pushtask="cd ~/.task && keybase login -s dghaehre_ && pushall && push-task-website"
+# alias pulltask="cd ~/.task && keybase login -s dghaehre_ && git pull origin master"
+# alias synctask="pulltask && pushtask"
 
-# Todoist
-alias t="todoist --color"
-alias inbox="todoist --color l --filter '#Inbox'"
-alias today="todoist --color l --filter 'today'"
+# # Todoist
+# alias t="todoist --color"
+# alias inbox="todoist --color l --filter '#Inbox'"
+# alias today="todoist --color l --filter 'today'"
 
 ##################### Utilities ####################
 #--------------------------------------------------#

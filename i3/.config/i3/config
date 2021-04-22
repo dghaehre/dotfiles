@@ -234,8 +234,9 @@ bindsym $mod+minus scratchpad show
 # For emoji support
 bindsym $mod+s exec --no-startup-id rofimoji 
 
-# For todoist
-bindsym $mod+t exec --no-startup-id rofi -lines 0 -show todoist -modi todoist:~/.config/rofi/todoist-add.sh 
+# For todo.sh
+# Might come in handy, but not necessary
+# bindsym $mod+t exec --no-startup-id todofi.sh -d ~/Dropbox/todotxt/config
 
 # Mark window
 # read 1 character and mark the current window with this character

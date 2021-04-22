@@ -18,47 +18,11 @@ separator_fg = "auto"
 name = "awesome5"
 [icons.overrides]
 
-# Taskwarrior
-# [[block]]
-# block = "custom"
-# command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-active"
-# interval = 25
-# hide_when_empty = true
-# json = true
-# [block.theme_overrides]
-# info_bg = "#8FBCBB"
-
-# [[block]]
-# block = "taskwarrior"
-# interval = 30
-# format = "{count} tasks {filter_name}"
-# format_singular = "{count} task {filter_name}"
-# format_everything_done = "all good ({filter_name})"
-# warning_threshold = 10
-# critical_threshold = 20
-# [[block.filters]]
-# name = "ready"
-# filter = "+READY"
-# [[block.filters]]
-# name = "blocking"
-# filter = "+BLOCKING -BLOCKED"
-
-# TODO.txt
-# [[block]]
-# block = "custom"
-# command = "~/.config/i3status-rust/scripts/todotxt-status/todotxt-status"
-# interval = 10
-# hide_when_empty = true
-# json = true
-# # TODO: create an on_click command that lets you easily organize todos (tui)
-# [block.theme_overrides]
-# info_bg = "#8FBCBB"
-
-# Todist
+#TODO.txt
 [[block]]
 block = "custom"
-command = "~/.config/i3status-rust/scripts/todoist/todoist-today"
-interval = 20
+command = "~/.config/i3status-rust/scripts/todotxt-status/todotxt-status"
+interval = 10
 hide_when_empty = true
 json = true
 [block.theme_overrides]
