@@ -5,18 +5,19 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-  "os"
+	"os"
 	"os/user"
 	"strings"
 	"time"
 )
 
 const (
-	Todotxt = "/Dropbox/todotxt/todo.txt"
-	Donetxt = "/Dropbox/todotxt/done.txt"
-  Done = "▰"
-  NotDone = "▱"
-  Checkmark = "✓"
+	Folder    = "/Dropbox/todotxt/"
+	Todotxt   = Folder + "todo.txt"
+	Donetxt   = Folder + "done.txt"
+	Done      = "▰"
+	NotDone   = "▱"
+	Checkmark = "✓"
 )
 
 type Result struct {
@@ -40,6 +41,27 @@ func emptyResult() Result {
 	return result
 }
 
+func conflictedCopyResult() Result {
+	var result Result
+	result.Text = "TODO.txt has conflict"
+	result.State = "Critical"
+	return result
+}
+
+func hasConflictedCopies(folder string) (bool, error) {
+	conflictExists := false
+	files, err := os.ReadDir(folder)
+	if err != nil {
+		return conflictExists, err
+	}
+	for _, file := range files {
+		if strings.Contains(file.Name(), "conflicted") {
+			conflictExists = true
+		}
+	}
+	return conflictExists, nil
+}
+
 func getLinesBy(file []byte, substr string) []string {
 	var lines []string
 	for _, todo := range strings.Split(string(file), "\n") {
@@ -51,15 +73,15 @@ func getLinesBy(file []byte, substr string) []string {
 }
 
 func getProgrssBar(done int, total int) string {
-  var full string
-  var empty string
-  for i := 0; i < done; i++ {
-    full += Done
-  }
-  for i := 0; i < total - done; i++ {
-    empty += NotDone
-  }
-  return full + empty
+	var full string
+	var empty string
+	for i := 0; i < done; i++ {
+		full += Done
+	}
+	for i := 0; i < total-done; i++ {
+		empty += NotDone
+	}
+	return full + empty
 }
 
 func workingNow(file []byte) (Result, error) {
@@ -81,7 +103,7 @@ func checkProgress(todofile []byte, donefile []byte) Result {
 	doneToday := len(getLinesBy(donefile, date))
 	total := leftToday + doneToday
 	if leftToday > 0 {
-    result.Icon = "tasks"
+		result.Icon = "tasks"
 		result.Text = getProgrssBar(doneToday, total)
 		return result
 	}
@@ -90,7 +112,7 @@ func checkProgress(todofile []byte, donefile []byte) Result {
 		result.State = "Good"
 		return result
 	}
-  result.Icon = "tasks"
+	result.Icon = "tasks"
 	result.Text = "no tasks today"
 	return result
 }
@@ -114,6 +136,18 @@ func main() {
 		fmt.Println(date)
 	}
 
+	conflictedCopy, err := hasConflictedCopies(usr.HomeDir + Folder)
+	if err != nil {
+		if verbose {
+			fmt.Println(err)
+		}
+	}
+
+	if conflictedCopy == true {
+		printResult(conflictedCopyResult())
+		return
+	}
+
 	todoFile, err := os.ReadFile(usr.HomeDir + Todotxt)
 
 	if err != nil {
@@ -130,7 +164,7 @@ func main() {
 		return
 	}
 
-  // TODO: read file in chunks (bottom-up)
+	// TODO: read file in chunks (bottom-up)
 	doneFile, err := os.ReadFile(usr.HomeDir + Donetxt)
 	if err != nil {
 		if verbose {

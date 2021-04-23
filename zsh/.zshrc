@@ -104,6 +104,7 @@ function now() {
     t -f p $1 A
   fi
 }
+
 # Complete 'now'
 function dnow() {
   current=$(t lsp A | head -n 1 | awk '{print $1}')
@@ -114,6 +115,18 @@ function dnow() {
     echo "Nothing is registered as 'now'"
   fi
 }
+
+# Clear 'now'
+function cnow() {
+  current=$(t lsp A | head -n 1 | awk '{print $1}')
+  if [ $current != "--" ]; then
+    number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
+    t -f p $number B
+  else
+    echo "Nothing is registered as 'now'"
+  fi
+}
+
 
 # taskwarrior
 # alias t="task"
