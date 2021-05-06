@@ -1,6 +1,3 @@
-# TODO: get these colors global somehow
-[theme]
-name = "solarized-dark"
 [theme.overrides]
 idle_bg = "#2E3440"
 idle_fg = "#f3f4f5"

@@ -1,8 +1,11 @@
 ##################### ZSH  ####################
 #------------------------------------------------#
 # Path to your oh-my-zsh installation.
-# export ZSH="/usr/share/oh-my-zsh"
-export ZSH="$HOME/.oh-my-zsh"
+if [ -d "/usr/share/oh-my-zsh" ]; then
+  export ZSH="/usr/share/oh-my-zsh"
+else
+  export ZSH="$HOME/.oh-my-zsh"
+fi
 source $ZSH/oh-my-zsh.sh
 export PATH=~/.local/bin:$PATH
 export GOPATH=~/Desktop/sider/golang
