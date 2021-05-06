@@ -90,6 +90,7 @@ alias today="t lsp A-B"
 alias work="t ls @work"
 alias worko="t lsp O @work"
 alias waiting="t lsp W"
+alias inbox="t ls -@ -+"
 alias thisweek="t lsp B C"
 # Set and show 'now'
 function now() {
@@ -127,17 +128,8 @@ function cnow() {
   fi
 }
 
-
-# taskwarrior
-# alias t="task"
-# alias pushtask="cd ~/.task && keybase login -s dghaehre_ && pushall && push-task-website"
-# alias pulltask="cd ~/.task && keybase login -s dghaehre_ && git pull origin master"
-# alias synctask="pulltask && pushtask"
-
-# # Todoist
-# alias t="todoist --color"
-# alias inbox="todoist --color l --filter '#Inbox'"
-# alias today="todoist --color l --filter 'today'"
+# Goals
+alias g="todo.sh -d ~/Dropbox/todotxt/goal_config"
 
 ##################### Utilities ####################
 #--------------------------------------------------#

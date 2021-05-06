@@ -3,6 +3,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
 Plug 'rust-lang/rust.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'neovimhaskell/haskell-vim'
@@ -15,16 +16,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ianks/vim-tsx'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mcchrish/nnn.vim'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
+Plug 'justinmk/vim-sneak'
 Plug 'LnL7/vim-nix'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-css-color'
 Plug 'tyru/open-browser.vim'
-Plug 'weirongxu/plantuml-previewer.vim'
 call plug#end()
 
 
@@ -267,6 +266,12 @@ let g:vimwiki_list = [
 " Table
 :map <Leader>ta :VimwikiTable<Enter>
 
+" fuzzy find project files
+command! -bang PersonalFiles call fzf#vim#files('~/wikis/personal', <bang>0)
+:map <Leader>wp :PersonalFiles<Enter>
+command! -bang WorkFiles call fzf#vim#files('~/wikis/work', <bang>0)
+:map <Leader>wW :WorkFiles<Enter>
+
 " Search for todo's
 function! VimwikiFindIncompleteTasks()
   lvimgrep /- \[ \]/ %:p
@@ -292,4 +297,3 @@ let g:vue_pre_processors = []
 """""""""""""""""""""""""""""""""""""""""
 " Fix crontab bug
 autocmd filetype crontab setlocal nobackup nowritebackup
-
