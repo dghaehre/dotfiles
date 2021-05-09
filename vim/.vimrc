@@ -95,6 +95,9 @@ let @d = ""
   \ . "tags = []\n"
   \ . "+++\n\n# " . expand('%:r')
 
+" Mainly used by capture.
+let @c = "#\ncaptured: " . strftime("%d/%m/%y %H:%M")
+
 " Edit .vimrc
 :nnoremap <leader>qv :vsplit ~/.vimrc<cr>
 :nnoremap <leader>qs :source ~/.vimrc<cr>
@@ -253,8 +256,6 @@ let g:haskell_backpack = 1                " to enable highlighting of backpack k
 let g:vimwiki_list = [
       \{'path': '~/wikis/personal/', 'syntax': 'markdown', 'ext': '.md'},
       \{'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
-" let g:vimwiki_folding='expr'
-:nmap <Leader>wsp <Plug>VimwikiSplitLink
 " Create link
 :vmap <Leader>l di[](<Esc>pa)<Esc>f[,a
 " Handle lists
@@ -263,14 +264,23 @@ let g:vimwiki_list = [
 :vmap <Leader>tj <Plug>VimwikiIncrementListItem
 :nmap <Leader>tk <Plug>VimwikiDecrementListItem
 :vmap <Leader>tk <Plug>VimwikiDecrementListItem
-" Table
+" Create table
 :map <Leader>ta :VimwikiTable<Enter>
 
-" fuzzy find project files
-command! -bang PersonalFiles call fzf#vim#files('~/wikis/personal', <bang>0)
+" fuzzy find personal files
+command! -bang -nargs=? -complete=dir PersonalFiles
+    \ call fzf#vim#files('~/wikis/personal', fzf#vim#with_preview(), <bang>0)
 :map <Leader>wp :PersonalFiles<Enter>
-command! -bang WorkFiles call fzf#vim#files('~/wikis/work', <bang>0)
+
+" fuzzy find work files
+command! -bang WorkFiles call fzf#vim#files('~/wikis/work', fzf#vim#with_preview(), <bang>0)
 :map <Leader>wW :WorkFiles<Enter>
+
+" Capture a note/idea fast for sorting later
+function Capture()
+  execute ":e ~/wikis/personal/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
+endfunction
+nnoremap <Leader>ca :call Capture()<CR>"cpggA
 
 " Search for todo's
 function! VimwikiFindIncompleteTasks()
