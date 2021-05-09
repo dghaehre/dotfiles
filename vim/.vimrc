@@ -1,29 +1,19 @@
 " ################ Plugins #################
 """"""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'ianks/vim-tsx'
-Plug 'rust-lang/rust.vim'
 Plug 'vimwiki/vimwiki'
-Plug 'neovimhaskell/haskell-vim'
-Plug 'raichoo/purescript-vim'
-Plug 'frigoeu/psc-ide-vim'
-Plug 'posva/vim-vue'
-Plug 'elmcast/elm-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'elixir-editors/vim-elixir'
 Plug 'mcchrish/nnn.vim'
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
-Plug 'LnL7/vim-nix'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-css-color'
 Plug 'tyru/open-browser.vim'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 
