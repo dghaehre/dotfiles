@@ -142,7 +142,7 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_symbols.dirty = ' !'
-let g:airline_theme='atomic'
+let g:airline_theme='lucius'
 set fillchars=""
 highlight VertSplit cterm=NONE
 set guioptions-=T " Remove toolbar
