@@ -13,6 +13,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-css-color'
 Plug 'tyru/open-browser.vim'
+Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 
@@ -98,6 +99,10 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 " write dts to insert date and time
 :iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
 
+nmap <Leader>Ga <Plug>(GitGutterStageHunk)
+" ^ Stage changes/hunk
+nmap <Leader>Gs :G<cr>
+" ^ Open up git status
 
 " Helpers:
 "
@@ -142,6 +147,10 @@ set numberwidth=5
 :set cursorline
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 highlight CursorLine cterm=NONE ctermbg=Black ctermfg=NONE guibg=NONE guifg=NONE
+highlight clear SignColumn
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 
 
@@ -209,6 +218,10 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nmap <Leader>e :vsp<Enter>
 nmap <Leader>E :sp<Enter>
+
+nmap ]g <Plug>(GitGutterNextHunk)
+nmap [g <Plug>(GitGutterPrevHunk)
+" ^ Move to next/prev unstaged change
 
 
 

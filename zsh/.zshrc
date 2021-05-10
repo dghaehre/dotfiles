@@ -85,6 +85,7 @@ alias xsetrate="xset r rate 300 40 && feh --bg-scale ~/.config/i3/background-2.j
 
 # Push personal diary to keybase
 alias push-diary="cd ~/wikis/personal && keybase login -s dghaehre_ && pushall"
+alias pull-diary="cd ~/wikis/personal && keybase login -s dghaehre_ && pullall"
 alias push-wikis="cd ~/wikis/work && pushall && push-diary"
 
 # todo.txt
@@ -141,6 +142,12 @@ function pushall() {
   git add .
   git commit -a -m "update $(date +"%dth %B, %Y")"
   git push origin $branch
+}
+
+# TODO: handle merge conflict
+function pullall() {
+  branch=$(git branch --show-current)
+  git pull origin $branch
 }
 
 # Dispaly status on the processes I need/want to monitor
