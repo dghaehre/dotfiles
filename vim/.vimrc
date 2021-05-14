@@ -99,9 +99,10 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 " write dts to insert date and time
 :iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
 
-nmap <Leader>Ga <Plug>(GitGutterStageHunk)
+nmap ga <Plug>(GitGutterStageHunk)
 " ^ Stage changes/hunk
-nmap <Leader>Gs :G<cr>
+nmap ge :G<cr>
+nmap gs :0G<cr>
 " ^ Open up git status
 
 " Helpers:
@@ -151,8 +152,8 @@ highlight clear SignColumn
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
-
-
+highlight CocFloating ctermfg=White ctermbg=Black
+highlight PMenu ctermfg=11 ctermbg=Black
 
 " #################### Startify ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -162,8 +163,6 @@ let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'}, {'s': '~/.ssh
 
 " ################ Coc language server #################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-" bug: higlight only takes effect after sourcing .vimrc
-highlight CocFloating ctermfg=White ctermbg=Black
 function! s:check_back_space() abort
   let col = col('.') - 1
    return !col || getline('.')[col - 1]  =~ '\s'
