@@ -103,9 +103,11 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 
 nmap ga <Plug>(GitGutterStageHunk)
 " ^ Stage changes/hunk
-nmap ge :G<cr>
+nmap gE :G<cr>
 nmap gs :0G<cr>
 " ^ Open up git status
+nnoremap <Leader>gl :0Glog<cr>
+" ^ Open up git log for current file
 
 " Helpers:
 "
