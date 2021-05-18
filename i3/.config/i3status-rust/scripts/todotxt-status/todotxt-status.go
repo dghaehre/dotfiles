@@ -72,6 +72,23 @@ func getLinesBy(file []byte, substr string) []string {
 	return lines
 }
 
+func removeFutureTasks(now time.Time, lines []string) []string {
+	var newlines []string
+	for _, line := range lines {
+		split := strings.Split(line, " t:")
+		if len(split) == 1 {
+			newlines = append(newlines, line)
+			continue
+		}
+		linedate, err := time.Parse("2006-01-02", split[1])
+		if err == nil && now.Before(linedate) {
+			continue
+		}
+		newlines = append(newlines, line)
+	}
+	return newlines
+}
+
 func getProgrssBar(done int, total int) string {
 	var full string
 	var empty string
@@ -98,9 +115,10 @@ func workingNow(file []byte) (Result, error) {
 
 func checkProgress(todofile []byte, donefile []byte) Result {
 	result := emptyResult()
-	date := time.Now().Format("2006-01-02")
-	leftToday := len(getLinesBy(todofile, "(B)"))
-	doneToday := len(getLinesBy(donefile, date))
+	now := time.Now()
+	date := now.Format("2006-01-02")
+	leftToday := len(removeFutureTasks(now, getLinesBy(todofile, "(B)")))
+	doneToday := len(removeFutureTasks(now, getLinesBy(donefile, date)))
 	total := leftToday + doneToday
 	if leftToday > 0 {
 		result.Icon = "tasks"

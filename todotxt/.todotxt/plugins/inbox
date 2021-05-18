@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+action=$1
+
+function usage {
+	echo "  $(basename $0)"
+	echo "    List todos that is currently only captured and needs to be \"catogorized\"."
+	echo ""
+	echo "    Examples:"
+	echo "      $ $TODO_SH $(basename $0)"
+	echo "      $ $TODO_SH -x $(basename $0)"
+	echo ""
+	exit
+}
+
+function list {
+	$TODO_FULL_SH list -@ -+
+}
+
+[ "$action" = "usage" ] && usage
+
+list

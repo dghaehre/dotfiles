@@ -54,13 +54,15 @@ alias ls="exa"
 alias spu="sudo pacman -Syu"
 alias l="exa -la --git --group"
 alias untar="tar -xvzf $x"
+function dotar() {
+  tar -czvf $1.tar.gz ./$1
+}
 alias tmux="env TERM=screen-256color tmux -u"
 # alias tmux="env TERM=myterm-it tmux -u"
 alias ta="tmux attach"
 alias ht="ht-rust"
 alias v="nvim"
 alias hindent="~/builds/hindent"
-alias a='echo "------------ Your aliases ---------------";alias;'
 alias topdf="pandoc -f markdown -t pdf -o doc.pdf -V geometry:a4paper -V geometry:margin=2cm -V mainfont=\"[source code pro]\" $x --pdf-engine wkhtmltopdf"
 alias sudov="sudo -E nvim"
 alias xsetrate="xset r rate 300 40 && feh --bg-scale ~/.config/i3/background-2.jpg"
@@ -71,14 +73,13 @@ alias push-diary="cd ~/wikis/personal && keybase login -s dghaehre_ && pushall"
 alias pull-diary="cd ~/wikis/personal && keybase login -s dghaehre_ && pullall"
 alias push-wikis="cd ~/wikis/work && pushall && push-diary"
 
-# todo.txt
+# Todo.txt
+export TODO_ACTIONS_DIR="/home/$USER/.todotxt/plugins"
+export TODOTXT_FINAL_FILTER="$TODO_ACTIONS_DIR/futureTasks"
 alias t="todo.sh -d ~/Dropbox/todotxt/config"
-alias today="t lsp A-B"
 alias work="t ls @work"
-alias worko="t lsp O @work"
 alias waiting="t lsp W"
-alias inbox="t ls -@ -+"
-alias thisweek="t lsp B C"
+
 # Set and show 'now'
 function now() {
   if [ -z "$1" ]; then
