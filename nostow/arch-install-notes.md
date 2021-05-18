@@ -68,12 +68,6 @@ must install before reboot:
   You might have to login to dropbox to login.
   You could also check journald for logs and click the link there.
 
-- install oh-my-zsh:
-	install zsh and oh-my-zsh before you run `stow zsh`
-	ref: https://github.com/ohmyzsh/ohmyzsh
-	command: `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
-	you would need to log back in to see your shell being set to zsh
-
 - install nodejs with nvm:
   command example: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash`
   install nodejs: `nvm install --lts`

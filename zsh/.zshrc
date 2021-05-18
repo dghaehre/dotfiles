@@ -1,23 +1,8 @@
 ##################### ZSH  ####################
 #------------------------------------------------#
-# Path to your oh-my-zsh installation.
-if [ -d "/usr/share/oh-my-zsh" ]; then
-  export ZSH="/usr/share/oh-my-zsh"
-else
-  export ZSH="$HOME/.oh-my-zsh"
-fi
-source $ZSH/oh-my-zsh.sh
 export PATH=~/.local/bin:$PATH
 export GOPATH=~/Desktop/sider/golang
-# ZSH_THEME="fwalch"
-plugins=(
-  git
-  colored-man-pages
-  tmux
-  rust
-  yarn
-  stack
-)
+export HISTFILE=~/.zsh_history
 
 # Load nvm
 export NVM_DIR="$HOME/.nvm"
@@ -56,8 +41,6 @@ alias sider="cd ~/Desktop/sider"
 alias down="cd ~/Downloads"
 alias backups="cd ~/Backups"
 alias keys="cd ~/Desktop/keys"
-alias mamp="cd /Applications/MAMP/htdocs"
-alias zshconfig="vim ~/.zshrc"
 alias git='TZ=UTC git'
 alias gl='git checkout'
 alias please='sudo !!'
@@ -134,6 +117,7 @@ function cnow() {
 
 # Goals
 alias g="todo.sh -d ~/Dropbox/todotxt/goal_config"
+
 
 ##################### Utilities ####################
 #--------------------------------------------------#
