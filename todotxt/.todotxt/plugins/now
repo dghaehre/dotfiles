@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+action=$1
+shift
+item=$1
+
+
+function usage {
+	echo "  $(basename $0)"
+	echo "    Handle which todo's you are currently working on"
+	echo ""
+	echo "    Examples:"
+	echo "      $ $TODO_SH $(basename $0)       - Show currently working todo"
+	echo "      $ $TODO_SH $(basename $0) 12		- Start working on todo 12"
+	echo "      $ $TODO_SH $(basename $0) done  - Complete currently working todo"
+	echo "      $ $TODO_SH $(basename $0) clear - Stop working"
+	echo "      $ $TODO_SH $(basename $0) stop  - Stop working"
+	echo ""
+	exit
+}
+
+function get_current_number {
+	current=$($TODO_FULL_SH lsp A | head -n 1 | awk '{print $1}')
+  if [ $current != "--" ]; then
+    number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
+		echo $number
+  else
+		echo "0"
+  fi
+}
+
+function now_show {
+	number=$(get_current_number)
+	if [ "$number" = "0" ]; then
+		echo "Nothing is currently being worked on"
+	else
+		$TODO_FULL_SH lsp A
+	fi
+}
+
+function now_start {
+	number=$(get_current_number)
+	if [ "$number" = "0" ]; then
+		$TODO_FULL_SH pri $item A
+	else
+		$TODO_FULL_SH pri $number B
+		$TODO_FULL_SH pri $item A
+	fi
+}
+
+function now_clear {
+	number=$(get_current_number)
+	if [ "$number" = "0" ]; then
+		$TODO_FULL_SH pri $item A
+		echo "Nothing is currently being worked on"
+	else
+		$TODO_FULL_SH pri $number B
+	fi
+}
+
+function now_done {
+	number=$(get_current_number)
+	if [ "$number" = "0" ]; then
+		echo "Nothing is currently being worked on"
+	else
+		$TODO_FULL_SH done $number
+	fi
+}
+
+[ "$action" = "usage" ] && usage
+
+if [ -z $item ]; then
+	now_show
+elif [[ "$item" = "clear" || "$item" = "c" || "$item" = "stop" ]]; then
+	now_clear
+elif [[ "$item" = "done" || "$item" = "d" ]]; then
+	now_done
+else
+	now_start $item
+fi
