@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+# Dependencies:
+# - timewarrior (timew)
+# - ripgrep
+# - awk
+#
+# TODO:
+# - [ ] make it possible to use without timewarrior
 
 action=$1
 shift
@@ -8,10 +15,11 @@ item=$1
 function usage {
 	echo "  $(basename $0)"
 	echo "    Handle which todo's you are currently working on"
+	echo "    Uses timewarrior to track time spent on tasks. You can only work on one task at a time"
 	echo ""
 	echo "    Examples:"
 	echo "      $ $TODO_SH $(basename $0)       - Show currently working todo"
-	echo "      $ $TODO_SH $(basename $0) 12		- Start working on todo 12"
+	echo "      $ $TODO_SH $(basename $0) 12    - Start working on todo 12"
 	echo "      $ $TODO_SH $(basename $0) done  - Complete currently working todo"
 	echo "      $ $TODO_SH $(basename $0) clear - Stop working"
 	echo "      $ $TODO_SH $(basename $0) stop  - Stop working"
@@ -34,7 +42,8 @@ function now_show {
 	if [ "$number" = "0" ]; then
 		echo "Nothing is currently being worked on"
 	else
-		$TODO_FULL_SH lsp A
+		$TODO_FULL_SH -P lsp A | head -n 1
+		display_recording "$number"
 	fi
 }
 
@@ -44,8 +53,10 @@ function now_start {
 		$TODO_FULL_SH pri $item A
 	else
 		$TODO_FULL_SH pri $number B
+		stop_recording
 		$TODO_FULL_SH pri $item A
 	fi
+	start_recording $item
 }
 
 function now_clear {
@@ -55,6 +66,7 @@ function now_clear {
 		echo "Nothing is currently being worked on"
 	else
 		$TODO_FULL_SH pri $number B
+		stop_recording
 	fi
 }
 
@@ -64,8 +76,28 @@ function now_done {
 		echo "Nothing is currently being worked on"
 	else
 		$TODO_FULL_SH done $number
+		stop_recording
 	fi
 }
+
+function start_recording() {
+	todo=$($TODO_FULL_SH -P -p ls $1 | head -n 1)
+	desc=$(echo $todo | tr "+" "\n" | head -n 1 | awk '{$1= ""; print $0}')
+	project=$(echo $todo | tr " " "\n" | awk '/+/{print}')
+	echo ""
+	timew start $project "$desc"
+}
+
+function stop_recording {
+	echo ""
+	timew stop
+}
+
+function display_recording {
+	echo ""
+	timew
+}
+
 
 [ "$action" = "usage" ] && usage
 
