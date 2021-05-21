@@ -106,7 +106,7 @@ nmap ga <Plug>(GitGutterStageHunk)
 nmap gE :G<cr>
 nmap gs :0G<cr>
 " ^ Open up git status
-nnoremap <Leader>gl :0Glog<cr>
+nnoremap gl :0Glog<cr>
 " ^ Open up git log for current file
 
 " Helpers:
