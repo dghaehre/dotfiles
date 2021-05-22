@@ -249,4 +249,4 @@ exec_always xset r rate 300 40
 exec_always feh --bg-scale ~/.config/i3/background-2.jpg
 
 # Caps lock works as Esc and Ctrl and set variant to mac
-exec_always setxkbmap -option 'caps:ctrl_modifier' -variant 'mac'; xcape -e '#66=Escape'
+exec_always setxkbmap -option 'caps:ctrl_modifier' -option 'lv3:ralt_switch' -variant 'mac'; xcape -e '#66=Escape'
