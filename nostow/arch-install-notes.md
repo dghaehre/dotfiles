@@ -25,7 +25,7 @@ must install before reboot:
 - bat
 - exa
 - fzf
-- nnn
+- broot
 - less
 - stow
 - rofi

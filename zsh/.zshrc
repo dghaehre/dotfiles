@@ -18,6 +18,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Load broot
+source ~/.config/broot/launcher/bash/br
+
 if test -f "~/Desktop/tomb/.zshrc"; then
   source ~/Desktop/tomb/.zshrc
 fi
@@ -174,44 +177,6 @@ bindkey -v '^f' fzf-cd-widget
 #------------------------------------------------#
 export BAT_PAGER="less -R"
 export BAT_THEME="zenburn"
-
-
-
-
-
-
-##################### File manager ####################
-#-----------------------------------------------------#
-export NNN_PLUG='v:-_bat $nnn*;e:fzopen;o:fzcd;'
-export NNN_COLORS="6213"  # use a different color for each context
-export NNN_BMS='d:~/Downloads/;s:~/Desktop/sider/;n:~/Desktop/tomb/;c:~/.dotfiles/;k:~/Desktop/keys/ssh/'
-alias n="nn -eH"
-function nn () {
-  # Block nesting of nnn in subshells
-  if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
-    echo "nnn is already running"
-    return
-  fi
-
-  # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
-  # To cd on quit only on ^G, remove the "export" as in:
-  #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-  # NOTE: NNN_TMPFILE is fixed, should not be modified
-  export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-
-  # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
-  # stty start undef
-  # stty stop undef
-  # stty lwrap undef
-  # stty lnext undef
-  nnn "$@"
-
-  if [ -f "$NNN_TMPFILE" ]; then
-    . "$NNN_TMPFILE"
-    rm -f "$NNN_TMPFILE" > /dev/null
-  fi
-}
-
 
 
 

@@ -7,7 +7,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'mcchrish/nnn.vim'
+Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'mhinz/vim-startify'
@@ -125,10 +125,15 @@ abbr iferr if err != nil {<CR><CR>}<esc>kddko
 
 
 
-" ################ File manager #################
+" ################ NERDTree #################
 """"""""""""""""""""""""""""""""""""""""""""
-" nnn
-let g:nnn#action = { '<c-e>': 'vsplit' }
+let NERDTreeQuitOnOpen=1
+let NERDTreeShowHidden=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeMinimalUI=1
+let NERDTreeIgnore = ['^node_modules$']
+nnoremap <leader>n :NERDTreeFind<CR>
+nnoremap <leader>N :NERDTreeToggle<CR>
 
 
 
