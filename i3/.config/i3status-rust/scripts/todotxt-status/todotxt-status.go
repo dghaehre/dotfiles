@@ -118,7 +118,7 @@ func checkProgress(todofile []byte, donefile []byte) Result {
 	now := time.Now()
 	date := now.Format("2006-01-02")
 	leftToday := len(removeFutureTasks(now, getLinesBy(todofile, "(B)")))
-	doneToday := len(removeFutureTasks(now, getLinesBy(donefile, date)))
+	doneToday := len(removeFutureTasks(now, getLinesBy(donefile, " " + date + " ")))
 	total := leftToday + doneToday
 	if leftToday > 0 {
 		result.Icon = "tasks"
