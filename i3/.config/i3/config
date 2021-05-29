@@ -205,8 +205,6 @@ mode "$mode_system" {
 
 bindsym $mod+Shift+e mode "$mode_system"
 
-bindsym $mod+q exec ~/.config/i3/toggleKeyboard.sh
-
 bindsym $mod+c exec CM_LAUNCHER=rofi clipmenu -i -show window
 
 set $mode_monitor Monitor laptop (l), HDMI only (h), DP1 only (d)
