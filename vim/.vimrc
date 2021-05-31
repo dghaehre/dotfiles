@@ -15,6 +15,7 @@ Plug 'ap/vim-css-color'
 Plug 'tyru/open-browser.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
+Plug 'voldikss/vim-floaterm'
 call plug#end()
 
 
@@ -58,15 +59,6 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 "== Copy to clipboard
 let @y = "\"+y"
-
-" close all folds
-nmap <Leader>fj zM
-" open all folds
-nmap <Leader>fk zR
-" toggle fold from cursor
-nmap <Leader>ff zA
-" start to make a manual fold
-nmap <Leader>fm zf
 
 " toggles between buffers
 nnoremap <leader><leader> <c-^>
@@ -163,6 +155,22 @@ highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 highlight CocFloating ctermfg=White ctermbg=Black
 highlight PMenu ctermfg=11 ctermbg=Black
+
+
+" #################### Floatterm ########################
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
+let g:floaterm_keymap_new = '<Leader>ft'
+let g:floaterm_keymap_next = '<Leader>fn'
+let g:floaterm_keymap_kill = '<Leader>fx'
+hi Floaterm guibg=black
+hi FloatermBorder guibg=black guifg=black
+noremap  <leader>ff  :FloatermToggle<CR>
+tnoremap <leader>ff <C-\><C-n>:FloatermToggle<CR>
+" Broot
+noremap  <leader>fb :FloatermNew --name=broot --autoclose=2 broot<CR>
+
 
 " #################### Startify ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
