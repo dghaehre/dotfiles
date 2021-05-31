@@ -72,9 +72,9 @@ nmap <Leader>fm zf
 nnoremap <leader><leader> <c-^>
 
 " enable spelling
-command! SpellUs execute "set spell spelllang=en_us"
-command! SpellNb execute "set spell spelllang=nb"
-" disable: :set nospell
+nnoremap <leader>zu :set spell spelllang=en_us<cr>
+nnoremap <leader>zn :set spell spelllang=nb<cr>
+nnoremap <leader>zz :set nospell<cr>
 
 " Change word, and press . for changing next word.
 nnoremap <leader>x *``cgn

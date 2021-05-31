@@ -145,6 +145,14 @@
 			leave_broot: false
 		}
 
+		{
+			invocation: open-and-exit
+			key: ctrl-v
+			shortcut: v
+			execution: "$EDITOR +{line} {file}"
+			leave_broot: true
+		}
+
 		# A convenient shortcut to create new text files in
 		# the current directory or below
 		{
