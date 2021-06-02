@@ -1,0 +1,27 @@
+# Vim bindings
+unbind-key       J
+bind-key         j    next
+unbind-key       K
+bind-key         k    prev
+unbind-key       l
+bind-key         l    open
+unbind-key       h
+bind-key         h    quit
+bind-key         ^j    down
+bind-key         ^k    up
+unbind-key       q
+bind-key         q    hard-quit
+bind-key         J    down
+bind-key         K    up
+
+# Colors
+color listfocus           yellow  black   bold
+color listnormal_unread   cyan black
+color listfocus_unread    yellow black   bold
+color info                yellow  black   bold
+
+# Bookmark
+bookmark-cmd "~/.newsboat/bookmark.sh"
+
+# Open links
+browser "firefox --new-window %u"

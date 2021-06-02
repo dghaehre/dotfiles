@@ -78,6 +78,7 @@ alias hindent="~/builds/hindent"
 alias topdf="pandoc -f markdown -t pdf -o doc.pdf -V geometry:a4paper -V geometry:margin=2cm -V mainfont=\"[source code pro]\" $x --pdf-engine wkhtmltopdf"
 alias sudov="sudo -E nvim"
 alias xsetrate="xset r rate 300 40 && feh --bg-scale ~/.config/i3/background-2.jpg"
+alias rss="newsboat --url-file ~/wikis/personal/rss-urls"
 
 
 # Push personal diary to keybase

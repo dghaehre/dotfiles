@@ -44,6 +44,7 @@ must install before reboot:
 - libpulse
 - lightdm-gtk-greeter
 - base-devel
+- newsboat
 
 ## AUR dependencies:
 - yay
