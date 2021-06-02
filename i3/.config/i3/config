@@ -231,10 +231,6 @@ bindsym $mod+minus scratchpad show
 # For emoji support
 bindsym $mod+s exec --no-startup-id rofimoji 
 
-# For todo.sh
-# Might come in handy, but not necessary
-# bindsym $mod+t exec --no-startup-id todofi.sh -d ~/Dropbox/todotxt/config
-
 # Mark window
 # read 1 character and mark the current window with this character
 bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '

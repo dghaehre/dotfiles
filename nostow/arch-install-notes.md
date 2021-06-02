@@ -49,7 +49,6 @@ must install before reboot:
 ## AUR dependencies:
 - yay
 - todotxt
-- todofi-git
 - dropbox
 
 ## Other dependencies:
