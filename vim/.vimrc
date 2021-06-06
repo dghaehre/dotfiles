@@ -1,20 +1,20 @@
 " ################ Plugins #################
 """"""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-Plug 'vimwiki/vimwiki'
-Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'ap/vim-css-color'
 Plug 'junegunn/fzf.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'preservim/nerdtree'
-Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'mhinz/vim-startify'
-Plug 'ap/vim-css-color'
-Plug 'tyru/open-browser.vim'
-Plug 'airblade/vim-gitgutter'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'preservim/nerdtree'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tyru/open-browser.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vimwiki/vimwiki'
 Plug 'voldikss/vim-floaterm'
 call plug#end()
 
@@ -95,6 +95,9 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 
 nmap ga <Plug>(GitGutterStageHunk)
 " ^ Stage changes/hunk
+nmap gu <Plug>(GitGutterUndoHunk)
+" ^ Undo changes/hunk
+
 nmap gE :G<cr>
 nmap gs :0G<cr>
 " ^ Open up git status
