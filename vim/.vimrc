@@ -22,13 +22,13 @@ call plug#end()
 
 " ################ Defaults #################
 """""""""""""""""""""""""""""""""""""""""""""
-
 :set expandtab
 :set shiftwidth=2
 :set softtabstop=2
 :set tabstop=2
 :set autoindent
 :set smartindent
+:set lcs=tab:›\ ,trail:·
 
 set wrap
 set linebreak
@@ -52,6 +52,9 @@ syntax on
 " tmux cursor
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
+
+
+
 " ################ Default keys/commands #################
 """""""""""""""""""""""""""""""""""""""""""""""
 " Set leader
@@ -71,6 +74,9 @@ nnoremap <leader>zz :set nospell<cr>
 " Change word, and press . for changing next word.
 nnoremap <leader>x *``cgn
 vnoremap <leader>x y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn
+
+" Toggle indent highlight for tabs
+nmap <leader>in :set invlist<cr>
 
  " TODO: make filename nice
 let @d = ""
@@ -277,6 +283,8 @@ let g:haskell_backpack = 1                " to enable highlighting of backpack k
 " Using Hindent in V mode: gq
 
 
+" ################ Golang #################
+autocmd FileType go setlocal invlist
 
 " ################ Vimwiki #################
 """"""""""""""""""""""""""""""""""""""""""""
