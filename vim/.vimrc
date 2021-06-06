@@ -225,16 +225,16 @@ nmap <Leader>/ viwy:Rg <C-R>=escape(@",'/\')<CR><CR>
 
 
 
-
-
 " ############# NAVIGATION ##########
 """""""""""""""""""""""""""""""""""""
 set splitbelow
 set splitright
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+" Disabled for others usecase.
+" nnoremap <C-j> <C-W><C-J>
+" nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
 nmap <Leader>e :vsp<Enter>
 nmap <Leader>E :sp<Enter>
 
@@ -242,6 +242,11 @@ nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
 " ^ Move to next/prev unstaged change
 
+" Move 1 more lines up or down in normal and visual selection modes.
+nnoremap <C-k> :m .-2<CR>==
+nnoremap <C-j> :m .+1<CR>==
+vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
 
 
 
