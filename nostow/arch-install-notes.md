@@ -51,6 +51,12 @@ must install before reboot:
 - todotxt
 - dropbox
 
+For neomutt
+- mutt-wizard
+- abook
+- lynx
+- notmuch
+
 ## Other dependencies:
 - rustup (needed for i3status-rust. Should be installed with rust script)
 - i3status-rust (Should be installed with cargo)

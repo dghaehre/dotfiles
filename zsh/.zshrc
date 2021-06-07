@@ -86,6 +86,7 @@ function b {
   cd ~
   dcd $1
 }
+alias mail="neomutt -F ~/wikis/personal/mutt/muttrc"
 
 
 # Push personal diary to keybase
