@@ -54,6 +54,7 @@ must install before reboot:
 For neomutt
 - mutt-wizard
 - abook
+- notmuch
 - lynx
 - notmuch
 
