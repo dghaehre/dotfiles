@@ -171,13 +171,14 @@ highlight PMenu ctermfg=11 ctermbg=Black
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
-let g:floaterm_keymap_new = '<Leader>ft'
-let g:floaterm_keymap_next = '<Leader>fn'
-let g:floaterm_keymap_kill = '<Leader>fx'
+let g:floaterm_keymap_new = '<C-t>'
+let g:floaterm_keymap_next = '<C-n>'
+let g:floaterm_keymap_prev = '<C-p>'
+let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
 noremap  <leader>ff  :FloatermToggle<CR>
-tnoremap <leader>ff <C-\><C-n>:FloatermToggle<CR>
+tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 " Broot
 noremap  <leader>fb :FloatermNew --name=broot --autoclose=2 broot<CR>
 
@@ -238,8 +239,8 @@ set splitbelow
 set splitright
 
 " Disabled for others usecase.
-" nnoremap <C-j> <C-W><C-J>
-" nnoremap <C-k> <C-W><C-K>
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 nmap <Leader>e :vsp<Enter>
@@ -250,10 +251,10 @@ nmap [g <Plug>(GitGutterPrevHunk)
 " ^ Move to next/prev unstaged change
 
 " Move 1 more lines up or down in normal and visual selection modes.
-nnoremap <C-k> :m .-2<CR>==
-nnoremap <C-j> :m .+1<CR>==
-vnoremap <C-k> :m '<-2<CR>gv=gv
-vnoremap <C-j> :m '>+1<CR>gv=gv
+nnoremap <C-u> :m .-2<CR>==
+nnoremap <C-d> :m .+1<CR>==
+vnoremap <C-u> :m '<-2<CR>gv=gv
+vnoremap <C-d> :m '>+1<CR>gv=gv
 
 
 
