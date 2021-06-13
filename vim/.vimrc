@@ -177,7 +177,7 @@ let g:floaterm_keymap_prev = '<C-p>'
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
-noremap  <leader>ff  :FloatermToggle<CR>
+noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 " Broot
 noremap  <leader>fb :FloatermNew --name=broot --autoclose=2 broot<CR>
@@ -186,6 +186,7 @@ noremap  <leader>fb :FloatermNew --name=broot --autoclose=2 broot<CR>
 " #################### Startify ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'}, {'s': '~/.ssh/config'}, {'g': '~/.gitconfig'}, {'t': '~/Dropbox/todotxt/todo.txt' }, {'d': '~/Dropbox/todotxt/done.txt' } ]
+nnoremap <leader>S :Startify<cr>
 
 
 
@@ -227,6 +228,7 @@ nmap <Leader>b :Buffers<Enter>
 nmap <Leader>s :Files<Enter>
 nmap <Leader>m :Marks<Enter>
 nmap <Leader>g :Rg<Enter>
+nmap <Leader>ws :Files ~/wikis/personal<cr>
 " Let you enter <Leader>g to search higlighted text in whole project
 " A quick and dirty trick if tags or coc is missing
 nmap <Leader>/ viwy:Rg <C-R>=escape(@",'/\')<CR><CR>

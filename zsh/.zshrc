@@ -69,9 +69,10 @@ alias untar="tar -xvzf $x"
 function dotar() {
   tar -czvf $1.tar.gz ./$1
 }
-alias tmux="env TERM=screen-256color tmux -u"
-# alias tmux="env TERM=myterm-it tmux -u"
-alias ta="tmux attach"
+# tmux
+alias tmux="env TERM=screen-256color tmux -u -c \"open-tmux-session home\""
+alias os="open-tmux-session"
+
 alias ht="ht-rust"
 alias v="nvim"
 alias hindent="~/builds/hindent"
