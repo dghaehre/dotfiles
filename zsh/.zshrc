@@ -102,42 +102,6 @@ alias t="todo.sh -d ~/Dropbox/todotxt/config"
 alias work="t ls @work"
 alias waiting="t lsp W"
 
-# Set and show 'now'
-function now() {
-  if [ -z "$1" ]; then
-    t lsp A
-  else
-    current=$(t lsp A | head -n 1 | awk '{print $1}')
-    if [ $current != "--" ]; then
-      number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-      t -f p $number B
-    fi
-    t -f p $1 A
-  fi
-}
-
-# Complete 'now'
-function dnow() {
-  current=$(t lsp A | head -n 1 | awk '{print $1}')
-  if [ $current != "--" ]; then
-    number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-    t do $number
-  else
-    echo "Nothing is registered as 'now'"
-  fi
-}
-
-# Clear 'now'
-function cnow() {
-  current=$(t lsp A | head -n 1 | awk '{print $1}')
-  if [ $current != "--" ]; then
-    number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-    t -f p $number B
-  else
-    echo "Nothing is registered as 'now'"
-  fi
-}
-
 # Goals
 alias g="todo.sh -d ~/Dropbox/todotxt/goal_config"
 

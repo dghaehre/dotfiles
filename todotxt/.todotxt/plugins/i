@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+
+action=$1
+shift
+item=$1
+shift
+param="$*"
+
+#Set the field separator to new line
+IFS=$'\n'
+
+function usage {
+	echo "  $(basename $0)> <options>"
+	echo "    Interactively list and modify todos"
+	echo ""
+	echo "    Options:"
+	echo "      c    context"
+	echo "      p    context"
+	echo ""
+	echo "    Examples:"
+	echo "      $ $TODO_SH $(basename $0)"
+	echo "      $ $TODO_SH $(basename $0) c"
+	echo "      $ $TODO_SH $(basename $0) p"
+	echo ""
+	exit
+}
+
+actions="done
+priority
+schedule"
+
+priorities="A
+B
+C
+D
+None"
+
+function get_number_from_line {
+	number=$(echo $1 | head -n1 | awk '{print $1;}')
+	echo $number
+}
+
+function listtasks {
+	todos=$($TODO_FULL_SH -p ls | head -n -2)
+	selected=$(echo "$todos" | fzf -m --prompt="todo> ")
+	if [ -n "$selected" ]; then
+		handle_action "$selected"
+		listtasks
+	fi
+}
+
+function handle_action {
+	lines=$@
+	a=$(echo "$actions" | fzf --preview-window=up --preview="echo \"$lines\"" --prompt="action> ")
+
+	if [ -n "$a" ]; then
+		case "$a" in
+
+			"done")
+				for line in $lines
+				do
+					number=$(get_number_from_line "$line")
+					$TODO_FULL_SH done $number
+				done
+				;;
+
+			"schedule")
+				echo "$lines"
+				echo ""
+				echo "schedule: "
+				read sch
+				for line in $lines
+				do
+					number=$(get_number_from_line "$line")
+					$TODO_FULL_SH sch $number $sch
+				done
+				;;
+
+			"priority")
+				p=$(echo "$priorities" | fzf --preview-window=up --preview="echo \"$lines\"" --prompt="priority> ")
+				for line in $lines
+				do
+					number=$(get_number_from_line "$line")
+					if [ "$p" = "None" ]; then
+						$TODO_FULL_SH dp $number
+					else
+						$TODO_FULL_SH pri $number $p
+					fi
+				done
+				;;
+		esac
+	fi
+}
+
+
+function listcontext {
+	projects=$($TODO_FULL_SH listcon)
+	selectedcontext=$(echo "$projects" | fzf --preview-window=up --preview="$TODO_SH ls {}" --prompt="context> ")
+
+	function go {
+		if [ -n "$selectedcontext" ]; then
+			todos=$($TODO_FULL_SH -p ls $selectedcontext | head -n -2)
+			selected=$(echo "$todos" | fzf -m --prompt="todo> ")
+			if [ -n "$selected" ]; then
+				handle_action "$selected"
+				go
+			fi
+		fi
+	}
+	go
+}
+
+function listprojects {
+	projects=$($TODO_FULL_SH listproj)
+	selectedproject=$(echo "$projects" | fzf --preview-window=up --preview="$TODO_SH ls {}" --prompt="project> ")
+
+	function go {
+		if [ -n "$selectedproject" ]; then
+			todos=$($TODO_FULL_SH -p ls $selectedproject | head -n -2)
+			selected=$(echo "$todos" | fzf -m --prompt="todo> ")
+			if [ -n "$selected" ]; then
+				handle_action "$selected"
+				go
+			fi
+		fi
+	}
+	go
+}
+
+[ "$action" = "usage" ] && usage
+
+if [ -z $item ]; then
+	listtasks
+elif [ $item = "p" ]; then
+	listprojects
+elif [ $item = "c" ]; then
+	listcontext
+else
+	usage
+fi
