@@ -19,7 +19,7 @@ name = "awesome5"
 [[block]]
 block = "custom"
 command = "~/.config/i3status-rust/scripts/todotxt-status/todotxt-status"
-interval = 10
+interval = 18
 hide_when_empty = true
 json = true
 [block.theme_overrides]

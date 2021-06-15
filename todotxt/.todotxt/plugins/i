@@ -27,6 +27,7 @@ function usage {
 
 actions="done
 priority
+edit
 schedule"
 
 priorities="A
@@ -61,6 +62,14 @@ function handle_action {
 				do
 					number=$(get_number_from_line "$line")
 					$TODO_FULL_SH done $number
+				done
+				;;
+
+			"edit")
+				for line in $lines
+				do
+					number=$(get_number_from_line "$line")
+					$EDITOR +$number $TODO_FILE
 				done
 				;;
 
