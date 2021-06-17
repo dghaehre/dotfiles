@@ -28,13 +28,8 @@ function usage {
 }
 
 function get_current_number {
-	current=$($TODO_FULL_SH lsp A | head -n 1 | awk '{print $1}')
-  if [ $current != "--" ]; then
-    number=$(echo $current | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | bc)
-		echo $number
-  else
-		echo "0"
-  fi
+	number=$($TODO_FULL_SH -p lsp A | awk 'NR==1 { print ($1 == "--") ? "0" : $1 }' | bc)
+	echo $number
 }
 
 function now_show {
@@ -82,8 +77,8 @@ function now_done {
 
 function start_recording() {
 	todo=$($TODO_FULL_SH -P -p ls $1 | head -n 1)
-	desc=$(echo $todo | tr "+" "\n" | head -n 1 | awk '{$1= ""; print $0}')
-	project=$(echo $todo | tr " " "\n" | awk '/+/{print}')
+	desc=$(echo $todo | awk '{ for (i = 1; i <= NF; i++) if ($i !~ /+|@/ && i > 1) print $i; }')
+	project=$(echo $todo | awk '{ for (i = 1; i <= NF; i++) if ($i ~ /+/) print $i }')
 	echo ""
 	timew start $project "$desc"
 }
