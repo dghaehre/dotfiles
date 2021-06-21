@@ -177,8 +177,10 @@ let g:floaterm_keymap_prev = '<C-p>'
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
+highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
+tnoremap ,<ESC> <C-\><C-n>
 " Broot
 noremap  <leader>fb :FloatermNew --name=broot --autoclose=2 broot<CR>
 
