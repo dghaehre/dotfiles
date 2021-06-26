@@ -1,0 +1,4 @@
+#!/bin/bash
+todos=$(cat ~/Dropbox/todotxt/todo.txt | wc -l)
+done=$(cat ~/Dropbox/todotxt/done.txt | wc -l)
+echo "$todos / $done"

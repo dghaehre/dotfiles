@@ -15,7 +15,7 @@ separator_fg = "auto"
 name = "awesome5"
 [icons.overrides]
 
-#TODO.txt
+#TODO.txt status
 [[block]]
 block = "custom"
 command = "~/.config/i3status-rust/scripts/todotxt-status/todotxt-status"
@@ -24,6 +24,13 @@ hide_when_empty = true
 json = true
 [block.theme_overrides]
 info_bg = "#8FBCBB"
+
+#TODO.txt counter
+[[block]]
+block = "custom"
+command = "~/.config/i3status-rust/scripts/todotxt-counter/todotxt-counter"
+interval = 60
+hide_when_empty = true
 
 [[block]]
 block = "pacman"
