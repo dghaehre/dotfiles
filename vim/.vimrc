@@ -42,7 +42,7 @@ set wrapmargin=0
 set undodir=~/.vim/undo-dir
 set undofile
 
-set foldmethod=manual
+set foldmethod=indent
 set foldlevel=0
 set foldlevelstart=20
 set nocompatible

@@ -192,6 +192,21 @@
 		}
 
 		{
+			invocation: projects
+			execution: ":focus ~/projects"
+		}
+
+		{
+			invocation: dotfiles
+			execution: ":focus ~/dotfiles"
+		}
+
+		{
+			invocation: wiki
+			execution: ":focus ~/wikis/personal"
+		}
+
+		{
 			invocation: toggle-preview 
 			key: ctrl-p
 			execution: ":toggle_preview"
