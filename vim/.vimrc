@@ -4,10 +4,13 @@ let g:polyglot_disabled = ['sensible']
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
-Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'mhinz/vim-startify'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'preservim/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
@@ -136,7 +139,7 @@ let NERDTreeShowLineNumbers=1
 let NERDTreeMinimalUI=1
 let NERDTreeIgnore = ['^node_modules$']
 nnoremap <leader>n :NERDTreeFind<CR>
-nnoremap <leader>N :NERDTreeToggle<CR>
+" nnoremap <leader>N :NERDTreeToggle<CR>
 
 
 
@@ -193,49 +196,27 @@ nnoremap <leader>S :Startify<cr>
 
 
 
-" ################ Coc language server #################
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:check_back_space() abort
-  let col = col('.') - 1
-   return !col || getline('.')[col - 1]  =~ '\s'
-   endfunction
-
-inoremap <silent><expr> <Tab>
-     \ pumvisible() ? "\<C-n>" :
-     \ <SID>check_back_space() ? "\<Tab>" :
-     \ coc#refresh()
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-
-
-
-
-" ########## FZF ###########
+" ########## Telescope ###########
 """""""""""""""""""""""""""""
-nmap <Leader>b :Buffers<Enter>
-nmap <Leader>s :Files<Enter>
-nmap <Leader>m :Marks<Enter>
-nmap <Leader>o :History<Enter>
-nmap <Leader>g :Rg<Enter>
-nmap <Leader>ws :Files ~/wikis/personal<cr>
-" Let you enter <Leader>g to search higlighted text in whole project
-" A quick and dirty trick if tags or coc is missing
-nmap <Leader>/ viwy:Rg <C-R>=escape(@",'/\')<CR><CR>
+nnoremap <leader>s <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep({ prompt_prefix=🔍 })<cr>
+nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>C <cmd>lua require('telescope.builtin').commands()<cr>
+nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles()<cr>
+nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
+nnoremap <leader>R <cmd>lua require('telescope.builtin').registers()<cr>
+nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
+nnoremap <leader>N <cmd>lua require('telescope.builtin').file_browser()<cr>
+" TODO: Let you enter <Leader>g to search higlighted text in whole project
+" TODO: nmap <Leader>/ viwy:Rg <C-R>=escape(@",'/\')<CR><CR>
+" TODO: nmap <Leader>ws :Files ~/wikis/personal<cr>
+
+" LSP
+nnoremap <leader>D <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
+nnoremap        gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap        gi <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
+nnoremap        gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+
 
 
 
@@ -318,14 +299,14 @@ let g:vimwiki_list = [
 " Create table
 :map <Leader>ta :VimwikiTable<Enter>
 
-" fuzzy find personal files
-command! -bang -nargs=? -complete=dir PersonalFiles
-    \ call fzf#vim#files('~/wikis/personal', fzf#vim#with_preview(), <bang>0)
-:map <Leader>wp :PersonalFiles<Enter>
+" " fuzzy find personal files
+" command! -bang -nargs=? -complete=dir PersonalFiles
+"     \ call fzf#vim#files('~/wikis/personal', fzf#vim#with_preview(), <bang>0)
+" :map <Leader>wp :PersonalFiles<Enter>
 
-" fuzzy find work files
-command! -bang WorkFiles call fzf#vim#files('~/wikis/work', fzf#vim#with_preview(), <bang>0)
-:map <Leader>wW :WorkFiles<Enter>
+" " fuzzy find work files
+" command! -bang WorkFiles call fzf#vim#files('~/wikis/work', fzf#vim#with_preview(), <bang>0)
+" :map <Leader>wW :WorkFiles<Enter>
 
 " Capture a note/idea fast for sorting later
 function Capture()
