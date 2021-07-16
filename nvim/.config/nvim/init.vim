@@ -24,7 +24,6 @@ local on_attach = function(client, bufnr)
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
@@ -37,7 +36,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "gopls", "rust_analyzer", "tsserver" }
+local servers = { "gopls", "rust_analyzer", "tsserver", "hls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -113,6 +112,7 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
+    hidden = true,
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
@@ -120,5 +120,19 @@ require('telescope').setup{
       },
     },
   }
+}
+
+-- Treesitter
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+  },
+  indentation = {
+    enable = true,              -- false will disable the whole extension
+  },
+  folding = {
+    enable = true,              -- false will disable the whole extension
+  },
 }
 EOF

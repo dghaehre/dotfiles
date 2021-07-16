@@ -1,6 +1,5 @@
 " ################ Plugins #################
 """"""""""""""""""""""""""""""""""""""""""""
-let g:polyglot_disabled = ['sensible']
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
@@ -12,7 +11,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'preservim/nerdtree'
-Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -199,17 +198,17 @@ nnoremap <leader>S :Startify<cr>
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
 nnoremap <leader>s <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep({ prompt_prefix=🔍 })<cr>
+nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>C <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles()<cr>
+nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles({ follow = true })<cr>
 nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
 nnoremap <leader>R <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
 nnoremap <leader>N <cmd>lua require('telescope.builtin').file_browser()<cr>
+nnoremap <Leader>ws <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/personal/" } })<cr>
 " TODO: Let you enter <Leader>g to search higlighted text in whole project
-" TODO: nmap <Leader>/ viwy:Rg <C-R>=escape(@",'/\')<CR><CR>
-" TODO: nmap <Leader>ws :Files ~/wikis/personal<cr>
 
 " LSP
 nnoremap <leader>D <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
