@@ -209,7 +209,9 @@ nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles({ follow = tru
 nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
 nnoremap <leader>R <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
-nnoremap <leader>N <cmd>lua require('telescope.builtin').file_browser()<cr>
+nnoremap <leader>N <cmd>lua require('telescope.builtin').file_browser({ hidden = true })<cr>
+nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
+nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <Leader>ws <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/personal/" } })<cr>
 " TODO: Let you enter <Leader>g to search higlighted text in whole project
 
