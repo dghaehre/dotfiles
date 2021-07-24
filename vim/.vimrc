@@ -64,8 +64,11 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 " Set leader
 :let mapleader = " "
 
-"== Copy to clipboard
-let @y = "\"+y"
+" copy/paste clipboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
 
 " toggles between buffers
 nnoremap <leader><leader> <c-^>
