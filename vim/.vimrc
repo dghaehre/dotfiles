@@ -6,7 +6,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-sneak'
-Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 Plug 'sheerun/vim-polyglot'
@@ -18,6 +17,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vimwiki/vimwiki'
 Plug 'voldikss/vim-floaterm'
+Plug 'wellle/targets.vim'
 call plug#end()
 
 
@@ -83,15 +83,7 @@ vnoremap <leader>x y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn
 " Toggle indent highlight for tabs
 nmap <leader>in :set invlist<cr>
 
- " TODO: make filename nice
-let @d = ""
-  \ . "+++\ntitle = \"" . expand('%:r') . "\"\n"
-  \ . "date = " . strftime('%Y-%m-%d') . "\n"
-  \ . "[taxonomies]\n"
-  \ . "tags = []\n"
-  \ . "+++\n\n# " . expand('%:r')
-
-" Mainly used by capture.
+" Used by capture.
 let @c = "#\ncaptured: " . strftime("%d/%m/%y %H:%M")
 
 " Edit .vimrc
@@ -160,6 +152,7 @@ set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
 set number
 set numberwidth=5
+:set scrolloff=6
 :set cursorline
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 highlight CursorLine cterm=NONE ctermbg=Black ctermfg=NONE guibg=NONE guifg=NONE
@@ -187,13 +180,6 @@ tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap ,<ESC> <C-\><C-n>
 " Broot
 noremap  <leader>fb :FloatermNew --name=broot --autoclose=2 broot<CR>
-
-
-" #################### Startify ########################
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'z': '~/.zshrc'}, {'s': '~/.ssh/config'}, {'g': '~/.gitconfig'}, {'t': '~/Dropbox/todotxt/todo.txt' }, {'d': '~/Dropbox/todotxt/done.txt' } ]
-nnoremap <leader>S :Startify<cr>
-
 
 
 " ################ Coc language server #################
@@ -225,9 +211,6 @@ function! s:show_documentation()
 endfunction
 
 
-
-
-
 " ########## FZF ###########
 """""""""""""""""""""""""""""
 nmap <Leader>b :Buffers<Enter>
@@ -254,6 +237,7 @@ nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 nmap <Leader>e :vsp<Enter>
 nmap <Leader>E :sp<Enter>
+nnoremap <Leader>O :on<Enter>
 
 nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
