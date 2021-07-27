@@ -36,7 +36,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "gopls", "rust_analyzer", "tsserver", "hls" }
+local servers = { "gopls", "rust_analyzer", "tsserver", "hls", "pyright" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -135,6 +135,7 @@ require('telescope').setup{
     },
   }
 }
+require('telescope').load_extension('fzf')
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
