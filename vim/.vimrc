@@ -16,8 +16,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tyru/open-browser.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'vimwiki/vimwiki'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
@@ -141,30 +139,85 @@ nnoremap <leader>n :NERDTreeFind<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
+" TODO: make it compatible with termguicolors
+" set termguicolors
 set background=dark
 set t_Co=256
-let g:airline_powerline_fonts = 0
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.dirty = ' !'
-let g:airline_theme='lucius'
 set fillchars=""
-highlight VertSplit cterm=NONE
 set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
 set number
 set numberwidth=5
 :set scrolloff=6
 :set cursorline
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-highlight CursorLine cterm=NONE ctermbg=Black ctermfg=NONE guibg=NONE guifg=NONE
+
+" Statusline
+set statusline=
+set statusline+=%#StatusBarLeft#
+set statusline+=\ %f
+set statusline+=%#StatusBarWarning#
+set statusline+=\ %m
+set statusline+=%#StatusBarError#
+set statusline+=\ %r
+set statusline+=%=
+set statusline+=%#StatusBarRight#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
+
+" Colors
+"
+" CODE
+highlight Type              ctermfg=151
+highlight Statement         ctermfg=12
+highlight PreProc           ctermfg=12
+highlight Keyword           ctermfg=11
+highlight Special           ctermfg=12
+highlight Delimiter         ctermfg=224
+highlight Comment           ctermfg=243 guifg=Grey
+highlight TODO              ctermfg=211 ctermbg=none cterm=italic
+highlight Title             ctermfg=224
+highlight VimwikiLink       ctermfg=12 cterm=italic
+highlight Search            ctermfg=none ctermbg=242 cterm=none
+highlight StatusBarLeft     ctermfg=none ctermbg=none cterm=none
+highlight StatusBarRight    ctermfg=12 ctermbg=none cterm=italic
+highlight StatusBarWarning  ctermfg=11 ctermbg=none cterm=none
+highlight StatusBarError    ctermfg=9 ctermbg=none cterm=none
+highlight PMenu ctermfg=none ctermbg=Black
+
+" highlight Special         ctermfg=110
+" highlight Special         ctermfg=81
+
+" LSP
+highlight LspDiagnosticsDefaultError ctermfg=243 cterm=italic
+highlight LspDiagnosticsVirtualTextHint ctermfg=243 cterm=italic
+highlight LspDiagnosticsVirtualTextWarning ctermfg=243 cterm=italic
+highlight LspDiagnosticsVirtualTextInformation ctermfg=243 cterm=italic
+"
+highlight LspDiagnosticsSignHint ctermfg=243 cterm=italic
+highlight LspDiagnosticsSignWarning ctermfg=14 cterm=italic
+highlight LspDiagnosticsSignInformation ctermfg=14 cterm=italic
+highlight LspDiagnosticsSignError ctermfg=1 cterm=italic
+"
+highlight LspDiagnosticsErrorHint ctermfg=1 cterm=italic
+highlight LspDiagnosticsFloatingWarning ctermfg=9 cterm=none
+highlight LspDiagnosticsFloatingHint ctermfg=243 cterm=none
+highlight LspDiagnosticsFloatingError ctermfg=9 cterm=none
+
+" MISC
+highlight VertSplit cterm=NONE guibg=NONE
 highlight clear SignColumn
+highlight LineNr cterm=none ctermfg=DarkGrey ctermbg=none guibg=none guifg=DarkGrey
+highlight CursorLineNr ctermfg=249 guifg=Grey
+highlight CursorLine cterm=none ctermbg=Black ctermfg=none
+
+" GIT
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
-highlight CocFloating ctermfg=White ctermbg=Black
-highlight PMenu ctermfg=11 ctermbg=Black
 
 
 " #################### Floatterm ########################
