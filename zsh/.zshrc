@@ -19,7 +19,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Load broot
-source ~/.config/broot/launcher/bash/br
+if test -f "~/.config/broot/launcher/bash/br"; then
+  source ~/.config/broot/launcher/bash/br
+fi
 
 if test -f "~/Desktop/tomb/.zshrc"; then
   source ~/Desktop/tomb/.zshrc
@@ -73,13 +75,6 @@ alias topdf="pandoc -f markdown -t pdf -o doc.pdf -V geometry:a4paper -V geometr
 alias sudov="sudo -E nvim"
 alias xsetrate="xset r rate 300 40 && feh --bg-scale ~/.config/i3/background.jpg"
 alias rss="newsboat --url-file ~/wikis/personal/rss-urls"
-function dcd {
-  br --only-folders --cmd "$1;:cd"
-}
-function b {
-  cd ~
-  dcd $1
-}
 alias mail="cd ~/mail && neomutt -F ~/wikis/personal/mutt/muttrc"
 
 
@@ -135,6 +130,31 @@ bindkey -v '^f' fzf-cd-widget
 
 
 
+##################### NNN #########################
+#-------------------------------------------------#
+# colors taken from https://github.com/jarun/nnn/wiki/Themes
+BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
+export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+# Bookmarks
+export NNN_BMS="d:~/dotfiles;p:~/projects/personal;w:~/wikis/personal;j:~/projects/work"
+
+n () { # Enable NNN to cd
+  # Block nesting of nnn in subshells
+  if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+      echo "nnn is already running"
+      return
+  fi
+  # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
+  # To cd on quit only on ^G, remove the "export" as in:
+  #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+  export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+  nnn "$@"
+  if [ -f "$NNN_TMPFILE" ]; then
+    . "$NNN_TMPFILE"
+    rm -f "$NNN_TMPFILE" > /dev/null
+  fi
+}
 
 
 ##################### BAT ########################
@@ -177,4 +197,10 @@ function git-to-push() {
     git log origin/$branch...$branch
 }
 
-eval "$(starship init zsh)"
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi

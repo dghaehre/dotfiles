@@ -10,7 +10,6 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'preservim/nerdtree'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -18,6 +17,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tyru/open-browser.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'voldikss/vim-floaterm'
+Plug 'mcchrish/nnn.vim'
 Plug 'wellle/targets.vim'
 call plug#end()
 
@@ -123,18 +123,12 @@ abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
 abbr iferr if err != nil {<CR><CR>}<esc>kddko
 
 
-
-" ################ NERDTree #################
+" ################ NNN #################
 """"""""""""""""""""""""""""""""""""""""""""
-let NERDTreeQuitOnOpen=1
-let NERDTreeShowHidden=1
-let NERDTreeShowLineNumbers=1
-let NERDTreeMinimalUI=1
-let NERDTreeIgnore = ['^node_modules$']
-nnoremap <leader>n :NERDTreeFind<CR>
-" nnoremap <leader>N :NERDTreeToggle<CR>
-
-
+let g:nnn#set_default_mappings = 0
+nnoremap <silent> <leader>n :NnnPicker<CR>
+nnoremap <leader>N :NnnPicker %:p:h<CR>
+let g:nnn#action = { '<c-l>': 'vsplit', '<c-j>': 'split' }
 
 
 " ######### DISPLAY #############
@@ -234,8 +228,6 @@ highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap ,<ESC> <C-\><C-n>
-" Broot
-noremap  <leader>fb :FloatermNew --name=broot --autoclose=2 broot<CR>
 
 
 " ########## Telescope ###########
@@ -249,7 +241,6 @@ nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles({ follow = tru
 nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
 nnoremap <leader>R <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
-nnoremap <leader>N <cmd>lua require('telescope.builtin').file_browser({ hidden = true })<cr>
 nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <Leader>ws <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/personal/" } })<cr>
