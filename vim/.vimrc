@@ -234,6 +234,7 @@ tnoremap ,<ESC> <C-\><C-n>
 """""""""""""""""""""""""""""
 nnoremap <leader>s <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <Leader>wg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/personal/" } })<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>C <cmd>lua require('telescope.builtin').commands()<cr>
@@ -319,7 +320,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 
-" ################ Vimwiki #################
+" ################ Vimwiki/markdown #################
 """"""""""""""""""""""""""""""""""""""""""""
 let g:vimwiki_list = [
       \{'path': '~/wikis/personal/', 'syntax': 'markdown', 'ext': '.md'},
@@ -334,6 +335,33 @@ let g:vimwiki_list = [
 :vmap <Leader>tk <Plug>VimwikiDecrementListItem
 " Create table
 :map <Leader>ta :VimwikiTable<Enter>
+
+" Folding for vimwiki and markdown files
+let g:vimwiki_folding = 'custom' " let folding to be set by another plugin
+function! MarkdownLevel()
+    if getline(v:lnum) =~ '^# .*$'
+        return ">1"
+    endif
+    if getline(v:lnum) =~ '^## .*$'
+        return ">2"
+    endif
+    if getline(v:lnum) =~ '^### .*$'
+        return ">3"
+    endif
+    if getline(v:lnum) =~ '^#### .*$'
+        return ">4"
+    endif
+    if getline(v:lnum) =~ '^##### .*$'
+        return ">5"
+    endif
+    if getline(v:lnum) =~ '^###### .*$'
+        return ">6"
+    endif
+    return "=" 
+endfunction
+autocmd BufEnter *.md setlocal foldexpr=MarkdownLevel()  
+autocmd BufEnter *.md setlocal foldmethod=expr   
+autocmd BufEnter *.md setlocal foldlevelstart=1   
 
 " " fuzzy find personal files
 " command! -bang -nargs=? -complete=dir PersonalFiles

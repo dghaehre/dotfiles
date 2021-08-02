@@ -49,11 +49,6 @@ export PAGER="less"
 alias ..="cd .."
 alias ...="cd ../../"
 alias ....="cd ../../../"
-alias desk="cd ~/Desktop"
-alias projects="cd ~/projects"
-alias dot="cd ~/dotfiles"
-alias down="cd ~/Downloads"
-alias backups="cd ~/Backups"
 alias gl='git checkout'
 alias please='sudo !!'
 alias cpwd="pwd | xsel -b"
@@ -198,7 +193,7 @@ function git-to-push() {
 }
 
 if command -v zoxide &> /dev/null; then
-  eval "$(zoxide init zsh)"
+  eval "$(zoxide init zsh --cmd cd)"
 fi
 
 if command -v starship &> /dev/null; then
