@@ -108,6 +108,14 @@ nmap gs :0G<cr>
 nnoremap gl :0Glog<cr>
 " ^ Open up git log for current file
 
+" Make it simpler to use marks
+nnoremap mj mJ
+nnoremap mk mK
+nnoremap ml mL
+nnoremap 'j 'J
+nnoremap 'k 'K
+nnoremap 'l 'L
+
 " Helpers:
 "
 " Search for text in file:
