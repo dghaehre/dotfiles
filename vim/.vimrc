@@ -52,6 +52,9 @@ syntax on
 :set number relativenumber
 :set nu rnu
 
+set splitbelow
+set splitright
+
 " tmux cursor
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
@@ -69,9 +72,6 @@ vnoremap <leader>y "+y
 nnoremap <leader>p "+p
 vnoremap <leader>p "+p
 
-" toggles between buffers
-nnoremap <leader><leader> <c-^>
-
 " enable spelling
 nnoremap <leader>zu :set spell spelllang=en_us<cr>
 nnoremap <leader>zn :set spell spelllang=nb<cr>
@@ -84,51 +84,22 @@ vnoremap <leader>x y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn
 " Toggle indent highlight for tabs
 nmap <leader>in :set invlist<cr>
 
-" Used by capture.
-let @c = "#\ncaptured: " . strftime("%d/%m/%y %H:%M")
-
-" Edit .vimrc
-:nnoremap <leader>qv :vsplit ~/.vimrc<cr>
+" Source .vimrc
 :nnoremap <leader>qs :source ~/.vimrc<cr>
 
 " Set currentfile as current dir
 nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" write dts to insert date and time
-:iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
-
-nmap ga <Plug>(GitGutterStageHunk)
-" ^ Stage changes/hunk
-nmap gu <Plug>(GitGutterUndoHunk)
-" ^ Undo changes/hunk
-
-nmap gE :G<cr>
-nmap gs :0G<cr>
-" ^ Open up git status
-nnoremap gl :0Glog<cr>
-" ^ Open up git log for current file
-
-" Make it simpler to use marks
-nnoremap mj mJ
-nnoremap mk mK
-nnoremap ml mL
-nnoremap 'j 'J
-nnoremap 'k 'K
-nnoremap 'l 'L
-
-" Helpers:
-"
-" Search for text in file:
-" 1. yank text
-" 2. q/p
-"
-" Search in file for hover over word: #
 
 
 " ################ Snippets #################
 """"""""""""""""""""""""""""""""""""""""""""
 abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
 abbr iferr if err != nil {<CR><CR>}<esc>kddko
+:iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
+let @c = "#\ncaptured: " . strftime("%d/%m/%y %H:%M")
+" ^ Used by capture.
+
 
 
 " ################ NNN #################
@@ -222,6 +193,22 @@ highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 
+" ################ GIT #################
+""""""""""""""""""""""""""""""""""""""""""""
+" Move to next/prev unstaged change
+nmap ]g <Plug>(GitGutterNextHunk)
+nmap [g <Plug>(GitGutterPrevHunk)
+" Stage changes/hunk
+nmap ga <Plug>(GitGutterStageHunk)
+" Undo changes/hunk
+nnoremap gu <Plug>(GitGutterUndoHunk)
+" Open up git status
+nnoremap gE :G<cr>
+nnoremap gs :0G<cr>
+" Open up git log for current file
+nnoremap gl :0Glog<cr>
+
+
 " #################### Floatterm ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:floaterm_width = 0.8
@@ -244,6 +231,7 @@ nnoremap <leader>s <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <Leader>wg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/personal/" } })<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
+" TODO: make grep_string also work in visual mode
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>C <cmd>lua require('telescope.builtin').commands()<cr>
 nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles({ follow = true })<cr>
@@ -253,7 +241,6 @@ nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
 nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <Leader>ws <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/personal/" } })<cr>
-" TODO: Let you enter <Leader>g to search higlighted text in whole project
 
 " LSP
 nnoremap <leader>D <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
@@ -266,8 +253,8 @@ nnoremap        gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 
 " ############# NAVIGATION ##########
 """""""""""""""""""""""""""""""""""""
-set splitbelow
-set splitright
+" toggles between buffers
+nnoremap <leader><leader> <c-^>
 
 " Disabled for others usecase.
 nnoremap <C-j> <C-W><C-J>
@@ -276,11 +263,6 @@ nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 nmap <Leader>e :vsp<Enter>
 nmap <Leader>E :sp<Enter>
-nnoremap <Leader>O :on<Enter>
-
-nmap ]g <Plug>(GitGutterNextHunk)
-nmap [g <Plug>(GitGutterPrevHunk)
-" ^ Move to next/prev unstaged change
 
 " Move 1 more lines up or down in normal and visual selection modes.
 nnoremap <C-u> :m .-2<CR>==
@@ -288,7 +270,13 @@ nnoremap <C-d> :m .+1<CR>==
 vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
 
-
+" Make it simpler to use marks
+nnoremap mj mJ
+nnoremap mk mK
+nnoremap ml mL
+nnoremap 'j 'J
+nnoremap 'k 'K
+nnoremap 'l 'L
 
 
 " ############ Resizing ############
@@ -327,6 +315,8 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
+
+
 
 " ################ Vimwiki/markdown #################
 """"""""""""""""""""""""""""""""""""""""""""
@@ -371,15 +361,6 @@ autocmd BufEnter *.md setlocal foldexpr=MarkdownLevel()
 autocmd BufEnter *.md setlocal foldmethod=expr   
 autocmd BufEnter *.md setlocal foldlevelstart=1   
 
-" " fuzzy find personal files
-" command! -bang -nargs=? -complete=dir PersonalFiles
-"     \ call fzf#vim#files('~/wikis/personal', fzf#vim#with_preview(), <bang>0)
-" :map <Leader>wp :PersonalFiles<Enter>
-
-" " fuzzy find work files
-" command! -bang WorkFiles call fzf#vim#files('~/wikis/work', fzf#vim#with_preview(), <bang>0)
-" :map <Leader>wW :WorkFiles<Enter>
-
 " Capture a note/idea fast for sorting later
 function Capture()
   execute ":e ~/wikis/personal/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
@@ -400,11 +381,6 @@ endfunction
 nmap <Leader>wa :call VimwikiFindAllIncompleteTasks()<CR>
 nmap <Leader>wx :call VimwikiFindIncompleteTasks()<CR>
 
-
-
-" ################ Vue #################
-""""""""""""""""""""""""""""""""""""""""
-let g:vue_pre_processors = []
 
 
 " ################ Bugs #################
