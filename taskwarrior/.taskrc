@@ -6,7 +6,7 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/.task
+data.location=~/wikis/personal/.task
 
 # Dates
 weekstart=Monday
@@ -21,9 +21,9 @@ alias.sch=scheduled
 alias.s=long scheduled
 
 # Context
-context.home=project:home
+context.home=project:home -fun
 context.work=project:work
-context.road=+road
+context.fun=+fun
 
 # Custom reports
 report.plan.description=List of scheduled tasks
@@ -34,8 +34,6 @@ report.plan.filter=status:pending and scheduled
 report.plan.dateformat=a, d b
 
 report.planall.description=List of all scheduled tasks (+waiting)
-#report.planall.columns=id,scheduled,project,description,status.short,scheduled.remaining,urgency
-#report.planall.labels=Id,Scheduled,Project,Description,Status,In,Urg
 report.planall.columns=id,project,status.short,description,scheduled,scheduled.remaining,urgency
 report.planall.labels=Id,Project,Status,Description,Scheduled,In,Urg
 report.planall.sort=scheduled+
@@ -44,7 +42,6 @@ report.planall.dateformat=a, d b
 
 # Urgency
 urgency.user.tag.fun.coefficient=-2.0
-urgency.user.tag.finance.coefficient=3.0
 urgency.user.tag.waiting.coefficient=-8.0
 
 calendar.details=full
@@ -83,9 +80,10 @@ color.blocking=color12
 color.project.none=
 
 # Priority
-color.uda.priority.H=bold blue #color14
-color.uda.priority.M=bold yellow #color12
-color.uda.priority.L=bold green #color11
+color.uda.priority.H=red
+color.uda.priority.M=green
+color.uda.priority.=white
+color.uda.priority.L=white
 
 # Tags
 color.tag.next=
@@ -128,38 +126,3 @@ color.sync.rejected=color13
 # Command: undo
 color.undo.after=color2
 color.undo.before=color1
-
-holiday.day2.name=Nyttårsdag
-holiday.day2.date=2021-01-01
-holiday.day3.name=Fastelavn
-holiday.day3.date=2021-02-14
-holiday.day4.name=Palmesøndag
-holiday.day4.date=2021-03-28
-holiday.day5.name=Skjærtorsdag
-holiday.day5.date=2021-04-01
-holiday.day6.name=Langfredag
-holiday.day6.date=2021-04-02
-holiday.day7.name=Påskedag
-holiday.day7.date=2021-04-04
-holiday.day8.name=Påskedag
-holiday.day8.date=2021-04-05
-holiday.day9.name=Offentlig Høytidsdag
-holiday.day9.date=2021-05-01
-holiday.day10.name=Frigjøringsdag 1945
-holiday.day10.date=2021-05-08
-holiday.day11.name=Kristi Himmelfartsdag
-holiday.day11.date=2021-05-13
-holiday.day12.name=Grunnlovsdag
-holiday.day12.date=2021-05-17
-holiday.day13.name=Pinsedag
-holiday.day13.date=2021-05-23
-holiday.day14.name=Pinsedag
-holiday.day14.date=2021-05-24
-holiday.day15.name=Julaften
-holiday.day15.date=2021-12-24
-holiday.day16.name=Juledag
-holiday.day16.date=2021-12-25
-holiday.day17.name=Juledag
-holiday.day17.date=2021-12-26
-holiday.day18.name=Nyttårsaften
-holiday.day18.date=2021-12-31

@@ -19,6 +19,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'voldikss/vim-floaterm'
 Plug 'mcchrish/nnn.vim'
 Plug 'wellle/targets.vim'
+Plug 'tools-life/taskwiki'
 call plug#end()
 
 
@@ -154,6 +155,7 @@ highlight Comment           ctermfg=243 guifg=Grey
 highlight TODO              ctermfg=211 ctermbg=none cterm=italic
 highlight Title             ctermfg=224
 highlight VimwikiLink       ctermfg=12 cterm=italic
+highlight TaskWikiTaskPriority ctermbg=none ctermfg=9 cterm=italic
 highlight Search            ctermfg=none ctermbg=242 cterm=none
 highlight StatusBarLeft     ctermfg=none ctermbg=none cterm=none
 highlight StatusBarRight    ctermfg=12 ctermbg=none cterm=italic
