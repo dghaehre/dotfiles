@@ -20,6 +20,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'mcchrish/nnn.vim'
 Plug 'wellle/targets.vim'
 Plug 'tools-life/taskwiki'
+Plug 'neovimhaskell/haskell-vim'
 call plug#end()
 
 
@@ -73,6 +74,8 @@ vnoremap <leader>y "+y
 nnoremap <leader>p "+p
 vnoremap <leader>p "+p
 
+nnoremap Y y$
+
 " enable spelling
 nnoremap <leader>zu :set spell spelllang=en_us<cr>
 nnoremap <leader>zn :set spell spelllang=nb<cr>
@@ -90,6 +93,9 @@ nmap <leader>in :set invlist<cr>
 
 " Set currentfile as current dir
 nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Open html file in firefox
+nnoremap go :silent !firefox <cfile><cr>
 
 
 
@@ -295,6 +301,7 @@ nmap <Leader>rl :vertical resize -20<Enter>
 
 " ################ Haskell #################
 """"""""""""""""""""""""""""""""""""""""""""
+" uses haskell-vim plugin
 autocmd FileType haskell setlocal shiftwidth=2 tabstop=2 expandtab
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
