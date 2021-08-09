@@ -6,7 +6,7 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/wikis/personal/.task
+data.location=~/.task
 
 # Dates
 weekstart=Monday
@@ -26,6 +26,9 @@ context.work=project:work
 context.fun=+fun
 
 # Custom reports
+
+# Plan
+# pending tasks that are scheduled
 report.plan.description=List of scheduled tasks
 report.plan.columns=id,project,description,scheduled,scheduled.remaining,due.remaining,urgency
 report.plan.labels=Id,Project,Description,Scheduled,In,Due,Urg
@@ -33,6 +36,8 @@ report.plan.sort=scheduled+
 report.plan.filter=status:pending and scheduled
 report.plan.dateformat=a, d b
 
+# Planall
+# all tasks that are scheduled
 report.planall.description=List of all scheduled tasks (+waiting)
 report.planall.columns=id,project,status.short,description,scheduled,scheduled.remaining,urgency
 report.planall.labels=Id,Project,Status,Description,Scheduled,In,Urg

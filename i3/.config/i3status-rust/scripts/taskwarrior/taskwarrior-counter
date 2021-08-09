@@ -1,0 +1,4 @@
+#!/bin/bash
+todos=$(task status:pending or status:waiting count)
+done=$(task status:completed count)
+echo "☐ $todos  ■ $done"
