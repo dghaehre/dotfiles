@@ -1,6 +1,7 @@
 ##################### DEFAULTS ####################
 #-------------------------------------------------#
-setenv EDITOR 'vim'
+setenv EDITOR 'nvim'
+setenv BROWSER 'firefox'
 export KEYTIMEOUT 1
 setenv PAGER 'less'
 
@@ -13,6 +14,39 @@ set -U fish_cursor_insert block
 set -U fish_cursor_default block
 
 
+##################### Abbr and aliases ####################
+#------------------------------------------------#
+abbr -a  v 'nvim'
+abbr -a spu sudo pacman -Syu
+abbr -a ss sudo systemctl
+abbr -a untar tar -xvzf
+abbr -a dotar tar -czvf
+abbr -a sudov sudo -E nvim
+abbr -a rss newsboat --url-file ~/wikis/personal/rss-urls
+abbr -a view-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
+abbr -a create-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf" 
+
+alias ..="cd .."
+alias ...="cd ../.."
+
+function s
+  if [ -z "$2" ]
+    grep -rn ./ -e "$1"
+  else
+    grep -rn $argv -e "$2"
+  end
+end
+
+if command -v exa > /dev/null
+  abbr -a l 'exa -la'
+	abbr -a ls 'exa'
+	abbr -a ll 'exa -la --git --group'
+else
+	abbr -a l 'ls'
+	abbr -a ll 'ls -l'
+	abbr -a lll 'ls -la'
+end
+
 
 ##################### BAT ########################
 #------------------------------------------------#
@@ -21,52 +55,107 @@ export BAT_THEME="zenburn"
 
 
 
-##################### Fish Prompt ########################
+############## Fish Prompt and Colors ####################
 #--------------------------------------------------------#
 function fish_prompt
-  set_color brblack
-  echo -n "["(date "+%H:%M")"] "
+  if [ $PWD != $HOME ]
     set_color blue
-  echo -n (hostname)
-    if [ $PWD != $HOME ]
-    set_color brblack
-    echo -n ':'
-    set_color yellow
-  echo -n (basename $PWD)
-    end
-    set_color green
-    printf '%s ' (__fish_git_prompt)
-    set_color red
-    echo -n '| '
-    set_color normal
+    echo -n (basename $PWD)
+  else
+    set_color blue
+    echo -n '~'
+  end
+  set_color green
+  printf '%s ' (__fish_git_prompt)
+  set_color brblack
+  echo -n '| '
+  set_color normal
 end
 
 function fish_mode_prompt
   switch $fish_bind_mode
     case default
-      set_color --bold red
-      echo 'N '
+      set_color --bold yellow
+      echo -n "["(date "+%H:%M")"] "
     case insert
-      set_color --bold green
-      echo ''
+      set_color brblack
+      echo -n "["(date "+%H:%M")"] "
     case replace_one
       set_color --bold green
-      echo 'R '
+      echo -n "["(date "+%H:%M")"] "
     case visual
       set_color --bold brmagenta
-      echo 'V '
+      echo -n "["(date "+%H:%M")"] "
     case '*'
       set_color --bold red
-      echo '?'
+      echo '? '
     end
     set_color normal
 end
 
+function fish_greeting
+end
+
 set fish_color_error red --bold
 set fish_color_command cyan --bold
-set fish_color_param cyan
-set fish_color_param cyan
+set fish_color_param blue
+set fish_color_search_match '--background=666'
+set fish_color_autosuggestion '888'
+set fish_color_comment '999'
+set fish_pager_color_description yellow
 
+
+##################### Fish GIT Prompt ########################
+#--------------------------------------------------------#
+set __fish_git_prompt_showuntrackedfiles 'yes'
+set __fish_git_prompt_showdirtystate 'yes'
+set __fish_git_prompt_showstashstate ''
+set __fish_git_prompt_showupstream 'none'
+set -g fish_prompt_pwd_dir_length 3
+
+
+
+##################### Man page ########################
+#-----------------------------------------------------#
+# from http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
+setenv LESS_TERMCAP_mb \e'[01;31m'       # begin blinking
+setenv LESS_TERMCAP_md \e'[01;38;5;74m'  # begin bold
+setenv LESS_TERMCAP_me \e'[0m'           # end mode
+setenv LESS_TERMCAP_se \e'[0m'           # end standout-mode
+setenv LESS_TERMCAP_so \e'[38;5;246m'    # begin standout-mode - info box
+setenv LESS_TERMCAP_ue \e'[0m'           # end underline
+setenv LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
+
+
+
+##################### Display ####################
+#------------------------------------------------#
+# Display DP to either left or right
+# USAGE: dmonitor right
+function dmonitor
+  xrandr --output DP1 --auto --$argv-of eDP1
+end
+
+function hmonitor
+  xrandr --output HDMI2 --auto --$argv-of eDP1
+end
+
+##################### GIT ####################
+#--------------------------------------------#
+abbr -a g git
+abbr -a gs git status
+abbr -a ga git add -p
+abbr -a gc git checkout
+
+function to-be-pushed
+    set branch (git branch | grep \* | cut -d ' ' -f2)
+    git diff --stat --cached origin/$branch
+end
+
+function git-to-push
+    set branch (git branch | grep \* | cut -d ' ' -f2)
+    git log origin/$branch...$branch
+end
 
 
 ##################### File manager ####################
@@ -140,117 +229,6 @@ end
 
 
 
-
-function s
-  if [ -z "$2" ]
-    grep -rn ./ -e "$1"
-  else
-    grep -rn $argv -e "$2"
-  end
-end
-
-abbr -a view-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
-abbr -a create-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf" 
-
-
-##################### Fish GIT Prompt ########################
-#--------------------------------------------------------#
-set __fish_git_prompt_showuntrackedfiles 'yes'
-set __fish_git_prompt_showdirtystate 'yes'
-set __fish_git_prompt_showstashstate ''
-set __fish_git_prompt_showupstream 'none'
-set -g fish_prompt_pwd_dir_length 3
-
-
-
-
-
-##################### Man page ########################
-#-----------------------------------------------------#
-# from http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
-setenv LESS_TERMCAP_mb \e'[01;31m'       # begin blinking
-setenv LESS_TERMCAP_md \e'[01;38;5;74m'  # begin bold
-setenv LESS_TERMCAP_me \e'[0m'           # end mode
-setenv LESS_TERMCAP_se \e'[0m'           # end standout-mode
-setenv LESS_TERMCAP_so \e'[38;5;246m'    # begin standout-mode - info box
-setenv LESS_TERMCAP_ue \e'[0m'           # end underline
-setenv LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
-
-
-
-
-##################### SSH  #######################
-#------------------------------------------------#
-
-function sshdaniel
-  echo Trying ssh with current folder data
-  set host (ls | grep @)
-  set key (ls | grep .pem)
-  set isport (ls | grep port.txt)
-  if [ -z "$isport" ]
-    set port ""
-  else
-    set p (cat port.txt)
-    set port "-p $p"
-  end
-  if [ -z "$key" ]
-      set ispassowrd ( ls | grep password.txt)
-      if [ -z "$ispassword" ]
-          echo password copied to clipboard
-          cat password.txt | tr -d '\n' | xsel -b
-          ssh -o PasswordAuthentication=yes -o IdentitiesOnly=yes $host $port
-      else
-          echo Found no .pem key or password.txt file
-      end
-  else
-      ssh -i $key -o IdentitiesOnly=yes $host $port
-  end
-end
-
-function logind
-  set s (ls ~/Desktop/keys/ssh | dmenu -p 'SSH:')
-  if [ ! -z "$s" ]
-    cd ~/Desktop/keys/ssh/$s
-    sshdaniel
-  end
-end
-
-
-
-
-##################### Display ####################
-#------------------------------------------------#
-# Display DP to either left or right
-# USAGE: dmonitor right
-function dmonitor
-  xrandr --output DP1 --auto --$argv-of eDP1
-end
-
-
-##################### GIT ####################
-#--------------------------------------------#
-function to-be-pushed
-    set branch (git branch | grep \* | cut -d ' ' -f2)
-    git diff --stat --cached origin/$branch
-end
-
-function git-to-push
-    set branch (git branch | grep \* | cut -d ' ' -f2)
-    git log origin/$branch...$branch
-end
-
-
-##################### Rust ####################
-#---------------------------------------------#
-function musl-build
-  docker run \
-    -v cargo-cache:/root/.cargo \
-    -v "$PWD:/volume" \
-    --rm -it clux/muslrust cargo build --release
-end
-
-
 ##################### Fix bugs ####################
 #-----------------------------"-------------------#
 abbr -a tmux 'tmux -u'
-abbr -a  vim 'vim -S ~/.vimrc'
