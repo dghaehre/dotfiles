@@ -24,6 +24,7 @@ alias.s=long scheduled
 context.home=project:home -fun
 context.work=project:work
 context.fun=+fun
+context.self=project:self
 
 # Custom reports
 

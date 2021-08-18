@@ -14,9 +14,13 @@ SETUVAR _fish_abbr_dotar:tar\x20\x2dczvf
 SETUVAR _fish_abbr_down:cd\x20\x7e/Downloads
 SETUVAR _fish_abbr_g:git
 SETUVAR _fish_abbr_ga:git\x20add\x20\x2dp
+SETUVAR _fish_abbr_gal:git\x20add\x20\x2e
+SETUVAR _fish_abbr_galc:git\x20add\x20\x2e\x20\x7c\x20git\x20commit\x20\x2dm
 SETUVAR _fish_abbr_gc:git\x20checkout
+SETUVAR _fish_abbr_gck:git\x20checkout
 SETUVAR _fish_abbr_gitlog:git\x20log\x20\x2d\x2dpretty\x3dformat\x3a\x27\x25h\x20\x25s\x27\x20\x2d\x2dgraph
 SETUVAR _fish_abbr_go:git\x20checkout
+SETUVAR _fish_abbr_gpa:git\x20add\x20\x2e\x20\x7c\x20git\x20commit\x20\x2dm\x20\x22update\x22\x20\x7c\x20git\x20push
 SETUVAR _fish_abbr_gs:git\x20status
 SETUVAR _fish_abbr_keys:cd\x20\x7e/Desktop/keys
 SETUVAR _fish_abbr_l:exa\x20\x2dla
@@ -34,8 +38,11 @@ SETUVAR _fish_abbr_sider:cd\x20\x7e/Desktop/sider
 SETUVAR _fish_abbr_spu:sudo\x20pacman\x20\x2dSyu
 SETUVAR _fish_abbr_ss:sudo\x20systemctl
 SETUVAR _fish_abbr_sudov:sudo\x20\x2dE\x20nvim
+SETUVAR _fish_abbr_ta:task\x20add
 SETUVAR _fish_abbr_tmp:cd\x20/tmp
 SETUVAR _fish_abbr_tmux:tmux\x20\x2du
+SETUVAR _fish_abbr_tr:task\x20ready
+SETUVAR _fish_abbr_trw:task\x20add\x20project\x3awork
 SETUVAR _fish_abbr_tt:\x7e/Desktop/sider/time\x2dtracker\x2dhs/build/tt
 SETUVAR _fish_abbr_untar:tar\x20\x2dxvzf
 SETUVAR _fish_abbr_v:nvim

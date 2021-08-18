@@ -22,6 +22,9 @@ abbr -a ss sudo systemctl
 abbr -a untar tar -xvzf
 abbr -a dotar tar -czvf
 abbr -a sudov sudo -E nvim
+abbr -a ta task add
+abbr -a tr task ready
+abbr -a trw task add project:work
 abbr -a rss newsboat --url-file ~/wikis/personal/rss-urls
 abbr -a view-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf" 
@@ -55,6 +58,12 @@ export BAT_THEME="zenburn"
 
 
 
+##################### FZF ########################
+#------------------------------------------------#
+fzf_configure_bindings --git_log=\cg --git_status=\cs --directory=\cf
+
+
+
 ############## Fish Prompt and Colors ####################
 #--------------------------------------------------------#
 function fish_prompt
@@ -81,7 +90,7 @@ function fish_mode_prompt
       set_color brblack
       echo -n "["(date "+%H:%M")"] "
     case replace_one
-      set_color --bold green
+      set_color --bold blue
       echo -n "["(date "+%H:%M")"] "
     case visual
       set_color --bold brmagenta
@@ -145,6 +154,7 @@ end
 abbr -a g git
 abbr -a gs git status
 abbr -a ga git add -p
+abbr -a gal git add .
 abbr -a gc git checkout
 
 function to-be-pushed
