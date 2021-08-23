@@ -16,9 +16,11 @@ SETUVAR _fish_abbr_g:git
 SETUVAR _fish_abbr_ga:git\x20add\x20\x2dp
 SETUVAR _fish_abbr_gal:git\x20add\x20\x2e
 SETUVAR _fish_abbr_galc:git\x20add\x20\x2e\x20\x7c\x20git\x20commit\x20\x2dm
-SETUVAR _fish_abbr_gc:git\x20checkout
+SETUVAR _fish_abbr_gc:git\x20commit\x20\x2dm
 SETUVAR _fish_abbr_gck:git\x20checkout
+SETUVAR _fish_abbr_gd:git\x20diff
 SETUVAR _fish_abbr_gitlog:git\x20log\x20\x2d\x2dpretty\x3dformat\x3a\x27\x25h\x20\x25s\x27\x20\x2d\x2dgraph
+SETUVAR _fish_abbr_gl:git\x20checkout
 SETUVAR _fish_abbr_go:git\x20checkout
 SETUVAR _fish_abbr_gpa:git\x20add\x20\x2e\x20\x7c\x20git\x20commit\x20\x2dm\x20\x22update\x22\x20\x7c\x20git\x20push
 SETUVAR _fish_abbr_gs:git\x20status

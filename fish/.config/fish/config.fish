@@ -154,8 +154,10 @@ end
 abbr -a g git
 abbr -a gs git status
 abbr -a ga git add -p
+abbr -a gd git diff
+abbr -a gl git checkout
 abbr -a gal git add .
-abbr -a gc git checkout
+abbr -a gc "git commit -m"
 
 function to-be-pushed
     set branch (git branch | grep \* | cut -d ' ' -f2)
