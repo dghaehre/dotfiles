@@ -44,6 +44,7 @@ if command -v exa > /dev/null
   abbr -a l 'exa -la'
 	abbr -a ls 'exa'
 	abbr -a ll 'exa -la --git --group'
+  abbr -a ds 'exa -D --tree --level 4'
 else
 	abbr -a l 'ls'
 	abbr -a ll 'ls -l'

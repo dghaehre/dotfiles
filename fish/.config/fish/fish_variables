@@ -12,6 +12,7 @@ SETUVAR _fish_abbr_create_2D_pdf:pandoc\x20\x2df\x20markdown\x20\x2dt\x20pdf\x20
 SETUVAR _fish_abbr_desk:cd\x20\x7e/Desktop/
 SETUVAR _fish_abbr_dotar:tar\x20\x2dczvf
 SETUVAR _fish_abbr_down:cd\x20\x7e/Downloads
+SETUVAR _fish_abbr_ds:exa\x20\x2dD\x20\x2d\x2dtree\x20\x2d\x2dlevel\x204
 SETUVAR _fish_abbr_g:git
 SETUVAR _fish_abbr_ga:git\x20add\x20\x2dp
 SETUVAR _fish_abbr_gal:git\x20add\x20\x2e
