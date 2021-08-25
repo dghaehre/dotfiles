@@ -24,6 +24,7 @@ abbr -a dotar tar -czvf
 abbr -a sudov sudo -E nvim
 abbr -a ta task add
 abbr -a tr task ready
+abbr -a te task edit
 abbr -a trw task add project:work
 abbr -a rss newsboat --url-file ~/wikis/personal/rss-urls
 abbr -a view-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
