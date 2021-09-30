@@ -22,9 +22,9 @@ alias.s=long scheduled
 
 # Context
 context.home=project:home -fun
-context.work=project:work
+context.work=-self
 context.fun=+fun
-context.self=project:self
+context.self=+self
 
 # Custom reports
 
@@ -60,7 +60,7 @@ urgency.uda.priority..coefficient=1.8
 
 
 # Color Theme
-rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
+rule.precedence.color=deleted,completed,active,uda.priority,tag.waiting,keyword.,overdue,scheduled.today,scheduled,due.today,due,blocked,blocking,recurring,tag.,project.,tagged,uda.
 
 # General decoration
 color.label=
@@ -74,10 +74,9 @@ color.debug=color6
 
 ## Task state
 color.completed=
-color.deleted=
-color.active=bold red
+color.deleted=red
+color.active=color6
 color.recurring=color4
-color.scheduled=
 color.until=
 color.blocked=color15
 color.blocking=color12
@@ -85,21 +84,27 @@ color.blocking=color12
 # Project
 color.project.none=
 
+# color.keyword.PR=color176
+# color.keyword.fix=color103
+
 # Priority
-color.uda.priority.H=red
-color.uda.priority.M=green
-color.uda.priority.=white
-color.uda.priority.L=white
+color.uda.priority.H=color203
+color.uda.priority.M=
+color.uda.priority.=
+color.uda.priority.L=
 
 # Tags
 color.tag.next=
+color.tag.waiting=color59
 color.tag.none=
-color.tagged=color10
+color.tagged=
+
+color.scheduled=color110
 
 # Due
 color.due=color13
-color.due.today=color1
-color.overdue=color1
+color.due.today=green
+color.overdue=red
 
 # Report: burndown
 color.burndown.done=color0 on color2

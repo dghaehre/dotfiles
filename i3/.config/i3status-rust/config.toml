@@ -15,6 +15,16 @@ separator_fg = "auto"
 name = "awesome5"
 [icons.overrides]
 
+# # Vpn
+[[block]]
+block = "custom"
+command = "~/.local/bin/check-vpn"
+interval = 25
+hide_when_empty = true
+json = true
+[block.theme_overrides]
+info_bg = "#8FBCBB"
+
 # Taskwarrior
 [[block]]
 block = "custom"
@@ -62,6 +72,11 @@ hide_when_empty = true
 # json = true
 # [block.theme_overrides]
 # info_bg = "#8FBCBB"
+
+[[block]]
+block = "sound"
+format = "{volume}"
+driver = "auto"
 
 # #TODO.txt counter
 # [[block]]

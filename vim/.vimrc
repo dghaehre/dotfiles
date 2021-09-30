@@ -97,6 +97,8 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 " Open html file in firefox
 nnoremap go :silent !firefox <cfile><cr>
 
+" Sneak
+map F <Plug>Sneak_S
 
 
 " ################ Snippets #################
@@ -104,9 +106,9 @@ nnoremap go :silent !firefox <cfile><cr>
 abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
 abbr iferr if err != nil {<CR><CR>}<esc>kddko
 :iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
+:iab <expr> plantoday printf("## TODO(s) today \| status:pending sch:%s \n\n\n## DONE today \| status:completed end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
 let @c = "#\ncaptured: " . strftime("%d/%m/%y %H:%M")
 " ^ Used by capture.
-
 
 
 " ################ NNN #################
@@ -200,6 +202,12 @@ highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
+highlight DiffRemoved    ctermfg=1 ctermbg=none cterm=italic
+highlight DiffDelete     ctermfg=1 ctermbg=none cterm=italic
+highlight DiffAdd        ctermfg=2 ctermbg=none
+highlight DiffChange     ctermfg=3 ctermbg=none
+highlight clear DiffText
+
 
 " ################ GIT #################
 """"""""""""""""""""""""""""""""""""""""""""
@@ -214,7 +222,7 @@ nnoremap gu <Plug>(GitGutterUndoHunk)
 nnoremap gE :G<cr>
 nnoremap gs :0G<cr>
 " Open up git log for current file
-nnoremap gl :0Glog<cr>
+nnoremap gl :0Gclog<cr>
 
 
 " #################### Floatterm ########################
@@ -240,7 +248,8 @@ nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <Leader>wg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/personal/" } })<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
 " TODO: make grep_string also work in visual mode
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>bs <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>bg <cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>
 nnoremap <leader>C <cmd>lua require('telescope.builtin').commands()<cr>
 nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles({ follow = true })<cr>
 nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
@@ -279,12 +288,23 @@ vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
 
 " Make it simpler to use marks
+" test
+nnoremap mt mT
+" start
+nnoremap ms mS
+" db
+nnoremap md mD
+
 nnoremap mj mJ
 nnoremap mk mK
 nnoremap ml mL
+
 nnoremap 'j 'J
 nnoremap 'k 'K
 nnoremap 'l 'L
+nnoremap 't 'T
+nnoremap 's 'S
+nnoremap 'd 'D
 
 
 " ############ Resizing ############
@@ -315,7 +335,7 @@ let g:haskell_backpack = 1                " to enable highlighting of backpack k
 
 
 " ################ Golang #################
-autocmd FileType go setlocal invlist
+" autocmd FileType go setlocal invlist
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1

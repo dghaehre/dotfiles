@@ -4,7 +4,9 @@ setenv EDITOR 'nvim'
 setenv BROWSER 'firefox'
 export KEYTIMEOUT 1
 setenv PAGER 'less'
-
+fish_add_path ~/.local/bin
+setenv GOPATH (go env GOPATH)
+fish_add_path (go env GOPATH)/bin
 
 
 ##################### Vim Keys  ########################
@@ -17,18 +19,33 @@ set -U fish_cursor_default block
 ##################### Abbr and aliases ####################
 #------------------------------------------------#
 abbr -a  v 'nvim'
+abbr -a tmux 'tmux -u -c "open-tmux-session home"'
 abbr -a spu sudo pacman -Syu
+abbr -a sp sudo pacman
 abbr -a ss sudo systemctl
 abbr -a untar tar -xvzf
 abbr -a dotar tar -czvf
 abbr -a sudov sudo -E nvim
+abbr -a t task
 abbr -a ta task add
 abbr -a tr task ready
 abbr -a te task edit
+abbr -a tm task mod
+abbr -a ts task start
+abbr -a tss task stop
+abbr -a td task done
+abbr -a tp task plan
+abbr -a tw task waiting
 abbr -a trw task add project:work
 abbr -a rss newsboat --url-file ~/wikis/personal/rss-urls
-abbr -a view-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
-abbr -a create-pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf" 
+abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
+abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
+abbr -a test_microphone arecord -vvv -f dat /dev/null
+abbr -a dockerrm docker rm (docker ps -q)
+
+function ttw
+  task mod $argv[1] sch:tomorrow
+end
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -148,7 +165,7 @@ function dmonitor
 end
 
 function hmonitor
-  xrandr --output HDMI2 --auto --$argv-of eDP1
+  xrandr --output HDMI1 --auto --$argv-of eDP1
 end
 
 ##################### GIT ####################
@@ -241,8 +258,13 @@ function nn --description 'support nnn quit and change directory'
   end
 end
 
+## Zoxide
+if command -v zoxide > /dev/null
+  zoxide init --cmd cd fish | source
+end
 
-
-##################### Fix bugs ####################
+##################### Secret ####################
 #-----------------------------"-------------------#
-abbr -a tmux 'tmux -u'
+if test -e ~/.config/fish/secret.fish
+  source ~/.config/fish/secret.fish
+end

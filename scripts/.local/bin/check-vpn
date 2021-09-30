@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+#
+# Output data for i3status-rust to show if vpn is on or not
+
+output_json() {
+  if [ $1 = "1" ]; then
+    echo "{\"icon\":\"ping\", \"text\": \"vpn\", \"state\": \"Good\"}"
+  else
+    echo "{\"text\": \"\"}"
+  fi
+}
+
+vpn_running=$(nmcli con | grep "tun0" | wc -l)
+
+output_json $vpn_running
