@@ -50,7 +50,7 @@ critical_bg = "#BF616A"
 critical_fg = "#2E3440"
 [[block.filters]]
 name = "ready"
-filter = "+READY"
+filter = "+READY -waiting"
 [[block.filters]]
 name = "blocking"
 filter = "+BLOCKING -BLOCKED"
