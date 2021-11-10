@@ -21,6 +21,8 @@ Plug 'mcchrish/nnn.vim'
 Plug 'wellle/targets.vim'
 Plug 'tools-life/taskwiki'
 Plug 'neovimhaskell/haskell-vim'
+Plug 'bakpakin/janet.vim'
+Plug 'ThePrimeagen/harpoon'
 call plug#end()
 
 
@@ -240,6 +242,14 @@ noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap ,<ESC> <C-\><C-n>
 
+" ########## Harpoon ###########
+""""""""""""""""""""""""""""""""
+nnoremap <leader>a :lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>hh :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap 'j :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap 'k :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap 'l :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap 'i :lua require("harpoon.ui").nav_file(4)<CR>
 
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
@@ -299,12 +309,13 @@ nnoremap mj mJ
 nnoremap mk mK
 nnoremap ml mL
 
-nnoremap 'j 'J
-nnoremap 'k 'K
-nnoremap 'l 'L
-nnoremap 't 'T
-nnoremap 's 'S
-nnoremap 'd 'D
+" NOTE: using harpoon instead for now
+" nnoremap 'j 'J
+" nnoremap 'k 'K
+" nnoremap 'l 'L
+" nnoremap 't 'T
+" nnoremap 's 'S
+" nnoremap 'd 'D
 
 
 " ############ Resizing ############
@@ -416,3 +427,18 @@ nmap <Leader>wx :call VimwikiFindIncompleteTasks()<CR>
 """""""""""""""""""""""""""""""""""""""""
 " Fix crontab bug
 autocmd filetype crontab setlocal nobackup nowritebackup
+
+
+
+" ################ Delve debugger #################
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Assuming you have delve running in tmux pane 2
+"
+" Send filename and filenumber as a breakpoint to delve
+nnoremap <silent> <leader>dl :exe "!tmux send -t 2 'b %:p:" . line(".") . "' Enter"<CR><C-L>
+" Send continue to delve
+nnoremap <silent> <leader>dc :exe "!tmux send -t 2 'c' Enter"<CR><C-L>
+" Print out selected text in delve
+vnoremap <silent> <leader>dp "4y:exe "!tmux send -t 2 'p <c-r>"' Enter"<CR><C-L>
+" Show status
+nnoremap <silent> <leader>ds :exe "!tmux send -t 2 'ls' Enter"<CR><C-L>

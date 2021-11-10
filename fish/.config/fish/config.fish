@@ -35,6 +35,7 @@ abbr -a ts task start
 abbr -a tss task stop
 abbr -a td task done
 abbr -a tp task plan
+abbr -a tl task log
 abbr -a tw task waiting
 abbr -a trw task add project:work
 abbr -a rss newsboat --url-file ~/wikis/personal/rss-urls
@@ -47,6 +48,10 @@ function ttw
   task mod $argv[1] sch:tomorrow
 end
 
+function ttt
+  task mod $argv[1] sch:today
+end
+
 alias ..="cd .."
 alias ...="cd ../.."
 
@@ -57,6 +62,12 @@ function s
     grep -rn $argv -e "$2"
   end
 end
+
+function cdir
+  mkdir -p $argv[1]
+  cd $argv[1]
+end
+
 
 if command -v exa > /dev/null
   abbr -a l 'exa -la'
@@ -172,11 +183,19 @@ end
 #--------------------------------------------#
 abbr -a g git
 abbr -a gs git status
-abbr -a ga git add -p
+abbr -a ga git add -u
 abbr -a gd git diff
 abbr -a gl git checkout
+alias gps="git push -u origin (git rev-parse --abbrev-ref HEAD)"
+alias gpl="git pull origin (git rev-parse --abbrev-ref HEAD)"
 abbr -a gal git add .
-abbr -a gc "git commit -m"
+abbr -a gc "git commit"
+abbr -a gcm "git commit -m"
+abbr -a gcf "git commit -m fixup"
+abbr -a gca "git commit --amend"
+abbr -a gwl git worktree list
+abbr -a gwa git worktree add
+abbr -a gwr git worktree remove
 
 function to-be-pushed
     set branch (git branch | grep \* | cut -d ' ' -f2)
