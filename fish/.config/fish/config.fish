@@ -193,6 +193,7 @@ abbr -a gc "git commit"
 abbr -a gcm "git commit -m"
 abbr -a gcf "git commit -m fixup"
 abbr -a gca "git commit --amend"
+abbr -a gsl "git-stash-fzf"
 abbr -a gwl git worktree list
 abbr -a gwa git worktree add
 abbr -a gwr git worktree remove
