@@ -55,12 +55,19 @@ calendar.holidays=full
 
 # Priorities
 uda.priority.values=H,M,,L
-urgency.uda.priority.L.coefficient=0
-urgency.uda.priority..coefficient=1.8
+urgency.uda.priority.L.coefficient=6
+urgency.uda.priority.M.coefficient=3
+urgency.uda.priority..coefficient=0
+urgency.uda.priority.L.coefficient=-6
 
 
 # Color Theme
-rule.precedence.color=deleted,completed,active,uda.priority,tag.waiting,keyword.,overdue,scheduled.today,scheduled,due.today,due,blocked,blocking,recurring,tag.,project.,tagged,uda.
+rule.precedence.color=deleted,completed,due.today,due,active,uda.priority,tag.waiting,keyword.,overdue,scheduled.today,scheduled,blocked,blocking,recurring,tag.,project.,tagged,uda.
+
+# Due
+color.due=color13
+color.due.today=green
+color.overdue=red
 
 # General decoration
 color.label=
@@ -128,11 +135,16 @@ color.calendar.overdue=color0 on color5
 color.calendar.today=color0 on color4
 color.calendar.weekend=on color0
 color.calendar.weeknumber=color4
-
-# Command: sync
 color.sync.added=color14
 color.sync.changed=color9
 color.sync.rejected=color13
+
+
+# Taskwarrior tui
+uda.taskwarrior-tui.calendar.months-per-row=4
+uda.taskwarrior-tui.task-report.next.filter=+READY
+uda.taskwarrior-tui.task-report.prompt-on-delete=true
+uda.taskwarrior-tui.task-report.prompt-on-done=true
 
 # Command: undo
 color.undo.after=color2

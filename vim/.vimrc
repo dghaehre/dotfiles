@@ -206,9 +206,9 @@ highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 highlight DiffRemoved    ctermfg=1 ctermbg=none cterm=italic
 highlight DiffDelete     ctermfg=1 ctermbg=none cterm=italic
-highlight DiffAdd        ctermfg=2 ctermbg=none
-highlight DiffChange     ctermfg=3 ctermbg=none
-highlight clear DiffText
+highlight DiffAdd        ctermfg=none ctermbg=8
+highlight DiffText       ctermfg=3 ctermbg=none cterm=italic
+highlight clear DiffChange
 
 
 " ################ GIT #################

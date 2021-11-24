@@ -27,6 +27,7 @@ abbr -a untar tar -xvzf
 abbr -a dotar tar -czvf
 abbr -a sudov sudo -E nvim
 abbr -a t task
+abbr -a tui taskwarrior-tui
 abbr -a ta task add
 abbr -a tr task ready
 abbr -a te task edit
@@ -50,6 +51,15 @@ end
 
 function ttt
   task mod $argv[1] sch:today
+end
+
+# Usage:
+# checkpr main but-1234
+function checkpr
+  git fetch origin
+  git checkout $argv[2]
+  git reset --soft origin/$argv[1]
+  git restore --staged .
 end
 
 alias ..="cd .."
