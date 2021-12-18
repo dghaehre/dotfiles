@@ -1,0 +1,72 @@
+##
+## Nice defaults
+## 
+set icons true
+set ignorecase true
+# Show hidden files
+set hidden true
+# interpreter for shell commands
+set shell sh
+set shellopts '-eu'
+# set internal field separator (IFS) to "\n" for shell commands
+set ifs "\n"
+
+# Bindings
+# Remove some defaults
+map o
+map n
+map sn
+map d
+map c
+map f
+
+# Use custom preview
+set previewer ~/.config/lf/preview
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
+
+cmd newdir ${{
+  printf "Dir name: "
+  read ans
+  mkdir $ans
+}}
+
+cmd sudoNewdir ${{
+  printf "Dir name: "
+  read ans
+  sudo mkdir $ans
+}}
+
+
+cmd sudoNewfile ${{
+  printf "File name: "
+  read ans
+  sudo $EDITOR $ans
+}}
+
+map nf newfile
+map nd newdir
+map snf sudoNewfile
+map snd sudoNewdir
+
+map dd delete
+
+# compress current file or selected files with tar and gunzip
+cmd tar ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    tar czf $1.tar.gz $1
+    rm -rf $1
+}}
+
+# compress current file or selected files with zip
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
