@@ -12,10 +12,12 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-surround'
+Plug 'numToStr/Comment.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tyru/open-browser.vim'
 Plug 'vimwiki/vimwiki'
+Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'mcchrish/nnn.vim'
 Plug 'wellle/targets.vim'
@@ -99,8 +101,6 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 " Open html file in firefox
 nnoremap go :silent !firefox <cfile><cr>
 
-" Sneak
-map F <Plug>Sneak_S
 
 
 " ################ Snippets #################
@@ -120,6 +120,10 @@ nnoremap <silent> <leader>n :NnnPicker<CR>
 nnoremap <leader>N :NnnPicker %:p:h<CR>
 let g:nnn#action = { '<c-l>': 'vsplit', '<c-j>': 'split' }
 
+
+" ################ BROOT #################
+""""""""""""""""""""""""""""""""""""""""""""
+noremap  <leader>br :FloatermNew --name=broot --autoclose=2 broot<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
@@ -196,7 +200,7 @@ highlight LspDiagnosticsFloatingError ctermfg=9 cterm=none
 highlight VertSplit cterm=NONE guibg=NONE
 highlight clear SignColumn
 highlight LineNr cterm=none ctermfg=DarkGrey ctermbg=none guibg=none guifg=DarkGrey
-highlight CursorLineNr ctermfg=249 guifg=Grey
+highlight CursorLineNr cterm=none ctermfg=249 guifg=Grey
 highlight CursorLine cterm=none ctermbg=Black ctermfg=none
 
 " GIT
@@ -233,7 +237,7 @@ let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 let g:floaterm_keymap_new = '<C-t>'
 let g:floaterm_keymap_next = '<C-n>'
-let g:floaterm_keymap_prev = '<C-p>'
+" let g:floaterm_keymap_prev = '<C-p>'
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
@@ -254,6 +258,7 @@ nnoremap 'i :lua require("harpoon.ui").nav_file(4)<CR>
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
 nnoremap <leader>s <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>S <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <Leader>wg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/personal/" } })<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
@@ -435,10 +440,13 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 " Assuming you have delve running in tmux pane 2
 "
 " Send filename and filenumber as a breakpoint to delve
-nnoremap <silent> <leader>dl :exe "!tmux send -t 2 'b %:p:" . line(".") . "' Enter"<CR><C-L>
+nnoremap <silent> <leader>db :exe "!tmux send -t 2 'b %:p:" . line(".") . "' Enter"<CR><C-L>
 " Send continue to delve
 nnoremap <silent> <leader>dc :exe "!tmux send -t 2 'c' Enter"<CR><C-L>
 " Print out selected text in delve
 vnoremap <silent> <leader>dp "4y:exe "!tmux send -t 2 'p <c-r>"' Enter"<CR><C-L>
 " Show status
-nnoremap <silent> <leader>ds :exe "!tmux send -t 2 'ls' Enter"<CR><C-L>
+nnoremap <silent> <leader>dl :exe "!tmux send -t 2 'ls' Enter"<CR><C-L>
+" TODO
+" Start a delve session in a new tmux session, from the current file
+" nnoremap <silent> <leader>ds :exe "!tmux split-window -h -I -c \"%:p\" Enter"<CR><C-L>

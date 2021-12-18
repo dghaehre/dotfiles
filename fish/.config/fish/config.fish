@@ -3,7 +3,7 @@
 setenv EDITOR 'nvim'
 setenv BROWSER 'firefox'
 export KEYTIMEOUT 1
-setenv PAGER 'less'
+setenv PAGER 'bat'
 fish_add_path ~/.local/bin
 setenv GOPATH (go env GOPATH)
 fish_add_path (go env GOPATH)/bin
@@ -60,6 +60,17 @@ function checkpr
   git checkout $argv[2]
   git reset --soft origin/$argv[1]
   git restore --staged .
+end
+
+function gb
+  if git rev-parse HEAD > /dev/null 2>&1
+      set branch (git branch -a --sort=committerdate --color=always |
+        fzf --height 100% --ansi --tac --preview-window=right,70% --preview 'echo {} | awk \'{print $1}\' | xargs git lg --color=always -n 10' | sed 's/^..//' | awk '{print $1}' |
+        sed 's#^remotes/[^/]*/##')
+      git checkout $branch
+  else
+    echo "Not in a git repo"
+  end
 end
 
 alias ..="cd .."

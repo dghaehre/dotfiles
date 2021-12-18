@@ -13,11 +13,12 @@ set ifs "\n"
 
 # Bindings
 # Remove some defaults
+map c
+map m
 map o
 map n
 map sn
 map d
-map c
 map f
 
 # Use custom preview
@@ -50,6 +51,14 @@ map nf newfile
 map nd newdir
 map snf sudoNewfile
 map snd sudoNewdir
+map m cut
+
+# Shortcuts
+map gh cd ~
+map gd cd ~/Downloads
+map gw cd ~/wikis
+map gp cd ~/projects
+map g. cd ~/dotfiles
 
 map dd delete
 
