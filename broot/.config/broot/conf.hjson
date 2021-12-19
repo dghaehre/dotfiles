@@ -81,6 +81,7 @@
 	# troubleshooting)
 	#
 	icon_theme: vscode
+	syntax_theme: base16-ocean.dark
 
 	###############################################################
 	# Special paths

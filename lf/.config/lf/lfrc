@@ -21,36 +21,64 @@ map sn
 map d
 map f
 
+map cc clear
+
 # Use custom preview
 set previewer ~/.config/lf/preview
 
+# define a custom 'open' command
+# This command is called when current file is not a directory. You may want to
+# use either file extensions and/or mime types here. Below uses an editor for
+# text files and a file opener for the rest.
+cmd open ${{
+    test -L $f && f=$(readlink -f $f)
+    case $(file --mime-type $f -b) in
+        text/*) $EDITOR $fx;;
+        *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
 # execute current file (must be executable)
-map x $$f
-map X !$f
+map X $$f
 
-cmd newdir ${{
-  printf "Dir name: "
-  read ans
-  mkdir $ans
+# New file
+cmd newfile %touch "$@"
+map nf push :newfile<space>
+
+# New dir
+cmd mkdir %mkdir -p "$@"
+map nd push :mkdir<space>
+
+cmd toggle-executable ${{
+  if [[ -x "$f" ]]
+    then
+      chmod u-x $f
+    else
+      chmod u+x $f
+  fi
+  lf -remote "send reload"
 }}
+map cx toggle-executable
 
-cmd sudoNewdir ${{
-  printf "Dir name: "
-  read ans
-  sudo mkdir $ans
+cmd change-permission ${{
+  chmod -R "$@" $f
+  lf -remote "send reload"
 }}
+map cp push :change-permission<space>
 
-
-cmd sudoNewfile ${{
-  printf "File name: "
-  read ans
-  sudo $EDITOR $ans
+cmd change-owner ${{
+  chown -R "$@" $f
+  lf -remote "send reload"
 }}
+map co push :change-owner<space>
 
-map nf newfile
-map nd newdir
-map snf sudoNewfile
-map snd sudoNewdir
+# TODO: implement cd somehow..
+# cmd quit-to-dir ${{
+#   cd "$PWD"
+#   lf -remote "send quit"
+# }}
+# map cd quit-to-dir
+
+# Move
 map m cut
 
 # Shortcuts
@@ -61,6 +89,31 @@ map gp cd ~/projects
 map g. cd ~/dotfiles
 
 map dd delete
+
+cmd fzf_jump ${{
+  res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
+  if [ -f "$res" ]; then
+    cmd="select"
+  elif [ -d "$res" ]; then
+    cmd="cd"
+  fi
+  lf -remote "send $id $cmd \"$res\""
+}}
+map f fzf_jump
+
+# extract the current file with the right command
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+    set -f
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+        *.tar.gz|*.tgz) tar xzvf $f;;
+        *.tar.xz|*.txz) tar xJvf $f;;
+        *.zip) unzip $f;;
+        *.rar) unrar x $f;;
+        *.7z) 7z x $f;;
+    esac
+}}
 
 # compress current file or selected files with tar and gunzip
 cmd tar ${{

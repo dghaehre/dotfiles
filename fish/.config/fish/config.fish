@@ -3,7 +3,7 @@
 setenv EDITOR 'nvim'
 setenv BROWSER 'firefox'
 export KEYTIMEOUT 1
-setenv PAGER 'bat'
+setenv PAGER 'bat --style=plain'
 fish_add_path ~/.local/bin
 setenv GOPATH (go env GOPATH)
 fish_add_path (go env GOPATH)/bin

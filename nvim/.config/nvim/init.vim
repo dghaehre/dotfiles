@@ -159,4 +159,20 @@ require'nvim-treesitter.configs'.setup {
     enable = true,              -- false will disable the whole extension
   },
 }
+
+-- Comment.nvim
+require('Comment').setup({
+  toggler = {
+    line = 'gcl'
+  },
+  extra = { -- This is defaults, but nice to document here
+    ---Add comment on the line above
+    above = 'gcO',
+    ---Add comment on the line below
+    below = 'gco',
+    ---Add comment at the end of line
+    eol = 'gcA',
+  }
+})
+
 EOF
