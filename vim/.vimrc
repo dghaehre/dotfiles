@@ -19,7 +19,6 @@ Plug 'tyru/open-browser.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
-Plug 'mcchrish/nnn.vim'
 Plug 'wellle/targets.vim'
 Plug 'tools-life/taskwiki'
 Plug 'neovimhaskell/haskell-vim'
@@ -113,13 +112,12 @@ let @c = "#\ncaptured: " . strftime("%d/%m/%y %H:%M")
 " ^ Used by capture.
 
 
-" ################ NNN #################
+" ################ LF #################
 """"""""""""""""""""""""""""""""""""""""""""
-let g:nnn#set_default_mappings = 0
-nnoremap <silent> <leader>n :NnnPicker<CR>
-nnoremap <leader>N :NnnPicker %:p:h<CR>
-let g:nnn#action = { '<c-l>': 'vsplit', '<c-j>': 'split' }
-
+let g:lf_map_keys = 0
+let g:lf_replace_netrw = 1 " Open lf when vim opens a directory
+nnoremap <leader>n :LfWorkingDirectory<CR>
+nnoremap <leader>N :LfCurrentFile<CR>
 
 " ################ BROOT #################
 """"""""""""""""""""""""""""""""""""""""""""

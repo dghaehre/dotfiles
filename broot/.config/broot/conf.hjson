@@ -292,9 +292,9 @@
 		default: none none / none none
 		exe: Cyan None
 		input: White None / gray(15) gray(2)
-		preview: none none / none none
+		# preview: none none / none none
 		preview_line_number: Cyan none
-		preview_match: None ansi(29)
+		# preview_match: None ansi(29)
 	}
 
 	#

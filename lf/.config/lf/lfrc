@@ -90,8 +90,10 @@ map g. cd ~/dotfiles
 
 map dd delete
 
+# TODO: add a fuzzy search for file content
+
 cmd fzf_jump ${{
-  res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
+  res="$(find . -maxdepth 5 | fzf --reverse --header='Jump to location' --preview-window=right,70% --preview 'bat --color always {}')"
   if [ -f "$res" ]; then
     cmd="select"
   elif [ -d "$res" ]; then

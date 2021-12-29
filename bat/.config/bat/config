@@ -1,2 +1,5 @@
 # Set the Theme
 --theme="ansi"
+
+# Remove fluff
+--style="numbers"

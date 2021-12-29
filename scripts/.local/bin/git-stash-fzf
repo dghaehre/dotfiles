@@ -1,32 +1,47 @@
 #!/usr/bin/env bash
+# Source: https://github.com/therealklanni/gsex/blob/master/gsex
+
+# Exit if no stashes
+[[ -z $(git stash list) ]] && echo "No stashes" && exit 1
 
 while out=$(git stash list "$@" |
-            fzf --ansi --no-sort --reverse --print-query --query="$query"                     \
-                --expect=ctrl-a,ctrl-b,ctrl-p,del                                             \
-                --bind="ctrl-u:preview-up"                                                    \
-                --bind="ctrl-d:preview-down"                                                  \
-                --prompt="[ctrl-a apply] [ctrl-b checkout] [ctrl-p pop] > "                   \
-                --preview="echo {} | cut -d':' -f1 | xargs git stash show --color=always -p"  \
+            fzf --ansi --no-sort --reverse --print-query --query="$query"                                   \
+                --expect=ctrl-a,ctrl-b,ctrl-p,del                                                           \
+                --bind="ctrl-u:preview-up"                                                                  \
+                --bind="ctrl-d:preview-down"                                                                \
+                --prompt="[ctrl-s apply] [ctrl-b checkout] [ctrl-p pop] [ctrl-l diff] [ctrl-d del] > "      \
+                --preview="echo {} | cut -d':' -f1 | xargs git stash show --color=always -p"                \
                 --preview-window='up:85%');
 do
     # Tokenize selection by newline
-    selection=("${(f)out}")
+    IFS=$'\n'
+    selection=($out)
 
     # Keep the query accross fzf calls
-    query="$selection[1]"
+    query="$selection[0]"
 
     # Represents the stash, e.g. stash{1}
-    reflog_selector=$(echo "$selection[3]" | cut -d ':' -f 1)
+    reflog_selector=$(echo "${selection[1]}" | cut -d ':' -f 1)
 
-    case "$selection[2]" in
-        # ctrl-a applies the stash to the current tree
-        ctrl-a)
+    # echo "${selection[0]}"
+    # echo "${selection[1]}"
+    # echo "$reflog_selector"
+    case "${selection[0]}" in
+       # enter or ctrl-l is just a diff
+       # TODO: doesnt work
+        ctrl-m)
+            git show --patience --color=always -p "$reflog_selector" | less -R
+            ;;
+        # ctrl-s applies the stash to the current tree
+       # TODO: doesnt work
+       # Use something else than ctrl-s
+        ctrl-s)
             git stash apply "$reflog_selector"
             break
             ;;
         # ctrl-b checks out the stash as a branch
         ctrl-b)
-            sha=$(echo "$selection[3]" | grep -o '[a-f0-9]\{7\}')
+            sha=$(echo "${selection[2]}" | grep -o '[a-f0-9]\{7\}')
             git stash branch "stash-$sha" "$reflog_selector"
             break
             ;;
@@ -35,8 +50,10 @@ do
             git stash pop "$reflog_selector"
             break
             ;;
-        # del will drop the stash
-        del)
+        # ctrl-d will drop the stash
+       # TODO: doesnt work
+       # Use something else than ctrl-d
+        ctrl-d)
             git stash drop "$reflog_selector"
             ;;
     esac
