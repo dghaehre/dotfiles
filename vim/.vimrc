@@ -24,6 +24,7 @@ Plug 'tools-life/taskwiki'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'ThePrimeagen/harpoon'
+Plug 'folke/zen-mode.nvim'
 call plug#end()
 
 
@@ -278,6 +279,10 @@ nnoremap        gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap        gi <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
 nnoremap        gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 
+
+" #################### Zen Mode ########################
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>Z :ZenMode<cr>
 
 
 

@@ -160,6 +160,8 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+require('zen-mode').setup({})
+
 -- Comment.nvim
 require('Comment').setup({
   toggler = {
