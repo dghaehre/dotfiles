@@ -223,11 +223,16 @@ nmap [g <Plug>(GitGutterPrevHunk)
 nmap ga <Plug>(GitGutterStageHunk)
 " Undo changes/hunk
 nnoremap gu <Plug>(GitGutterUndoHunk)
+
 " Open up git status
-nnoremap gE :G<cr>
-nnoremap gs :0G<cr>
+nnoremap <leader>gs :G<cr>
+nnoremap <leader>gS :0G<cr>
+nnoremap <leader>gb :Git blame<cr>
+nnoremap <leader>gc :Git commit<cr>
+nnoremap <leader>gp :Git push<cr>
+nnoremap <leader>gd :Git diff<cr>
 " Open up git log for current file
-nnoremap gl :0Gclog<cr>
+nnoremap <leader>gl :0Gclog<cr>
 
 
 " #################### Floatterm ########################
@@ -243,7 +248,9 @@ hi FloatermBorder guibg=black guifg=black
 highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
-tnoremap ,<ESC> <C-\><C-n>
+tnoremap <C-o> <C-\><C-n>
+nnoremap <Leader>to :FloatermNew --name=tui --autoclose=2 taskwarrior-tui<CR>
+
 
 " ########## Harpoon ###########
 """"""""""""""""""""""""""""""""
@@ -256,21 +263,21 @@ nnoremap 'i :lua require("harpoon.ui").nav_file(4)<CR>
 
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
-nnoremap <leader>s <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>S <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
-nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <Leader>wg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/personal/" } })<cr>
+nnoremap <leader>sf <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>Sf <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
+nnoremap <leader>sg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
 " TODO: make grep_string also work in visual mode
-nnoremap <leader>bs <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>bg <cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>
-nnoremap <leader>C <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <leader>o <cmd>lua require('telescope.builtin').oldfiles({ follow = true })<cr>
-nnoremap <leader>m <cmd>lua require('telescope.builtin').marks()<cr>
-nnoremap <leader>R <cmd>lua require('telescope.builtin').registers()<cr>
+nnoremap <leader>sbf <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>sbg <cmd>lua require('telescope.builtin').live_grep({grep_open_files=true})<cr>
+nnoremap <leader>sc <cmd>lua require('telescope.builtin').commands()<cr>
+nnoremap <leader>so <cmd>lua require('telescope.builtin').oldfiles({ follow = true })<cr>
+nnoremap <leader>sm <cmd>lua require('telescope.builtin').marks()<cr>
+nnoremap <leader>sr <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
-nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
-nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
+" nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
+" nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
+nnoremap <Leader>wg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/personal/" } })<cr>
 nnoremap <Leader>ws <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/personal/" } })<cr>
 
 " LSP
