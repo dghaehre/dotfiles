@@ -27,9 +27,9 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  buf_set_keymap('n', 'ge', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', 'ge', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
 end
@@ -160,7 +160,17 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require('zen-mode').setup({})
+require('zen-mode').setup({
+  window = {
+    height = 0.9,
+    options = {
+      number = false,
+      relativenumber = false,
+      cursorline = false,
+      foldcolumn = "0"
+    }
+  }
+})
 
 -- Comment.nvim
 require('Comment').setup({

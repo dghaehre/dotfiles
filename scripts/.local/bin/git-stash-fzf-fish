@@ -1,0 +1,54 @@
+#!/usr/bin/env fish
+
+# Exit if fzf not installed
+command -v fzf > /dev/null || ( echo "Please install fzf to use gsex" && exit 1 )
+
+# Exit if no stashes
+[[ -z $(git stash list) ]] && echo "No stashes" && exit 1
+
+while out=$(git stash list "$@" |
+            fzf --ansi --no-sort --reverse --print-query --query="$query" \
+                --preview 'git show --patience --stat --pretty=oneline --color=always \
+                  -p "$(echo {} | cut -d: -f1)" | less -R' \
+                --preview-window=bottom:60% \
+                --expect=ctrl-m,ctrl-a,ctrl-p,ctrl-b,del);
+do
+    # Tokenize selection by newline
+    selection=("${(f)out}")
+
+    # Keep the query accross fzf calls
+    query="$selection[1]"
+
+    # Represents the stash, e.g. stash{1}
+    reflog_selector=$(echo "$selection[3]" | cut -d: -f1)
+
+    case "$selection[2]" in
+        # enter or ctrl-m is just a diff
+        ctrl-m)
+            git show --patience --color=always -p "$reflog_selector" | less -R
+            ;;
+        # ctrl-a applies stash
+        ctrl-a)
+            idx=$(echo "$selection[3]" | cut -d'{' -f2 | cut -d'}' -f1)
+            git stash apply stash@{"$idx"}
+            break
+            ;;
+        # ctrl-p pops stash
+        ctrl-p)
+            idx=$(echo "$selection[3]" | cut -d'{' -f2 | cut -d'}' -f1)
+            git stash pop stash@{"$idx"}
+            break
+            ;;
+        # ctrl-b checks out the stash as a branch
+        ctrl-b)
+            sha=$(echo "$selection[3]" | grep -o '[a-f0-9]\{7\}')
+            idx=$(echo "$selection[3]" | cut -d'{' -f2 | cut -d'}' -f1)
+            git stash branch "stash-$idx-$sha" "$reflog_selector"
+            break
+            ;;
+        # del will drop the stash
+        del)
+            git stash drop "$reflog_selector"
+            ;;
+    esac
+done

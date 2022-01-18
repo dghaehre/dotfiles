@@ -45,6 +45,9 @@ abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md 
 abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a dockerrm docker rm (docker ps -q)
 
+# set webcam to 50hz
+abbr -a camflickering v4l2-ctl --set-ctrl power_line_frequency=1
+
 function ttw
   task mod $argv[1] sch:tomorrow
 end
