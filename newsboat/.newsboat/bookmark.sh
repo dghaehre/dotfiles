@@ -12,4 +12,4 @@ content="# ${title}\n${feed_title}\n\n${description}\n\n[link](${url})"
 filename=$(echo "${title}" | awk '{gsub(/ /,"-")} {print $0}')
 d=$(date +%s)
 
-echo -e $content > ~/wikis/personal/Inbox/Bookmarks/${filename}.md
+echo -e $content > ~/wikis/vimwiki/Bookmarks/${filename}.md

@@ -3,7 +3,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
-Plug 'justinmk/vim-sneak'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-lua/popup.nvim'
@@ -31,13 +30,13 @@ call plug#end()
 
 " ################ Defaults #################
 """""""""""""""""""""""""""""""""""""""""""""
-:set expandtab
-:set shiftwidth=2
-:set softtabstop=2
-:set tabstop=2
-:set autoindent
-:set smartindent
-:set lcs=tab:›\ ,trail:·
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set autoindent
+set smartindent
+set lcs=tab:›\ ,trail:·
 
 set wrap
 set linebreak
@@ -55,8 +54,8 @@ set foldlevelstart=20
 set nocompatible
 filetype plugin on
 syntax on
-:set number relativenumber
-:set nu rnu
+set number relativenumber
+set nu rnu
 
 set splitbelow
 set splitright
@@ -254,12 +253,12 @@ nnoremap <Leader>to :FloatermNew --name=tui --autoclose=2 taskwarrior-tui<CR>
 
 " ########## Harpoon ###########
 """"""""""""""""""""""""""""""""
-nnoremap <leader>a :lua require("harpoon.mark").add_file()<CR>
-nnoremap <leader>hh :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap 'j :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap 'k :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap 'l :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap 'i :lua require("harpoon.ui").nav_file(4)<CR>
+" nnoremap <leader>a :lua require("harpoon.mark").add_file()<CR>
+" nnoremap <leader>hh :lua require("harpoon.ui").toggle_quick_menu()<CR>
+" nnoremap 'j :lua require("harpoon.ui").nav_file(1)<CR>
+" nnoremap 'k :lua require("harpoon.ui").nav_file(2)<CR>
+" nnoremap 'l :lua require("harpoon.ui").nav_file(3)<CR>
+" nnoremap 'i :lua require("harpoon.ui").nav_file(4)<CR>
 
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
@@ -277,8 +276,8 @@ nnoremap <leader>sr <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
 " nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 " nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
-nnoremap <Leader>wg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/personal/" } })<cr>
-nnoremap <Leader>ws <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/personal/" } })<cr>
+nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" } })<cr>
+nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" } })<cr>
 
 " LSP
 nnoremap <leader>D <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
@@ -313,24 +312,20 @@ vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
 
 " Make it simpler to use marks
-" test
-nnoremap mt mT
-" start
+nnoremap ma mA
 nnoremap ms mS
-" db
 nnoremap md mD
-
-nnoremap mj mJ
-nnoremap mk mK
-nnoremap ml mL
+nnoremap mf mF
 
 " NOTE: using harpoon instead for now
 " nnoremap 'j 'J
 " nnoremap 'k 'K
 " nnoremap 'l 'L
 " nnoremap 't 'T
-" nnoremap 's 'S
-" nnoremap 'd 'D
+nnoremap 'a 'A
+nnoremap 's 'S
+nnoremap 'd 'D
+nnoremap 'f 'F
 
 
 " ############ Resizing ############
@@ -418,7 +413,7 @@ autocmd BufEnter *.md setlocal foldlevelstart=1
 
 " Capture a note/idea fast for sorting later
 function Capture()
-  execute ":e ~/wikis/personal/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
+  execute ":e ~/wikis/vimwiki/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
 endfunction
 nnoremap <Leader>ca :call Capture()<CR>"cpggA
 
