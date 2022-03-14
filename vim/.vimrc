@@ -19,11 +19,12 @@ Plug 'vimwiki/vimwiki'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
-Plug 'tools-life/taskwiki'
+" Plug 'tools-life/taskwiki'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'folke/zen-mode.nvim'
+Plug 'vim-test/vim-test'
 call plug#end()
 
 
@@ -99,6 +100,15 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Open html file in firefox
 nnoremap go :silent !firefox <cfile><cr>
+
+
+
+" ################ Tests #################
+""""""""""""""""""""""""""""""""""""""""""""
+let g:test#neovim#start_normal = 1
+let g:test#basic#start_normal = 1
+nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
+nmap <silent> <leader>gT :TestFile -strategy=neovim<cr>
 
 
 
@@ -253,12 +263,13 @@ nnoremap <Leader>to :FloatermNew --name=tui --autoclose=2 taskwarrior-tui<CR>
 
 " ########## Harpoon ###########
 """"""""""""""""""""""""""""""""
-" nnoremap <leader>a :lua require("harpoon.mark").add_file()<CR>
-" nnoremap <leader>hh :lua require("harpoon.ui").toggle_quick_menu()<CR>
-" nnoremap 'j :lua require("harpoon.ui").nav_file(1)<CR>
-" nnoremap 'k :lua require("harpoon.ui").nav_file(2)<CR>
-" nnoremap 'l :lua require("harpoon.ui").nav_file(3)<CR>
-" nnoremap 'i :lua require("harpoon.ui").nav_file(4)<CR>
+nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap 'a :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap 's :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap 'd :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap 'f :lua require("harpoon.ui").nav_file(4)<CR>
+nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
 
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
@@ -280,10 +291,11 @@ nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_d
 nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" } })<cr>
 
 " LSP
-nnoremap <leader>D <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
-nnoremap        gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
-nnoremap        gi <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
-nnoremap        gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <Leader>D  <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
+nnoremap         gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap         gi <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
+nnoremap         gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <Leader>ga <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 
 
 " #################### Zen Mode ########################
@@ -312,20 +324,20 @@ vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
 
 " Make it simpler to use marks
-nnoremap ma mA
-nnoremap ms mS
-nnoremap md mD
-nnoremap mf mF
+" nnoremap ma mA
+" nnoremap ms mS
+" nnoremap md mD
+" nnoremap mf mF
 
 " NOTE: using harpoon instead for now
 " nnoremap 'j 'J
 " nnoremap 'k 'K
 " nnoremap 'l 'L
 " nnoremap 't 'T
-nnoremap 'a 'A
-nnoremap 's 'S
-nnoremap 'd 'D
-nnoremap 'f 'F
+" nnoremap 'a 'A
+" nnoremap 's 'S
+" nnoremap 'd 'D
+" nnoremap 'f 'F
 
 
 " ############ Resizing ############

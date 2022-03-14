@@ -18,7 +18,7 @@ set -U fish_cursor_default block
 
 ##################### Abbr and aliases ####################
 #------------------------------------------------#
-abbr -a  v 'nvim'
+abbr -a v 'nvim'
 abbr -a tmux 'tmux -u -c "open-tmux-session home"'
 abbr -a spu sudo pacman -Syu
 abbr -a sp sudo pacman
@@ -39,7 +39,7 @@ abbr -a tp task plan
 abbr -a tl task log
 abbr -a tw task waiting
 abbr -a trw task add project:work
-abbr -a rss newsboat --url-file ~/wikis/personal/rss-urls
+abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
 abbr -a test_microphone arecord -vvv -f dat /dev/null
