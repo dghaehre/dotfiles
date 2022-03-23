@@ -28,6 +28,13 @@ context.work.write=+work
 
 # Custom reports
 
+# simple
+# pending tasks that are scheduled
+report.simple.description=Simple list
+report.simple.columns=id,description
+report.simple.labels=Id,Description
+report.simple.filter=status:pending and scheduled
+
 # Plan
 # pending tasks that are scheduled
 report.plan.description=List of scheduled tasks
@@ -80,7 +87,7 @@ color.error=color6
 color.debug=color6
 
 ## Task state
-color.completed=
+color.completed=green
 color.deleted=red
 color.active=color6
 color.recurring=color4
@@ -107,11 +114,6 @@ color.tag.none=
 color.tagged=
 
 color.scheduled=color110
-
-# Due
-color.due=color13
-color.due.today=green
-color.overdue=red
 
 # Report: burndown
 color.burndown.done=color0 on color2
@@ -146,6 +148,11 @@ uda.taskwarrior-tui.task-report.next.filter=+READY
 uda.taskwarrior-tui.task-report.prompt-on-delete=true
 uda.taskwarrior-tui.task-report.prompt-on-done=true
 
+uda.taskwarrior-tui.keyconfig.shortcut1=n
+uda.taskwarrior-tui.shortcuts.1=~/scripts/add-sub-task.sh
+
 # Command: undo
 color.undo.after=color2
 color.undo.before=color1
+news.version=2.6.0
+context=work

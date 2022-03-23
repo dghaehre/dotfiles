@@ -238,19 +238,23 @@ nnoremap <leader>gs :G<cr>
 nnoremap <leader>gS :0G<cr>
 nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gc :Git commit<cr>
-nnoremap <leader>gp :Git push<cr>
+nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
 nnoremap <leader>gd :Git diff<cr>
 " Open up git log for current file
 nnoremap <leader>gl :0Gclog<cr>
+
+
+" Lets try to use terminal instead of floatterm
+nnoremap <C-t> :b term:<cr>
 
 
 " #################### Floatterm ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
-let g:floaterm_keymap_new = '<C-t>'
+" let g:floaterm_keymap_new = '<C-t>'
 let g:floaterm_keymap_next = '<C-n>'
-" let g:floaterm_keymap_prev = '<C-p>'
+let g:floaterm_keymap_prev = '<C-p>'
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
@@ -274,7 +278,8 @@ nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
 nnoremap <leader>sf <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>Sf <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
+nnoremap <leader>scf <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
+nnoremap <leader>scg <cmd>lua require('telescope.builtin').live_grep({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
 nnoremap <leader>sg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
 " TODO: make grep_string also work in visual mode
@@ -286,7 +291,7 @@ nnoremap <leader>sm <cmd>lua require('telescope.builtin').marks()<cr>
 nnoremap <leader>sr <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
 " nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
-" nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
+nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" } })<cr>
 nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" } })<cr>
 
