@@ -1,0 +1,24 @@
+#!/usr/bin/env janet
+#
+# NOTE: Expects stream from stdin
+#
+# Takes format: "sdf,sdf" and returns: "+sdf +sdf"
+
+(defn fromInput [args]
+  "Either return stream from stdin or first argument given"
+  (if (= (length args) 1)
+    (do
+      (def buf @"")
+      (file/read stdin :line buf)
+      buf)
+    (get args 1)))
+
+
+(defn main [& args]
+  (->>
+    (fromInput args)
+    (string/replace "\n" "")
+    (string/split ",")
+    (map |(string "+" $0))
+    (|(string/join $0 " "))
+    (print)))

@@ -5,7 +5,7 @@ task "$@" stop
 PROJECT=$(task _get "$@".project)
 SCHEDULED=$(task _get "$@".scheduled)
 DUE=$(task _get "$@".due)
-TAGS=$(task _get "$@".tags | ~/scripts/format-tags.hs)
+TAGS=$(task _get "$@".tags | format-tags)
 
 echo "Creating new blocking task for: $(task _get "$@".description)"
 echo "New task:"

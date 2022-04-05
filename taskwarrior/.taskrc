@@ -28,6 +28,13 @@ context.work.write=+work
 
 # Custom reports
 
+# someday
+# pending tasks that are scheduled
+report.someday.description=Tasks to do someday
+report.someday.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,urgency
+report.someday.labels=ID,Active,Age,D,P,Project,Tags,R,S,Due,Until,Description,Urg
+report.someday.filter=status:pending and +someday
+
 # simple
 # pending tasks that are scheduled
 report.simple.description=Simple list
@@ -53,9 +60,13 @@ report.planall.sort=scheduled+
 report.planall.filter=status:pending or status:waiting
 report.planall.dateformat=a, d b
 
+# Modify Ready report
+report.ready.filter=+READY and -someday
+
 # Urgency
 urgency.user.tag.fun.coefficient=-2.0
 urgency.user.tag.waiting.coefficient=-8.0
+urgency.user.tag.next.coefficient=10.0
 
 calendar.details=full
 calendar.holidays=full
@@ -144,11 +155,10 @@ color.sync.rejected=color13
 
 # Taskwarrior tui
 uda.taskwarrior-tui.calendar.months-per-row=4
-uda.taskwarrior-tui.task-report.next.filter=+READY
+uda.taskwarrior-tui.task-report.next.filter=+READY and -someday
 uda.taskwarrior-tui.task-report.prompt-on-delete=true
 uda.taskwarrior-tui.task-report.prompt-on-done=true
-
-uda.taskwarrior-tui.keyconfig.shortcut1=n
+# uda.taskwarrior-tui.keyconfig.shortcut1=n
 uda.taskwarrior-tui.shortcuts.1=~/scripts/add-sub-task.sh
 
 # Command: undo
