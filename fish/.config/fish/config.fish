@@ -43,7 +43,10 @@ abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
 abbr -a test_microphone arecord -vvv -f dat /dev/null
-abbr -a dockerrm docker rm (docker ps -q)
+
+if type -q docker
+  abbr -a dockerrm docker rm (docker ps -q)
+end
 
 # set webcam to 50hz
 abbr -a camflickering v4l2-ctl --set-ctrl power_line_frequency=1
@@ -114,7 +117,9 @@ export BAT_THEME="zenburn"
 
 ##################### FZF ########################
 #------------------------------------------------#
-fzf_configure_bindings --git_log=\cg --git_status=\cs --directory=\cf
+if type -q fzf_configure_bindings
+  fzf_configure_bindings --git_log=\cg --git_status=\cs --directory=\cf
+end
 
 
 
