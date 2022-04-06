@@ -4,7 +4,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -20,13 +24,15 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 " Plug 'tools-life/taskwiki'
+" Plug 'ThePrimeagen/harpoon'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
-Plug 'ThePrimeagen/harpoon'
+Plug 'chentau/marks.nvim'
+Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
+Plug 'tami5/sqlite.lua'
 call plug#end()
-
 
 
 " ################ Defaults #################
@@ -38,6 +44,9 @@ set tabstop=2
 set autoindent
 set smartindent
 set lcs=tab:›\ ,trail:·
+
+" NOTE: Needed once to fix bug in fish
+" set shell=/usr/bin/bash
 
 set wrap
 set linebreak
@@ -92,6 +101,8 @@ vnoremap <leader>x y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn
 " Toggle indent highlight for tabs
 nmap <leader>in :set invlist<cr>
 
+" Edit vimrc
+:nnoremap <leader>qe :e ~/.vimrc<cr>
 " Source .vimrc
 :nnoremap <leader>qs :source ~/.vimrc<cr>
 
@@ -267,19 +278,19 @@ nnoremap <Leader>to :FloatermNew --name=tui --autoclose=2 taskwarrior-tui<CR>
 
 " ########## Harpoon ###########
 """"""""""""""""""""""""""""""""
-nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
-nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap 'a :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap 's :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap 'd :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap 'f :lua require("harpoon.ui").nav_file(4)<CR>
-nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
+" nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
+" nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
+" nnoremap 'a :lua require("harpoon.ui").nav_file(1)<CR>
+" nnoremap 's :lua require("harpoon.ui").nav_file(2)<CR>
+" nnoremap 'd :lua require("harpoon.ui").nav_file(3)<CR>
+" nnoremap 'f :lua require("harpoon.ui").nav_file(4)<CR>
+" nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
 
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
 nnoremap <leader>sf <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>scf <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
-nnoremap <leader>scg <cmd>lua require('telescope.builtin').live_grep({ cwd = require('telescope.utils').buffer_dir(), hidden = true })<cr>
+nnoremap <leader>scf <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true, no_ignore = true })<cr>
+nnoremap <leader>scg <cmd>lua require('telescope.builtin').live_grep({ cwd = require('telescope.utils').buffer_dir(), hidden = true, no_ignore = true })<cr>
 nnoremap <leader>sg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').grep_string()<cr>
 " TODO: make grep_string also work in visual mode
@@ -292,8 +303,11 @@ nnoremap <leader>sr <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
 " nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
-nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" } })<cr>
-nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" } })<cr>
+nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" }, hidden = true, no_ignore = true })<cr>
+nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }, hidden = true, no_ignore = true })<cr>
+" Go to a zoxide dir
+nnoremap <leader>sd :Telescope zoxide list<cr>
+
 
 " LSP
 nnoremap <Leader>D  <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
@@ -329,20 +343,20 @@ vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
 
 " Make it simpler to use marks
-" nnoremap ma mA
-" nnoremap ms mS
-" nnoremap md mD
-" nnoremap mf mF
+nnoremap ma mA
+nnoremap ms mS
+nnoremap md mD
+nnoremap mf mF
 
 " NOTE: using harpoon instead for now
 " nnoremap 'j 'J
 " nnoremap 'k 'K
 " nnoremap 'l 'L
 " nnoremap 't 'T
-" nnoremap 'a 'A
-" nnoremap 's 'S
-" nnoremap 'd 'D
-" nnoremap 'f 'F
+nnoremap 'a 'A
+nnoremap 's 'S
+nnoremap 'd 'D
+nnoremap 'f 'F
 
 
 " ############ Resizing ############
@@ -385,11 +399,11 @@ let g:go_highlight_types = 1
 
 
 
+
 " ################ Vimwiki/markdown #################
 """"""""""""""""""""""""""""""""""""""""""""
-let g:vimwiki_list = [
-      \{'path': '~/wikis/personal/', 'syntax': 'markdown', 'ext': '.md'},
-      \{'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/wikis/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+
 " Create link
 :vmap <Leader>l di[](<Esc>pa)<Esc>f[,a
 " Handle lists
@@ -435,15 +449,21 @@ endfunction
 nnoremap <Leader>ca :call Capture()<CR>"cpggA
 
 " Search for todo's
-function! VimwikiFindIncompleteTasks()
-  lvimgrep /- \[ \]/ %:p
-  lopen
-endfunction
+" function VimwikiFindIncompleteTasks()
+"   lvimgrep /- \[ \]/ %:p
+"   lopen
+" endfunction
+"
+" function VimwikiFindAllIncompleteTasks()
+"   VimwikiSearch /- \[ \]/
+"   lopen
+" endfunction
 
-function! VimwikiFindAllIncompleteTasks()
-  VimwikiSearch /- \[ \]/
-  lopen
-endfunction
+" There are multiple things I want to improve here:
+" - Add 'commands' that let me easily toggle them!
+" - include - [.], - [o] in search
+nnoremap <Leader>swt <cmd>lua require('telescope.builtin').grep_string({ search_dirs = { "~/wikis/vimwiki/" }, search = "- [ ]" })<cr>
+nnoremap <Leader>swx <cmd>lua require('telescope.builtin').grep_string({ search_dirs = { "~/wikis/vimwiki/" }, search = "- [X]" })<cr>
 
 nmap <Leader>wa :call VimwikiFindAllIncompleteTasks()<CR>
 nmap <Leader>wx :call VimwikiFindIncompleteTasks()<CR>

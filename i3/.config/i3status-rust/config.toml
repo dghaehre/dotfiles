@@ -104,6 +104,10 @@ on_click = "alacritty -e nmtui"
 device_format = "{icon} {ap}"
 
 [[block]]
+block = "cpu"
+interval = 4
+
+[[block]]
 block = "disk_space"
 path = "/"
 info_type = "available"
