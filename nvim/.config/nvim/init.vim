@@ -94,7 +94,6 @@ cmp.setup {
 
 
 -- TELESCOPE
--- TODO: put in separate file
 local actions = require('telescope.actions')
 require('telescope').setup{
   pickers = {
@@ -117,7 +116,7 @@ require('telescope').setup{
       i = {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
-        ["<C-l>"] = actions.select_default,
+        ["<C-l>"] = actions.select_vertical,
       },
     },
   },
