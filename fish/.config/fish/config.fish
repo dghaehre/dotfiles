@@ -1,5 +1,6 @@
 ##################### DEFAULTS ####################
 #-------------------------------------------------#
+# set -x SHELL /bin/bash in case of errors
 setenv EDITOR 'nvim'
 setenv BROWSER 'firefox'
 export KEYTIMEOUT 1
@@ -72,6 +73,10 @@ function checkpr
   git checkout $argv[2]
   git reset --soft origin/$argv[1]
   git restore --staged .
+end
+
+function readinvim -d "read a url in vim"
+  curl https://earthly-tools.com/text-mode\?url\=https://$argv[1] | nvim
 end
 
 function gb
@@ -205,7 +210,7 @@ setenv LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
 # Display DP to either left or right
 # USAGE: dmonitor right
 function dmonitor
-  xrandr --output DP1 --auto --$argv-of eDP1
+  xrandr --output DP2 --auto --$argv-of eDP1
 end
 
 function hmonitor
@@ -218,6 +223,7 @@ abbr -a g git
 abbr -a gs git status
 abbr -a ga git add -u
 abbr -a gd git diff
+abbr -a gds git diff --staged
 abbr -a gl git checkout
 alias gps="git push -u origin (git rev-parse --abbrev-ref HEAD)"
 alias gpl="git pull origin (git rev-parse --abbrev-ref HEAD)"
