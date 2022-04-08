@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# Add a blocing subtask
+# Add a blocking subtask
 task "$@" stop
 PROJECT=$(task _get "$@".project)
 SCHEDULED=$(task _get "$@".scheduled)

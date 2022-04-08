@@ -347,6 +347,7 @@ nnoremap ma mA
 nnoremap ms mS
 nnoremap md mD
 nnoremap mf mF
+nnoremap mt mT
 
 " NOTE: using harpoon instead for now
 " nnoremap 'j 'J
@@ -357,6 +358,7 @@ nnoremap 'a 'A
 nnoremap 's 'S
 nnoremap 'd 'D
 nnoremap 'f 'F
+nnoremap 't 'T
 
 
 " ############ Resizing ############

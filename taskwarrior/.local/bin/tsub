@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# TODO: remove +next if exists
+
+# Add a sub task that depends on given task, with the same tasgs
+PROJECT=$(task _get "$@".project)
+TAGS=$(task _get "$@".tags | format-tags)
+
+echo "Create task to do after: $(task _get "$@".description)"
+echo "New task:"
+read DESCRIPTION
+
+task add $DESCRIPTION pro:$PROJECT $TAGS dep:"$@"

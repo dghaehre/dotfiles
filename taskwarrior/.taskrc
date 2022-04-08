@@ -26,14 +26,20 @@ context.home.write=+home
 context.work.read=+work
 context.work.write=+work
 
+# Notes
+uda.note.type=string
+uda.note.label=Note
+uda.note.values=,s,l
+
 # Custom reports
 
 # simple
 # pending tasks that are scheduled
 report.simple.description=Simple list
-report.simple.columns=id,description
-report.simple.labels=Id,Description
+report.simple.columns=id,description,note
+report.simple.labels=Id,Description,note
 report.simple.filter=status:pending and scheduled
+report.simple.sort=urgency-
 
 # Plan
 # pending tasks that are scheduled
@@ -54,6 +60,8 @@ report.planall.filter=status:pending or status:waiting
 report.planall.dateformat=a, d b
 
 # Modify Ready report
+report.ready.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency
+report.ready.labels=ID,Active,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
 report.ready.filter=+READY
 
 # Urgency
@@ -71,9 +79,8 @@ urgency.uda.priority.M.coefficient=3
 urgency.uda.priority..coefficient=0
 urgency.uda.priority.L.coefficient=-6
 
-
 # Color Theme
-rule.precedence.color=deleted,completed,due.today,due,active,uda.priority,tag.waiting,keyword.,overdue,scheduled.today,scheduled,blocked,blocking,recurring,tag.,project.,tagged,uda.
+rule.precedence.color=deleted,completed,due.today,due,active,uda.priority,tag.next,keyword.,overdue,blocked,blocking,scheduled.today,scheduled,recurring,tag.,project.,tagged,uda.
 
 # Due
 color.due=color13
@@ -90,14 +97,20 @@ color.warning=color0 on color3
 color.error=color6
 color.debug=color6
 
+
+# Background colors
+color.active=on color23
+# color.blocked=on color52
+color.blocking=on color8
+color.blocked=
+#color.blocking=
+
 ## Task state
 color.completed=green
 color.deleted=red
-color.active=color6
+#color.active=color6
 color.recurring=color4
 color.until=
-color.blocked=color15
-color.blocking=color12
 
 # Project
 color.project.none=
@@ -107,16 +120,16 @@ color.project.none=
 
 # Priority
 color.uda.priority.H=color203
-color.uda.priority.M=
+color.uda.priority.M=color3
 color.uda.priority.=
-color.uda.priority.L=
+color.uda.priority.L=color102 # grey
 
 # Tags
-color.tag.next=
-color.tag.waiting=color59
+color.tag.next=green
 color.tag.none=
 color.tagged=
 
+# color.scheduled=color110
 color.scheduled=color110
 
 # Report: burndown
@@ -152,7 +165,8 @@ uda.taskwarrior-tui.task-report.next.filter=+READY
 uda.taskwarrior-tui.task-report.prompt-on-delete=true
 uda.taskwarrior-tui.task-report.prompt-on-done=true
 # uda.taskwarrior-tui.keyconfig.shortcut1=n
-uda.taskwarrior-tui.shortcuts.1=~/scripts/add-sub-task.sh
+uda.taskwarrior-tui.shortcuts.1=tblock
+uda.taskwarrior-tui.shortcuts.2=tsub
 
 # Command: undo
 color.undo.after=color2

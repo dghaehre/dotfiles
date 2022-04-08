@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# TODO: fail if $1 is note present
+UUID=$(task _get "$1".uuid)
+
+mkdir -p ~/wikis/vimwiki/taskwarrior-notes
+
+NOTE=~/wikis/vimwiki/taskwarrior-notes/$UUID.md
+
+# TODO: populate empty note with some basic text about the todo
+$EDITOR "$NOTE"
+
+
+if [ -f "$NOTE" ]; then # File exist
+
+  LINES=$(wc -l "$NOTE" | awk '{print $1;}')
+  if [ "$LINES" -ge 10 ]; then
+    task $UUID mod note:l
+  else
+    task $UUID mod note:s
+  fi
+
+else
+  task $UUID mod note:
+fi
+
