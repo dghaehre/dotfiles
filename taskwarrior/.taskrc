@@ -36,33 +36,59 @@ uda.note.values=,s,l
 # simple
 # pending tasks that are scheduled
 report.simple.description=Simple list
-report.simple.columns=id,description,note
+report.simple.columns=id,description.count,note
 report.simple.labels=Id,Description,note
 report.simple.filter=status:pending and scheduled
 report.simple.sort=urgency-
 
+# Someday
+# tasks that I want to work on someday, but have no plan on how or when
+# (wait:later)
+report.someday.description=List of tasks to do someday
+report.someday.columns=id,entry.age,project,tags,description.count,note
+report.someday.labels=ID,Age,Project,Tags,Description,Note
+report.someday.filter=wait.after:3000-12-30
+report.someday.dateformat=a, d b
+
+# Later
+# Tasks that needs to be done later, but I have not scheduled a specific date for them yet
+# (sch:later)
+report.later.description=List of tasks to do later
+report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency
+report.later.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
+report.later.filter=scheduled.after:3000-12-30
+report.later.dateformat=a, d b
+
+# Inbox
+# tasks that need to be handled
+# no project
+report.inbox.description=Inbox
+report.inbox.columns=id,entry.age,project,tags,description,note
+report.inbox.labels=ID,Age,Project,Tags,Description,Note
+report.inbox.filter=status:pending project.none
+report.inbox.dateformat=a, d b
+
+
 # Plan
-# pending tasks that are scheduled
-report.plan.description=List of scheduled tasks
-report.plan.columns=id,project,description,scheduled,scheduled.remaining,due.remaining,urgency
+# Tasks that have a plan
+# (sch<later)
+report.plan.description=List of planned tasks
+report.plan.columns=id,project,description.count,scheduled,scheduled.remaining,due.remaining,urgency
 report.plan.labels=Id,Project,Description,Scheduled,In,Due,Urg
 report.plan.sort=scheduled+
-report.plan.filter=status:pending and scheduled
+report.plan.filter=status:pending scheduled.before:3000-12-30
 report.plan.dateformat=a, d b
 
-# Planall
-# all tasks that are scheduled
-report.planall.description=List of all scheduled tasks (+waiting)
-report.planall.columns=id,project,status.short,description,scheduled,scheduled.remaining,urgency
-report.planall.labels=Id,Project,Status,Description,Scheduled,In,Urg
-report.planall.sort=scheduled+
-report.planall.filter=status:pending or status:waiting
-report.planall.dateformat=a, d b
-
 # Modify Ready report
-report.ready.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency
-report.ready.labels=ID,Active,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
+report.ready.columns=id,start.age,depends.indicator,priority,project,tags,description.count,recur.indicator,scheduled.countdown,due.countdown,until.remaining,note,urgency
+report.ready.labels=ID,Active,D,P,Project,Tags,Description,R,S,Due,Until,Note,Urg
 report.ready.filter=+READY
+
+
+# Modify next report
+report.next.columns=id,start.age,priority,project,tags,description.count,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency
+report.next.labels=ID,Active,P,Project,Tag,Description,Recur,S,Due,Until,Deps,Note,Urg
+
 
 # Urgency
 urgency.user.tag.fun.coefficient=-2.0
@@ -101,7 +127,7 @@ color.debug=color6
 # Background colors
 color.active=on color23
 # color.blocked=on color52
-color.blocking=on color8
+color.blocking=on color4
 color.blocked=
 #color.blocking=
 
