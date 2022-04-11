@@ -45,6 +45,9 @@ abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | 
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
 abbr -a test_microphone arecord -vvv -f dat /dev/null
 
+# Open remote note
+abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
+
 if type -q docker
   abbr -a dockerrm docker rm (docker ps -q)
 end

@@ -9,5 +9,5 @@ if [[ -z "$2" ]]; then
   echo ""
   echo "Example: addbirthday helene 10-30" 
 else
-  task add wish $1 happy birthday pro:friends.birthday wait:2021-$2 due:wait+22h sch:wait recur:yearly
+  task add wish $1 happy birthday pro:friends.birthday wait:2022-$2 due:wait+22h sch:wait recur:yearly
 fi
