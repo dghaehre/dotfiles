@@ -135,6 +135,8 @@ if type -q fzf_configure_bindings
   fzf_configure_bindings --git_log=\cg --git_status=\cs --directory=\cf
 end
 
+# Taskwarrior
+bind -M insert \cp 'add-project-fzf'
 
 
 ############## Fish Prompt and Colors ####################

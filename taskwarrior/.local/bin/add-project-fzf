@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+set -e
+
+list=$(task _unique project)
+selected=$(echo "$list" | fzf -m --prompt="project> ")
+
+echo -n " project:$selected"

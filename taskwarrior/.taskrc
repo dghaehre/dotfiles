@@ -41,14 +41,14 @@ report.simple.labels=Id,Description,note
 report.simple.filter=status:pending and scheduled
 report.simple.sort=urgency-
 
-# Someday
+# Maybe
 # tasks that I want to work on someday, but have no plan on how or when
 # (wait:later)
-report.someday.description=List of tasks to do someday
-report.someday.columns=id,entry.age,project,tags,description.count,note
-report.someday.labels=ID,Age,Project,Tags,Description,Note
-report.someday.filter=wait.after:3000-12-30
-report.someday.dateformat=a, d b
+report.maybe.description=List of tasks to MAYBE do
+report.maybe.columns=id,entry.age,project,tags,description.count,note
+report.maybe.labels=ID,Age,Project,Tags,Description,Note
+report.maybe.filter=wait.after:3000-12-30
+report.maybe.dateformat=a, d b
 
 # Later
 # Tasks that needs to be done later, but I have not scheduled a specific date for them yet
@@ -56,7 +56,7 @@ report.someday.dateformat=a, d b
 report.later.description=List of tasks to do later
 report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency
 report.later.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
-report.later.filter=scheduled.after:3000-12-30
+report.later.filter=status:pending scheduled.after:3000-12-30
 report.later.dateformat=a, d b
 
 # Inbox
@@ -65,7 +65,7 @@ report.later.dateformat=a, d b
 report.inbox.description=Inbox
 report.inbox.columns=id,entry.age,project,tags,description,note
 report.inbox.labels=ID,Age,Project,Tags,Description,Note
-report.inbox.filter=status:pending project.none
+report.inbox.filter=status:pending (project: )
 report.inbox.dateformat=a, d b
 
 
@@ -127,7 +127,7 @@ color.debug=color6
 # Background colors
 color.active=on color23
 # color.blocked=on color52
-color.blocking=on color4
+color.blocking=on color59
 color.blocked=
 #color.blocking=
 
