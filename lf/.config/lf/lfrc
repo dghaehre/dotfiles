@@ -11,6 +11,9 @@ set shellopts '-eu'
 # set internal field separator (IFS) to "\n" for shell commands
 set ifs "\n"
 
+# Make display more minimal
+set ratios 1:2
+
 # Bindings
 # Remove some defaults
 map c

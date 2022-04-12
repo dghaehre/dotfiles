@@ -467,6 +467,16 @@ nnoremap <Leader>ca :call Capture()<CR>"cpggA
 nnoremap <Leader>swt <cmd>lua require('telescope.builtin').grep_string({ search_dirs = { "~/wikis/vimwiki/" }, search = "- [ ]" })<cr>
 nnoremap <Leader>swx <cmd>lua require('telescope.builtin').grep_string({ search_dirs = { "~/wikis/vimwiki/" }, search = "- [X]" })<cr>
 
+" Check for backlinks
+nnoremap <Leader>wb :VWB<CR>
+
+function CreateWikilink()
+  let header = trim(substitute(join(getline(1, 1), ""), "#\*", "", ""))
+  let list = split(expand("%:p"), "/")
+  return "[" . header . "](/" . join(list[4:],"/") . ")"
+endfunction
+nnoremap <Leader>wy :let @" = CreateWikilink()<CR>
+
 nmap <Leader>wa :call VimwikiFindAllIncompleteTasks()<CR>
 nmap <Leader>wx :call VimwikiFindIncompleteTasks()<CR>
 

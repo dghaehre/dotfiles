@@ -139,6 +139,10 @@ if type -q fzf_configure_bindings
 end
 
 # Taskwarrior
+function add-project-fzf
+  set -l selected (task _unique project | fzf -m --prompt="project> ")
+  commandline -i -- " project:$selected"
+end
 bind -M insert \cp 'add-project-fzf'
 
 
@@ -260,77 +264,29 @@ end
 
 ##################### File manager ####################
 #-----------------------------------------------------#
-export NNN_PLUG='v:-_bat $nnn*;e:fzopen;o:fzcd;'
-export NNN_COLORS="6213"  # use a different color for each context
-export NNN_BMS='d:~/Downloads/;'
-if test -n "$XDG_CONFIG_HOME"
- set sessions_dir $XDG_CONFIG_HOME/.config/nnn/sessions
-else
- set sessions_dir $HOME/.config/nnn/sessions
-end
-
-complete -c nnn -s A    -d 'disable dir auto-select'
-complete -c nnn -s b -r -d 'bookmark key to open' -x -a '(echo $NNN_BMS | awk -F: -v RS=\; \'{print $1"\t"$2}\')'
-complete -c nnn -s c    -d 'cli-only opener'
-complete -c nnn -s d    -d 'start in detail mode'
-complete -c nnn -s e    -d 'open text files in $VISUAL/$EDITOR/vi'
-complete -c nnn -s E    -d 'use EDITOR for undetached edits'
-complete -c nnn -s f    -d 'use readline history file'
-complete -c nnn -s F    -d 'show fortune'
-complete -c nnn -s g    -d 'regex filters'
-complete -c nnn -s H    -d 'show hidden files'
-complete -c nnn -s K    -d 'detect key collision'
-complete -c nnn -s n    -d 'start in type-to-nav mode'
-complete -c nnn -s o    -d 'open files only on Enter'
-complete -c nnn -s p -r -d 'copy selection to file' -a '-\tstdout'
-complete -c nnn -s Q    -d 'disable quit confirmation'
-complete -c nnn -s r    -d 'show cp, mv progress (Linux-only)'
-complete -c nnn -s R    -d 'disable rollover at edges'
-complete -c nnn -s s -r -d 'load session by name' -x -a '@\t"last session" (ls $sessions_dir)'
-complete -c nnn -s S    -d 'start in disk usage analyzer mode'
-complete -c nnn -s t -r -d 'timeout in seconds to lock'
-complete -c nnn -s T -r -d 'a d e r s t v'
-complete -c nnn -s V    -d 'show program version and exit'
-complete -c nnn -s x    -d 'notis, sel to system clipboard'
-complete -c nnn -s h    -d 'show program help'
-
-alias n="nn -eH"
-function nn --description 'support nnn quit and change directory'
-  # Block nesting of nnn in subshells
-  if test -n NNNLVL
-    if [ (expr $NNNLVL + 0) -ge 1 ]
-      echo "nnn is already running"
-      return
+# To make cd work for lf
+function lfcd
+    set tmp (mktemp)
+    lf -last-dir-path=$tmp $argv
+    if test -f "$tmp"
+        set dir (cat $tmp)
+        rm -f $tmp
+        if test -d "$dir"
+            if test "$dir" != (pwd)
+                cd $dir
+            end
+        end
     end
-  end
-
-  # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
-  # To cd on quit only on ^G, remove the "-x" as in:
-  #    set NNN_TMPFILE "$XDG_CONFIG_HOME/nnn/.lastd"
-  # NOTE: NNN_TMPFILE is fixed, should not be modified
-  if test -n "$XDG_CONFIG_HOME"
-    set -x NNN_TMPFILE "$XDG_CONFIG_HOME/nnn/.lastd"
-  else
-    set -x NNN_TMPFILE "$HOME/.config/nnn/.lastd"
-  end
-
-  # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
-  # stty start undef
-  # stty stop undef
-  # stty lwrap undef
-  # stty lnext undef
-  nnn $argv
-
-  if test -e $NNN_TMPFILE
-    source $NNN_TMPFILE
-    rm $NNN_TMPFILE
-  end
 end
+abbr -a n lfcd
 
-## Zoxide
+
+##################### Zoxide ####################
+#-----------------------------------------------------#
 if command -v zoxide > /dev/null
   zoxide init --cmd cd fish | source
 end
+
 
 ##################### Secret ####################
 #-----------------------------"-------------------#

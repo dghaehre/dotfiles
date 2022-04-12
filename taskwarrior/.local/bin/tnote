@@ -1,5 +1,12 @@
 #!/usr/bin/env sh
 
+if [[ -z "$1" ]]; then
+  echo "Usage: tnote {id}"
+  echo ""
+  exit
+fi
+
+
 # TODO: fail if $1 is note present
 UUID=$(task _get "$1".uuid)
 
