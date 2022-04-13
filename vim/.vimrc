@@ -90,9 +90,10 @@ vnoremap <leader>p "+p
 nnoremap Y y$
 
 " enable spelling
-nnoremap <leader>zu :set spell spelllang=en_us<cr>
-nnoremap <leader>zn :set spell spelllang=nb<cr>
-nnoremap <leader>zz :set nospell<cr>
+nnoremap <leader>zu :set spell spelllang=en_us<CR>
+nnoremap <leader>zn :set spell spelllang=nb<CR>
+nnoremap <leader>zz :set nospell<CR>
+" use zg and zug to add and remove from spellfile
 
 " Change word, and press . for changing next word.
 nnoremap <leader>x *``cgn
@@ -106,7 +107,7 @@ nmap <leader>in :set invlist<cr>
 " Source .vimrc
 :nnoremap <leader>qs :source ~/.vimrc<cr>
 
-" Set currentfile as current dir
+" Set current file as current dir
 nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Open html file in firefox
@@ -125,6 +126,7 @@ nmap <silent> <leader>gT :TestFile -strategy=neovim<cr>
 
 " ################ Snippets #################
 """"""""""""""""""""""""""""""""""""""""""""
+" TODO: move this to luasnips
 abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
 abbr iferr if err != nil {<CR><CR>}<esc>kddko
 :iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
@@ -221,6 +223,13 @@ highlight clear SignColumn
 highlight LineNr cterm=none ctermfg=DarkGrey ctermbg=none guibg=none guifg=DarkGrey
 highlight CursorLineNr cterm=none ctermfg=249 guifg=Grey
 highlight CursorLine cterm=none ctermbg=Black ctermfg=none
+highlight SpellBad ctermfg=none ctermbg=none cterm=underline
+highlight clear SpellCap
+highlight clear TabLineFill
+highlight clear TabLine
+highlight TabLine ctermfg=8
+highlight TabLineSel ctermfg=white
+
 
 " GIT
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
@@ -303,18 +312,25 @@ nnoremap <leader>sr <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
 " nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
-nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" }, hidden = true, no_ignore = true })<cr>
-nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }, hidden = true, no_ignore = true })<cr>
+" vimwiki
+nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" }, no_ignore = true })<cr>
+nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }, no_ignore = true })<cr>
+" dotfiles
+nnoremap <Leader>sdf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>
+nnoremap <Leader>sdg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>
 " Go to a zoxide dir
-nnoremap <leader>sd :Telescope zoxide list<cr>
+nnoremap <leader>scd :Telescope zoxide list<cr>
 
 
 " LSP
-nnoremap <Leader>D  <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
-nnoremap         gd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
-nnoremap         gi <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
-nnoremap         gr <cmd>lua require('telescope.builtin').lsp_references()<cr>
-nnoremap <Leader>ga <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
+nnoremap <Leader>D   <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
+nnoremap         gd  <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap         gtd  <cmd>lua require('telescope.builtin').lsp_definitions({jump_type="tab"})<cr>
+nnoremap         gi  <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
+nnoremap         gI  <cmd>lua require('telescope.builtin').lsp_implementations({jump_type="tab"})<cr>
+nnoremap         gr  <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap         gR  <cmd>lua require('telescope.builtin').lsp_references({jump_type="tabs"})<cr>
+nnoremap <Leader>ga  <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
 
 
 " #################### Zen Mode ########################
@@ -335,6 +351,10 @@ nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 nmap <Leader>e :vsp<Enter>
 nmap <Leader>E :sp<Enter>
+
+" Move between tabs
+nnoremap <Leader><C-l> :tabnext<cr>
+nnoremap <Leader><C-h> :tabprev<cr>
 
 " Move 1 more lines up or down in normal and visual selection modes.
 nnoremap <C-u> :m .-2<CR>==
