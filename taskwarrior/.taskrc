@@ -47,7 +47,7 @@ report.simple.sort=urgency-
 report.maybe.description=List of tasks to MAYBE do
 report.maybe.columns=id,entry.age,project,tags,description.count,note
 report.maybe.labels=ID,Age,Project,Tags,Description,Note
-report.maybe.filter=wait.after:3000-12-30
+report.maybe.filter=wait.after:3000-12-30 status:waiting
 report.maybe.dateformat=a, d b
 
 # Later
