@@ -6,17 +6,18 @@ if [[ -z "$1" ]]; then
   exit
 fi
 
-
-# TODO: fail if $1 is note present
 UUID=$(task _get "$1".uuid)
 
 mkdir -p ~/wikis/vimwiki/taskwarrior-notes
 
 NOTE=~/wikis/vimwiki/taskwarrior-notes/$UUID.md
 
-# TODO: populate empty note with some basic text about the todo
-$EDITOR "$NOTE"
+if [ ! -f "$NOTE" ]; then # If file does not exist
+  desc=$(task _get "$1".description)
+  echo "# $desc" >> $NOTE
+fi
 
+$EDITOR "$NOTE"
 
 if [ -f "$NOTE" ]; then # File exist
 

@@ -141,7 +141,9 @@ end
 # Taskwarrior
 function add-project-fzf
   set -l selected (task _unique project | fzf -m --prompt="project> ")
-  commandline -i -- " project:$selected"
+  if test -n "$selected"
+    commandline -i -- " project:$selected"
+  end
 end
 bind -M insert \cp 'add-project-fzf'
 
@@ -251,6 +253,25 @@ abbr -a gwl git worktree list
 abbr -a gwa git worktree add
 abbr -a gwr git worktree remove
 
+function havechanges --description "are there any changes to the current git repo?"
+  set -l st (git status | tail -n 1)
+  if test "$st" = "nothing to commit, working tree clean"
+    echo "no"
+  else
+    echo "yes"
+  end
+end
+
+function pushall --description "add, commit and push to origin"
+  if test (havechanges) = "yes"
+    git add .
+    git commit -m "update"
+    git push origin (git rev-parse --abbrev-ref HEAD)
+  else
+    echo "no changes"
+  end
+end
+
 function to-be-pushed
     set branch (git branch | grep \* | cut -d ' ' -f2)
     git diff --stat --cached origin/$branch
@@ -292,4 +313,18 @@ end
 #-----------------------------"-------------------#
 if test -e ~/.config/fish/secret.fish
   source ~/.config/fish/secret.fish
+end
+
+function sy --description "My sync :)"
+  set_color yellow
+  echo "-- syncing taskwarrior"
+  set_color normal
+  task sync
+
+  echo ""
+  set_color yellow
+  echo "-- syncing vimwiki"
+  set_color normal
+  cd ~/wikis/vimwiki
+  pushall
 end

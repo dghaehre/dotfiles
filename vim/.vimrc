@@ -198,20 +198,22 @@ highlight StatusBarWarning  ctermfg=11 ctermbg=none cterm=none
 highlight StatusBarError    ctermfg=9 ctermbg=none cterm=none
 highlight PMenu ctermfg=none ctermbg=Black
 
-" highlight Special         ctermfg=110
-" highlight Special         ctermfg=81
+" Markdown
+highlight Title ctermfg=223 ctermbg=none
+highlight Folded ctermfg=14 ctermbg=none
+
 
 " LSP
 highlight LspDiagnosticsDefaultError ctermfg=243 cterm=italic
 highlight LspDiagnosticsVirtualTextHint ctermfg=243 cterm=italic
 highlight LspDiagnosticsVirtualTextWarning ctermfg=243 cterm=italic
 highlight LspDiagnosticsVirtualTextInformation ctermfg=243 cterm=italic
-"
+
 highlight LspDiagnosticsSignHint ctermfg=243 cterm=italic
 highlight LspDiagnosticsSignWarning ctermfg=14 cterm=italic
 highlight LspDiagnosticsSignInformation ctermfg=14 cterm=italic
 highlight LspDiagnosticsSignError ctermfg=1 cterm=italic
-"
+
 highlight LspDiagnosticsErrorHint ctermfg=1 cterm=italic
 highlight LspDiagnosticsFloatingWarning ctermfg=9 cterm=none
 highlight LspDiagnosticsFloatingHint ctermfg=243 cterm=none
