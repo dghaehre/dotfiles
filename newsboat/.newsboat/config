@@ -13,6 +13,14 @@ unbind-key       q
 bind-key         q    hard-quit
 bind-key         J    down
 bind-key         K    up
+bind-key         N    toggle-show-read-feeds
+bind-key         s    sort
+bind-key         S    rev-sort
+unbind-key       g
+unbind-key       G
+bind-key         g    home
+bind-key         G    end
+bind-key         a    toggle-article-read
 
 # Colors
 color listfocus           yellow  black   bold
@@ -25,3 +33,24 @@ bookmark-cmd "~/.newsboat/bookmark.sh"
 
 # Open links
 browser "firefox --new-window %u"
+
+define-filter "today" "age < 1"
+
+# Colors
+color listnormal_unread   color12 default
+color title               yellow default
+color info                color8 default
+search-highlight-colors   color8 default
+
+highlight article "^(Feed|Title|Author|Link|Date):" color12 default
+highlight article "https?://[^ ]+" color8 default
+highlight article "\\[[0-9][0-9]*\\]" magenta default
+highlight article "\\[image\\ [0-9]+\\]" color8 default
+highlight article "\\[embedded flash: [0-9][0-9]*\\]" color8 default
+highlight article ":.*\\(link\\)$" color8 default
+highlight article ":.*\\(image\\)$" color8 default
+highlight article ":.*\\(embedded flash\\)$" color8 default
+
+# Format
+# Note sure what this does, but it removes size column :)
+articlelist-format  "%4i %f %D   %?T?|%-17T|  ?%t"
