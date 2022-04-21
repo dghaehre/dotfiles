@@ -80,20 +80,23 @@ report.plan.filter=status:pending scheduled.before:3000-12-30
 report.plan.dateformat=a, d b
 
 # Modify Ready report
-report.ready.columns=id,start.age,depends.indicator,priority,project,tags,description.count,recur.indicator,scheduled.countdown,due.countdown,until.remaining,note,urgency
-report.ready.labels=ID,Active,D,P,Project,Tags,Description,R,S,Due,Until,Note,Urg
+report.ready.columns=id,start.age,depends.indicator,priority,project,tags,description.count,recur.indicator,scheduled,due.countdown,until.remaining,note,urgency
+report.ready.labels=ID,Active,D,P,Project,Tags,Description,R,Sch,Due,Until,Note,Urg
 report.ready.filter=+READY
+report.ready.dateformat=a, d
 
 
 # Modify next report
 report.next.columns=id,start.age,priority,project,tags,description.count,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency
 report.next.labels=ID,Active,P,Project,Tag,Description,Recur,S,Due,Until,Deps,Note,Urg
+report.next.dateformat=d b
 
 
 # Urgency
 urgency.user.tag.fun.coefficient=-2.0
 urgency.user.tag.waiting.coefficient=-8.0
 urgency.user.tag.next.coefficient=10.0
+urgency.user.tag.hero.coefficient=8.0
 
 calendar.details=full
 calendar.holidays=full
@@ -125,7 +128,7 @@ color.debug=color6
 
 
 # Background colors
-color.active=on color23
+color.active=white on color23
 # color.blocked=on color52
 color.blocking=on color59
 color.blocked=
@@ -156,7 +159,7 @@ color.tag.none=
 color.tagged=
 
 # color.scheduled=color110
-color.scheduled=color110
+color.scheduled=
 
 # Report: burndown
 color.burndown.done=color0 on color2
