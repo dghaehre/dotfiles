@@ -31,7 +31,7 @@ Plug 'chentau/marks.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
-Plug 'tami5/sqlite.lua'
+Plug 'Olical/conjure'
 call plug#end()
 
 
@@ -74,12 +74,11 @@ set splitright
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 
-
-
 " ################ Default keys/commands #################
 """""""""""""""""""""""""""""""""""""""""""""""
 " Set leader
 :let mapleader = " "
+:let maplocalleader = ","
 
 " copy/paste clipboard
 nnoremap <leader>y "+y
