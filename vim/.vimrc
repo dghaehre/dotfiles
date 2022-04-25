@@ -31,7 +31,7 @@ Plug 'chentau/marks.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
-Plug 'tami5/sqlite.lua'
+Plug 'Olical/conjure'
 call plug#end()
 
 
@@ -60,7 +60,7 @@ set undofile
 
 set foldmethod=indent
 set foldlevel=0
-set foldlevelstart=20
+set foldlevelstart=50
 set nocompatible
 filetype plugin on
 syntax on
@@ -74,12 +74,11 @@ set splitright
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 
-
-
 " ################ Default keys/commands #################
 """""""""""""""""""""""""""""""""""""""""""""""
 " Set leader
 :let mapleader = " "
+:let maplocalleader = ","
 
 " copy/paste clipboard
 nnoremap <leader>y "+y
@@ -240,8 +239,8 @@ highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 highlight DiffRemoved    ctermfg=1 ctermbg=none cterm=italic
 highlight DiffDelete     ctermfg=1 ctermbg=none cterm=italic
-highlight DiffAdd        ctermfg=none ctermbg=8
-highlight DiffText       ctermfg=3 ctermbg=none cterm=italic
+highlight DiffAdd        ctermfg=none ctermbg=23
+highlight DiffText       ctermfg=none ctermbg=8 cterm=italic
 highlight clear DiffChange
 
 
@@ -261,10 +260,11 @@ nnoremap <leader>gS :0G<cr>
 nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
-nnoremap <leader>gd :Git diff<cr>
 " Open up git log for current file
 nnoremap <leader>gl :0Gclog<cr>
 
+" TODO: how to make this work with git gutter..?
+nnoremap <leader>gd :Gvdiffsplit 
 
 " Lets try to use terminal instead of floatterm
 nnoremap <C-t> :b term:<cr>
@@ -312,7 +312,7 @@ nnoremap <leader>so <cmd>lua require('telescope.builtin').oldfiles({ follow = tr
 nnoremap <leader>sm <cmd>lua require('telescope.builtin').marks()<cr>
 nnoremap <leader>sr <cmd>lua require('telescope.builtin').registers()<cr>
 nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
-" nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
+nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 " vimwiki
 nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" }, no_ignore = true })<cr>

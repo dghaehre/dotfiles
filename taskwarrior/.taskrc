@@ -80,20 +80,23 @@ report.plan.filter=status:pending scheduled.before:3000-12-30
 report.plan.dateformat=a, d b
 
 # Modify Ready report
-report.ready.columns=id,start.age,depends.indicator,priority,project,tags,description.count,recur.indicator,scheduled.countdown,due.countdown,until.remaining,note,urgency
-report.ready.labels=ID,Active,D,P,Project,Tags,Description,R,S,Due,Until,Note,Urg
+report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,due.countdown,until.remaining,note,urgency
+report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Due,Until,Note,Urg
 report.ready.filter=+READY
+report.ready.dateformat=a, d
 
 
 # Modify next report
 report.next.columns=id,start.age,priority,project,tags,description.count,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency
 report.next.labels=ID,Active,P,Project,Tag,Description,Recur,S,Due,Until,Deps,Note,Urg
+report.next.dateformat=d b
 
 
 # Urgency
 urgency.user.tag.fun.coefficient=-2.0
 urgency.user.tag.waiting.coefficient=-8.0
 urgency.user.tag.next.coefficient=10.0
+urgency.user.tag.hero.coefficient=8.0
 
 calendar.details=full
 calendar.holidays=full
@@ -116,7 +119,7 @@ color.overdue=red
 # General decoration
 color.label=
 color.label.sort=
-color.alternate=on color0
+color.alternate=
 color.header=color4
 color.footnote=color6
 color.warning=color0 on color3
@@ -125,10 +128,10 @@ color.debug=color6
 
 
 # Background colors
-color.active=on color23
-# color.blocked=on color52
-color.blocking=on color59
-color.blocked=
+color.active=white on color23
+color.blocked=on color59
+color.blocking=on color0
+#color.blocked=
 #color.blocking=
 
 ## Task state
@@ -145,7 +148,7 @@ color.project.none=
 # color.keyword.fix=color103
 
 # Priority
-color.uda.priority.H=color203
+color.uda.priority.H=white on color52
 color.uda.priority.M=color3
 color.uda.priority.=
 color.uda.priority.L=color102 # grey
@@ -153,10 +156,11 @@ color.uda.priority.L=color102 # grey
 # Tags
 color.tag.next=green
 color.tag.none=
+color.tag.waiting=color102
 color.tagged=
 
 # color.scheduled=color110
-color.scheduled=color110
+color.scheduled=
 
 # Report: burndown
 color.burndown.done=color0 on color2

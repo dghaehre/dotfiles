@@ -51,6 +51,9 @@ map nf push :newfile<space>
 cmd mkdir %mkdir -p "$@"
 map nd push :mkdir<space>
 
+map <c-n> search-next
+map <c-p> search-prev
+
 cmd toggle-executable ${{
   if [[ -x "$f" ]]
     then

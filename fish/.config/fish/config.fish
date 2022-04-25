@@ -34,7 +34,8 @@ abbr -a tr task ready
 abbr -a te task edit
 abbr -a tm task mod
 abbr -a ts task start
-abbr -a tss task stop
+abbr -a tss task (task ids +ACTIVE) stop
+abbr -a tdd task (task ids +ACTIVE) done
 abbr -a td task done
 abbr -a tp task plan
 abbr -a tl task log
@@ -44,6 +45,7 @@ abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
 abbr -a test_microphone arecord -vvv -f dat /dev/null
+abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 
 # Open remote note
 abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
