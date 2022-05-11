@@ -8,6 +8,7 @@ setenv PAGER 'bat --style=plain'
 fish_add_path ~/.local/bin
 setenv GOPATH (go env GOPATH)
 fish_add_path (go env GOPATH)/bin
+source ~/.config/fish/git.fish
 
 
 ##################### Vim Keys  ########################
@@ -40,7 +41,6 @@ abbr -a td task done
 abbr -a tp task plan
 abbr -a tl task log
 abbr -a tw task waiting
-abbr -a trw task add project:work
 abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
@@ -235,55 +235,6 @@ function hmonitor
   xrandr --output HDMI1 --auto --$argv-of eDP1
 end
 
-##################### GIT ####################
-#--------------------------------------------#
-abbr -a g git
-abbr -a gs git status
-abbr -a ga git add -u
-abbr -a gd git diff
-abbr -a gds git diff --staged
-abbr -a gl git checkout
-alias gps="git push -u origin (git rev-parse --abbrev-ref HEAD)"
-alias gpl="git pull origin (git rev-parse --abbrev-ref HEAD)"
-abbr -a gal git add .
-abbr -a gc "git commit"
-abbr -a gcm "git commit -m"
-abbr -a gcf "git commit -m fixup"
-abbr -a gca "git commit --amend"
-abbr -a gsl "git-stash-fzf"
-abbr -a gwl git worktree list
-abbr -a gwa git worktree add
-abbr -a gwr git worktree remove
-
-function havechanges --description "are there any changes to the current git repo?"
-  set -l st (git status | tail -n 1)
-  if test "$st" = "nothing to commit, working tree clean"
-    echo "no"
-  else
-    echo "yes"
-  end
-end
-
-function pushall --description "add, commit and push to origin"
-  if test (havechanges) = "yes"
-    git add .
-    git commit -m "update"
-    git push origin (git rev-parse --abbrev-ref HEAD)
-  else
-    echo "no changes"
-  end
-end
-
-function to-be-pushed
-    set branch (git branch | grep \* | cut -d ' ' -f2)
-    git diff --stat --cached origin/$branch
-end
-
-function git-to-push
-    set branch (git branch | grep \* | cut -d ' ' -f2)
-    git log origin/$branch...$branch
-end
-
 
 ##################### File manager ####################
 #-----------------------------------------------------#
@@ -317,16 +268,3 @@ if test -e ~/.config/fish/secret.fish
   source ~/.config/fish/secret.fish
 end
 
-function sy --description "My sync :)"
-  set_color yellow
-  echo "-- syncing taskwarrior"
-  set_color normal
-  task sync
-
-  echo ""
-  set_color yellow
-  echo "-- syncing vimwiki"
-  set_color normal
-  cd ~/wikis/vimwiki
-  pushall
-end

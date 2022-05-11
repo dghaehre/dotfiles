@@ -41,8 +41,8 @@ interval = 30
 format = "{count} tasks {filter_name}"
 format_singular = "{count} task {filter_name}"
 format_everything_done = "all good ({filter_name})"
-warning_threshold = 15
-critical_threshold = 25
+warning_threshold = 5
+critical_threshold = 10
 [block.theme_overrides]
 warning_bg = "#EBCB8B"
 warning_fg = "#2E3440"
