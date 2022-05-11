@@ -37,16 +37,14 @@ function git_havechanges --description "are there any changes to the current git
   end
 end
 
-# TODO: needs testing
 function git_haveremotechanges --description "are there any remote changes to the current branch?"
   set -l currentbranch (git_currentbranch)
-  git fetch origin $currentbranch
-  # set -l st (git diff origin/$currentbranch)
-  set -l st (git status origin/$currentbranch | tail -n 1)
-  if test "$st" = "nothing to commit, working tree clean"
-    echo "no"
-  else
+  git fetch origin $currentbranch 2&> /dev/null
+  set -l st (git status | rg "Your branch is behind" | wc -l)
+  if test "$st" = "1"
     echo "yes"
+      else
+    echo "no"
   end
 end
 
