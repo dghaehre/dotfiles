@@ -1,5 +1,6 @@
 #!/bin/bash
 todos=$(task status:pending or status:waiting count)
+today=$(task status:completed end.after:today count)
 done=$(task status:completed count)
 context=$(task context show | awk -F "'" '{print $2}' | head -n 1)
-echo "@$context  ☐ $todos  ■ $done"
+echo "@$context  ■ $today   ☐ $todos  ■ $done"

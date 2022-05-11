@@ -50,6 +50,10 @@ abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 # Open remote note
 abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
 
+# Edit commandline in editor
+bind \ce edit_command_buffer
+bind -M insert \ce edit_command_buffer
+
 if type -q docker
   abbr -a dockerrm docker rm (docker ps -q)
 end
