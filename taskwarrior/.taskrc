@@ -54,7 +54,7 @@ report.maybe.dateformat=a, d b
 # Tasks that needs to be done later, but I have not scheduled a specific date for them yet
 # (sch:later)
 report.later.description=List of tasks to do later
-report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency
+report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency.integer
 report.later.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
 report.later.filter=status:pending scheduled.after:3000-12-30
 report.later.dateformat=a, d b
@@ -73,21 +73,21 @@ report.inbox.dateformat=a, d b
 # Tasks that have a plan
 # (sch<later)
 report.plan.description=List of planned tasks
-report.plan.columns=id,project,description.count,scheduled,scheduled.remaining,due.remaining,urgency
+report.plan.columns=id,project,description.count,scheduled,scheduled.remaining,due.remaining,urgency.integer
 report.plan.labels=Id,Project,Description,Scheduled,In,Due,Urg
 report.plan.sort=scheduled+
 report.plan.filter=status:pending scheduled.before:3000-12-30
 report.plan.dateformat=a, d b
 
 # Modify Ready report
-report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,due.countdown,until.remaining,note,urgency
 report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Due,Until,Note,Urg
+report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,due.countdown,until.remaining,note,urgency.integer
 report.ready.filter=+READY
 report.ready.dateformat=a, d
 
 
 # Modify next report
-report.next.columns=id,start.age,priority,project,tags,description.count,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency
+report.next.columns=id,start.age,priority,project,tags,description.count,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency.integer
 report.next.labels=ID,Active,P,Project,Tag,Description,Recur,S,Due,Until,Deps,Note,Urg
 report.next.dateformat=d b
 
@@ -197,6 +197,9 @@ uda.taskwarrior-tui.task-report.prompt-on-done=true
 # uda.taskwarrior-tui.keyconfig.shortcut1=n
 uda.taskwarrior-tui.shortcuts.1=tblock
 uda.taskwarrior-tui.shortcuts.2=tsub
+
+# Remove context
+verbose=affected,blank,edit,header,footnote,label,new-id,project,special,sync,override,recur
 
 # Command: undo
 color.undo.after=color2
