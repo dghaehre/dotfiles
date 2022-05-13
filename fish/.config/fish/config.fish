@@ -171,20 +171,21 @@ function fish_prompt
   set_color normal
 end
 
+# TODO: show time if there is no context!
 function fish_mode_prompt
   switch $fish_bind_mode
     case default
       set_color --bold yellow
-      echo -n "["(date "+%H:%M")"] "
+      echo -n "["(task _get rc.context)"] "
     case insert
       set_color brblack
-      echo -n "["(date "+%H:%M")"] "
+      echo -n "["(task _get rc.context)"] "
     case replace_one
       set_color --bold blue
-      echo -n "["(date "+%H:%M")"] "
+      echo -n "["(task _get rc.context)"] "
     case visual
       set_color --bold brmagenta
-      echo -n "["(date "+%H:%M")"] "
+      echo -n "["(task _get rc.context)"] "
     case '*'
       set_color --bold red
       echo '? '

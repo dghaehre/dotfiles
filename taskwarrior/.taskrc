@@ -25,6 +25,8 @@ context.home.read=+home
 context.home.write=+home
 context.work.read=+work
 context.work.write=+work
+context.hero.read=+hero
+context.hero.write=+work +hero
 
 # Notes
 uda.note.type=string
@@ -205,5 +207,4 @@ verbose=affected,blank,edit,header,footnote,label,new-id,project,special,sync,ov
 color.undo.after=color2
 color.undo.before=color1
 news.version=2.6.0
-
-include ./.taskdrc
+context=work
