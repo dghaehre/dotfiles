@@ -217,7 +217,7 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # For emoji support
-bindsym $mod+s exec --no-startup-id rofimoji 
+bindsym $mod+s exec --no-startup-id rofi -show emoji -modi emoji
 
 # Mark window
 # read 1 character and mark the current window with this character

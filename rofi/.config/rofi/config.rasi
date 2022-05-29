@@ -5,5 +5,9 @@ configuration {
 	columns: 1;
 	font: "mono 10";
 	show-icons: false;
+  kb-remove-to-eol: "";
+  kb-accept-entry: "Control+m,Return,KP_Enter";
+  kb-row-down: "Down,Control+j";
+  kb-row-up: "Up,Control+k";
 }
 @theme "Arc-Dark"
