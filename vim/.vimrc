@@ -32,6 +32,8 @@ Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
+Plug 'tpope/vim-unimpaired'
+Plug 'kdheepak/lazygit.nvim'
 call plug#end()
 
 
@@ -269,6 +271,8 @@ nnoremap <leader>gd :Gvdiffsplit
 " Lets try to use terminal instead of floatterm
 nnoremap <C-t> :b term:<cr>
 
+" setup mapping to call :LazyGit
+nnoremap <silent> <leader>G :LazyGit<CR>
 
 " #################### Floatterm ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""

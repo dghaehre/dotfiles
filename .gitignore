@@ -3,3 +3,4 @@ fish/.config/fish/secret.fish
 newsboat/.newsboat/urls
 newsboat/.newsboat/cache.db
 newsboat/.newsboat/history.search
+scripts/.local/bin/vipps
