@@ -46,6 +46,7 @@ abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | 
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
 abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
+abbr -a lg lazygit
 
 # Open remote note
 abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
