@@ -25,68 +25,10 @@ json = true
 [block.theme_overrides]
 info_bg = "#8FBCBB"
 
-# Taskwarrior
-[[block]]
-block = "custom"
-command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-active"
-interval = 25
-hide_when_empty = true
-json = true
-[block.theme_overrides]
-info_bg = "#8FBCBB"
-
-[[block]]
-block = "taskwarrior"
-interval = 30
-format = "{count} tasks {filter_name}"
-format_singular = "{count} task {filter_name}"
-format_everything_done = "all good ({filter_name})"
-warning_threshold = 5
-critical_threshold = 10
-[block.theme_overrides]
-warning_bg = "#EBCB8B"
-warning_fg = "#2E3440"
-critical_bg = "#BF616A"
-critical_fg = "#2E3440"
-[[block.filters]]
-name = "ready"
-filter = "+READY"
-[[block.filters]]
-name = "later"
-filter = "status:pending scheduled.after:3000-12-30"
-[[block.filters]]
-name = "maybe"
-filter = "wait.after:3000-12-30"
-# TODO create a filter for tasks today
-
-#TODO.txt counter
-[[block]]
-block = "custom"
-command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-counter"
-interval = 60
-hide_when_empty = true
-
-# #TODO.txt status
-# [[block]]
-# block = "custom"
-# command = "~/.config/i3status-rust/scripts/todotxt-status/todotxt-status"
-# interval = 18
-# hide_when_empty = true
-# json = true
-# [block.theme_overrides]
-# info_bg = "#8FBCBB"
-
 [[block]]
 block = "sound"
 format = "{volume}"
 driver = "auto"
-
-# #TODO.txt counter
-# [[block]]
-# block = "custom"
-# command = "~/.config/i3status-rust/scripts/todotxt-counter/todotxt-counter"
-# interval = 60
-# hide_when_empty = true
 
 [[block]]
 block = "pacman"
