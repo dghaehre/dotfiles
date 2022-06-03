@@ -27,7 +27,7 @@ Plug 'wellle/targets.vim'
 " Plug 'ThePrimeagen/harpoon'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
-Plug 'chentau/marks.nvim'
+Plug 'chentoast/marks.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
@@ -252,7 +252,8 @@ highlight clear DiffChange
 nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
 " Stage changes/hunk
-nmap ga <Plug>(GitGutterStageHunk)
+nnoremap ga <Plug>(GitGutterStageHunk)
+vnoremap ga <Plug>(GitGutterStageHunk)
 " Undo changes/hunk
 nnoremap gu <Plug>(GitGutterUndoHunk)
 
