@@ -1,0 +1,10 @@
+#!/usr/bin/env janet
+(use utils)
+
+# TODO: sy pull
+(defn main [& args]
+  ```
+  Sync my stuff
+  ```
+  (fish "sy push")
+  (os/shell "i3lock -c 263238 && systemctl suspend"))
