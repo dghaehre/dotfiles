@@ -34,6 +34,8 @@ Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'tpope/vim-unimpaired'
 Plug 'kdheepak/lazygit.nvim'
+Plug 'aklt/plantuml-syntax'
+Plug 'weirongxu/plantuml-previewer.vim'
 call plug#end()
 
 
