@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+
+set -e
+
+if [[ -z "$1" ]]; then
+  project=$(task _unique project | fzf -m --prompt="project> ")
+else
+  project=$(task _get "$1".project)
+fi
+
+PROJECTPATH="${project/.//}"
+NOTE=~/wikis/vimwiki/taskwarrior-notes/projects/$PROJECTPATH.md
+DIRPATH=$(dirname "$NOTE")
+
+if [ ! -f "$NOTE" ]; then # If file does not exist
+  content="# $project
+
+## TODO(s) || project:$project
+
+### Pending | status:pending
+
+
+### DONE | status:completed
+
+"
+  mkdir -p $DIRPATH
+  echo "$content" >> $NOTE
+fi
+
+$EDITOR "$NOTE"
