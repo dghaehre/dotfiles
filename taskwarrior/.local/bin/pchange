@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+set -e
+
+project=$(task _unique project | fzf -m --prompt="project> ")
+
+uuids=$(task _uuids proj:$project)
+
+echo "Change $project"
+echo "New project name:"
+read NEWPROJECT
+
+echo $NEWPROJECT
+
+task "$uuids" mod pro:$NEWPROJECT
+
+
+# TODO: change filename in taskwarrior-notes

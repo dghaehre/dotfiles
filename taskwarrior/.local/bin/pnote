@@ -8,19 +8,14 @@ else
   project=$(task _get "$1".project)
 fi
 
-PROJECTPATH="${project/.//}"
+PROJECTPATH=$(echo $project | sed 's/\./\//g')
 NOTE=~/wikis/vimwiki/taskwarrior-notes/projects/$PROJECTPATH.md
 DIRPATH=$(dirname "$NOTE")
 
 if [ ! -f "$NOTE" ]; then # If file does not exist
   content="# $project
 
-## TODO(s) || project:$project
-
-### Pending | status:pending
-
-
-### DONE | status:completed
+## TODO(s) | status:pending project:$project
 
 "
   mkdir -p $DIRPATH

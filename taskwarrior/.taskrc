@@ -25,8 +25,10 @@ context.home.read=+home
 context.home.write=+home
 context.work.read=+work
 context.work.write=+work
+context.vipps.read=proj:vipps or +work
+context.vipps.write=proj:vipps
 context.hero.read=+hero
-context.hero.write=+work +hero
+context.hero.write=(+work or proj:vipps) +hero
 
 # Notes
 uda.note.type=string
