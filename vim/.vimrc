@@ -36,6 +36,13 @@ Plug 'tpope/vim-unimpaired'
 Plug 'kdheepak/lazygit.nvim'
 Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim'
+
+" Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'nvim-telescope/telescope-dap.nvim'
+
 call plug#end()
 
 
@@ -516,21 +523,3 @@ nmap <Leader>wx :call VimwikiFindIncompleteTasks()<CR>
 """""""""""""""""""""""""""""""""""""""""
 " Fix crontab bug
 autocmd filetype crontab setlocal nobackup nowritebackup
-
-
-
-" ################ Delve debugger #################
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" Assuming you have delve running in tmux pane 2
-"
-" Send filename and filenumber as a breakpoint to delve
-nnoremap <silent> <leader>db :exe "!tmux send -t 2 'b %:p:" . line(".") . "' Enter"<CR><C-L>
-" Send continue to delve
-nnoremap <silent> <leader>dc :exe "!tmux send -t 2 'c' Enter"<CR><C-L>
-" Print out selected text in delve
-vnoremap <silent> <leader>dp "4y:exe "!tmux send -t 2 'p <c-r>"' Enter"<CR><C-L>
-" Show status
-nnoremap <silent> <leader>dl :exe "!tmux send -t 2 'ls' Enter"<CR><C-L>
-" TODO
-" Start a delve session in a new tmux session, from the current file
-" nnoremap <silent> <leader>ds :exe "!tmux split-window -h -I -c \"%:p\" Enter"<CR><C-L>
