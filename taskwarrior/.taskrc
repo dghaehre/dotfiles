@@ -95,6 +95,9 @@ report.next.columns=id,start.age,priority,project,tags,description.count,recur,s
 report.next.labels=ID,Active,P,Project,Tag,Description,Recur,S,Due,Until,Deps,Note,Urg
 report.next.dateformat=d b
 
+# Modify all report (project column)
+report.all.columns=id,status.short,uuid.short,start.active,entry.age,end.age,depends.indicator,priority,project,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
+
 
 # Urgency
 urgency.user.tag.fun.coefficient=-2.0
