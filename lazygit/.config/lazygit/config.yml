@@ -40,3 +40,9 @@ gui:
   showIcons: true
   commandLogSize: 8
   splitDiff: 'auto' # one of 'auto' | 'always'
+customCommands:
+  - key: '<c-r>'
+    command: 'REVIEW_BASE={{.SelectedLocalCommit.Sha}} git review'
+    context: 'commits'
+    subprocess: true
+    description: "review from vim"
