@@ -24,7 +24,7 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 Plug 'tools-life/taskwiki'
-" Plug 'ThePrimeagen/harpoon'
+Plug 'ThePrimeagen/harpoon'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'chentoast/marks.nvim'
@@ -303,13 +303,13 @@ nnoremap <Leader>to :FloatermNew --name=tui --autoclose=2 taskwarrior-tui<CR>
 
 " ########## Harpoon ###########
 """"""""""""""""""""""""""""""""
-" nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
-" nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
-" nnoremap 'a :lua require("harpoon.ui").nav_file(1)<CR>
-" nnoremap 's :lua require("harpoon.ui").nav_file(2)<CR>
-" nnoremap 'd :lua require("harpoon.ui").nav_file(3)<CR>
-" nnoremap 'f :lua require("harpoon.ui").nav_file(4)<CR>
-" nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
+nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap 'a :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap 's :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap 'd :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap 'f :lua require("harpoon.ui").nav_file(4)<CR>
+nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
 
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
@@ -380,22 +380,22 @@ vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
 
 " Make it simpler to use marks
-nnoremap ma mA
-nnoremap ms mS
-nnoremap md mD
-nnoremap mf mF
-nnoremap mt mT
+" nnoremap ma mA
+" nnoremap ms mS
+" nnoremap md mD
+" nnoremap mf mF
+" nnoremap mt mT
 
 " NOTE: using harpoon instead for now
 " nnoremap 'j 'J
 " nnoremap 'k 'K
 " nnoremap 'l 'L
 " nnoremap 't 'T
-nnoremap 'a 'A
-nnoremap 's 'S
-nnoremap 'd 'D
-nnoremap 'f 'F
-nnoremap 't 'T
+" nnoremap 'a 'A
+" nnoremap 's 'S
+" nnoremap 'd 'D
+" nnoremap 'f 'F
+" nnoremap 't 'T
 
 
 " ############ Resizing ############

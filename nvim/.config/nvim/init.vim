@@ -46,6 +46,17 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- Harpoon
+require("harpoon").setup({
+  global_settings = {
+    -- set marks specific to each git branch inside git repository
+    mark_branch = true,
+  },
+  menu = {
+      width = vim.api.nvim_win_get_width(0) - 100,
+  }
+})
+
 -- Debugging setup (dap)
 local ok, dap = pcall(require, "dap")
 if ok then
