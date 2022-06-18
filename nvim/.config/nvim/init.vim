@@ -84,19 +84,18 @@ if ok then
       toggle = "t",
     },
     expand_lines = false,
-    sidebar = {
-      -- You can change the order of elements in the sidebar
-      elements = {
-        -- Provide as ID strings or tables with "id" and "size" keys
-        { id = "scopes", size = 0.50 },
-        { id = "watches", size = 0.50 },
+    layout = {
+      {
+        elements = {
+          -- Provide as ID strings or tables with "id" and "size" keys
+          { id = "scopes", size = 0.50 },
+          { id = "watches", size = 0.50 },
+        },
+        size = 40,
+        position = "left", -- Can be "left", "right", "top", "bottom"
+      }, {
+        elements = {}
       },
-      size = 40,
-      position = "left", -- Can be "left", "right", "top", "bottom"
-    },
-    tray = {
-      -- removing those, as I dont know how they work.. 🙃
-      elements = {}
     },
   })
 
