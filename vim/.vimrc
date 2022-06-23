@@ -311,6 +311,13 @@ nnoremap 'd :lua require("harpoon.ui").nav_file(3)<CR>
 nnoremap 'f :lua require("harpoon.ui").nav_file(4)<CR>
 nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
 
+" Terminal
+nnoremap 'q :lua require("harpoon.term").gotoTerminal(1)<CR>
+nnoremap 'w :lua require("harpoon.term").gotoTerminal(2)<CR>
+nnoremap 'e :lua require("harpoon.term").gotoTerminal(3)<CR>
+nnoremap 'r :lua require("harpoon.term").gotoTerminal(4)<CR>
+nnoremap 't :lua require("harpoon.term").gotoTerminal(5)<CR>
+
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
 nnoremap <leader>sf <cmd>lua require('telescope.builtin').find_files()<cr>
