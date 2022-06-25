@@ -1,11 +1,16 @@
 #!/usr/bin/env janet
 
+###########################
+# Lets dog food this shit #
+###########################
+
 (defn get-comment-chars [ftype]
   "Defaults to: #"
   (def supported-filetypes
     {:go          "//"
      :golang      "#"
      :js          "//"
+     :vim         "\""
      :javascript  "//"
      :janet       "#"
      :haskell     "--"
