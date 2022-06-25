@@ -1,11 +1,13 @@
 #!/usr/bin/env janet
 
-###########################
-# Lets dog food this shit #
-###########################
+##################################################################
+# Lets dog food this shit.                                       #
+#                                                                #
+# This script tries to make it easy to create headers like this. #
+##################################################################
 
 (defn get-comment-chars [ftype]
-  "Defaults to: #"
+  "Defaults to #"
   (def supported-filetypes
     {:go          "//"
      :golang      "#"
@@ -18,7 +20,8 @@
      :rust        "//"
      :rs          "//"
      :bash        "#" })
-  (get supported-filetypes (keyword ftype) "#"))
+  (if (nil? ftype) "#"
+    (get supported-filetypes (keyword ftype) "#")))
 
 (defn add-header-and-footer [input comment-chars]
   "Adding header and footer for the whole input string"
@@ -31,8 +34,11 @@
   (string line "\n" input "\n" line))
 
 (defn add-line-endings [input comment-chars]
+  "Add `commant-chars` at the end of every line"
+
   (def lines (string/split "\n" input))
   (def end-length (length (get lines 0)))
+
   (defn add-line-ending [line]
     (if (>= (length line) end-length)
       (string line comment-chars)
@@ -40,24 +46,22 @@
         (def line-length (length line))
         (def until-end (- end-length line-length))
         (string line (string/repeat " " until-end) comment-chars))))
+
   (-> (map add-line-ending lines)
       (string/join "\n")))
 
 (defn format [input comment-chars]
-  "Make some fancy stuff around input"
+  "Make input fancy"
   (as-> input _
       (string/trim _ "\n") # Remove trailing newline
       (string/split "\n" _) # Make list of lines
-      (map |(string/trim $0) _) # Trim line
       (map |(string/trim $0 comment-chars) _) # Remove comments
-      (map |(string/trim $0) _) # Trim again
       (map |(string comment-chars " " $0) _) # Add comments
       (string/join _ "\n")
       (add-header-and-footer _ comment-chars)
       (add-line-endings _ comment-chars)))
 
 (defn main [_ &opt ftype]
-  (default ftype "bash")
   (-> (file/read stdin :all)
       (format (get-comment-chars ftype))
       (print)))
