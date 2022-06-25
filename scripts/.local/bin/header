@@ -40,9 +40,8 @@
         (def line-length (length line))
         (def until-end (- end-length line-length))
         (string line (string/repeat " " until-end) comment-chars))))
-  (as-> lines _
-        (map add-line-ending _)
-        (string/join _ "\n")))
+  (-> (map add-line-ending lines)
+      (string/join "\n")))
 
 (defn format [input comment-chars]
   "Make some fancy stuff around input"
@@ -59,5 +58,6 @@
 
 (defn main [_ &opt ftype]
   (default ftype "bash")
-  (def input (file/read stdin :all))
-  (print (format input (get-comment-chars ftype))))
+  (-> (file/read stdin :all)
+      (format (get-comment-chars ftype))
+      (print)))
