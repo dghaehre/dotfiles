@@ -1,0 +1,58 @@
+#!/usr/bin/env janet
+
+(defn get-comment-chars [ftype]
+  "Defaults to: #"
+  (def supported-filetypes
+    {:go          "//"
+     :golang      "#"
+     :js          "//"
+     :javascript  "//"
+     :janet       "#"
+     :haskell     "--"
+     :hs          "--"
+     :rust        "//"
+     :rs          "//"
+     :bash        "#" })
+  (get supported-filetypes (keyword ftype) "#"))
+
+(defn add-header-and-footer [input comment-chars]
+  "Adding header and footer for the whole input string"
+  (defn get-max [len line] (if (> len (length line)) len (length line)))
+  (def max-length (reduce get-max 0 (string/split "\n" input)))
+  (def line (->> (/ max-length (length comment-chars))
+                 (math/ceil)
+                 (+ 1)
+                 (string/repeat comment-chars)))
+  (string line "\n" input "\n" line))
+
+(defn add-line-endings [input comment-chars]
+  (def lines (string/split "\n" input))
+  (def end-length (length (get lines 0)))
+  (defn add-line-ending [line]
+    (if (>= (length line) end-length)
+      (string line comment-chars)
+      (do
+        (def line-length (length line))
+        (def until-end (- end-length line-length))
+        (string line (string/repeat " " until-end) comment-chars))))
+  (as-> lines _
+        (map add-line-ending _)
+        (string/join _ "\n")))
+
+(defn format [input comment-chars]
+  "Make some fancy stuff around input"
+  (as-> input _
+      (string/trim _ "\n") # Remove trailing newline
+      (string/split "\n" _) # Make list of lines
+      (map |(string/trim $0) _) # Trim line
+      (map |(string/trim $0 comment-chars) _) # Remove comments
+      (map |(string/trim $0) _) # Trim again
+      (map |(string comment-chars " " $0) _) # Add comments
+      (string/join _ "\n")
+      (add-header-and-footer _ comment-chars)
+      (add-line-endings _ comment-chars)))
+
+(defn main [_ &opt ftype]
+  (default ftype "bash")
+  (def input (file/read stdin :all))
+  (print (format input (get-comment-chars ftype))))
