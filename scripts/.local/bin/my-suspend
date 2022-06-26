@@ -1,5 +1,10 @@
 #!/usr/bin/env janet
-(use utils)
+
+(defn fish [s]
+  ```
+  Run command as fish shell
+  ```
+  (os/execute @("/usr/bin/fish" "-c" s) :e))
 
 # TODO: sy pull
 (defn main [& args]
