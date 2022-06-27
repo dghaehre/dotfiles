@@ -21,8 +21,8 @@ alias.sch=scheduled
 alias.s=long scheduled
 
 # Context
-context.home.read=+home
-context.home.write=+home
+context.home.read=-work and proj.not:vipps
+context.home.write=
 context.work.read=+work
 context.work.write=+work
 context.vipps.read=proj:vipps or +work
@@ -62,6 +62,7 @@ report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.
 report.later.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
 report.later.filter=status:pending scheduled.after:3000-12-30
 report.later.dateformat=a, d b
+report.later.sort=urgency-
 
 # Inbox
 # tasks that need to be handled

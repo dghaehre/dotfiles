@@ -290,7 +290,7 @@ let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 " let g:floaterm_keymap_new = '<C-t>'
 let g:floaterm_keymap_next = '<C-n>'
-let g:floaterm_keymap_prev = '<C-p>'
+" let g:floaterm_keymap_prev = '<C-p>'
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black

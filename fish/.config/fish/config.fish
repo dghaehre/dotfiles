@@ -39,7 +39,7 @@ abbr -a tss task (task ids +ACTIVE) stop
 abbr -a tdd task (task ids +ACTIVE) done
 abbr -a td task done
 abbr -a tp task plan
-abbr -a tl task log
+abbr -a tl task later
 abbr -a tw task waiting
 abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
