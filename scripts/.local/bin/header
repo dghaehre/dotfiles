@@ -23,15 +23,17 @@
   (if (nil? ftype) "#"
     (get supported-filetypes (keyword ftype) "#")))
 
+(def left-padding "   ")
+
 (defn add-header-and-footer [input comment-chars]
   "Adding header and footer for the whole input string"
   (defn get-max [len line] (if (> len (length line)) len (length line)))
   (def max-length (reduce get-max 0 (string/split "\n" input)))
   (def line (->> (/ max-length (length comment-chars))
                  (math/ceil)
-                 (+ 1)
+                 (+ 2)
                  (string/repeat comment-chars)))
-  (string line "\n" input "\n" line))
+  (string line "\n" comment-chars "\n" input "\n" comment-chars "\n" line))
 
 (defn add-line-endings [input comment-chars]
   "Add `commant-chars` at the end of every line"
@@ -56,7 +58,7 @@
       (string/trim _ "\n") # Remove trailing newline
       (string/split "\n" _) # Make list of lines
       (map |(string/trim $0 comment-chars) _) # Remove comments
-      (map |(string comment-chars " " $0) _) # Add comments
+      (map |(string comment-chars left-padding $0) _) # Add comments
       (string/join _ "\n")
       (add-header-and-footer _ comment-chars)
       (add-line-endings _ comment-chars)))
