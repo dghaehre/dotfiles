@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -e
+
+token=$(cat ~/.todoist.token)
+
+count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=due:today"  -H "Authorization: Bearer $token" | jq '. | length')
+
+echo "Today: $count"
