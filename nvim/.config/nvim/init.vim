@@ -152,13 +152,6 @@ cmp.setup {
 
 
 
--- NOTE: remove?
--- vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-
 -- TELESCOPE
 local actions = require('telescope.actions')
 require('telescope').setup{
@@ -198,37 +191,6 @@ require('telescope').setup{
 }
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('dap')
-
--- Zoxide
-require'telescope'.load_extension('zoxide')
-local z_utils = require("telescope._extensions.zoxide.utils")
-require("telescope._extensions.zoxide.config").setup({
-  prompt_title = "[ change dir ]",
-  -- Zoxide list command with score
-  list_command = "zoxide query -ls",
-  mappings = {
-    default = {
-      action = function(selection)
-        vim.cmd("cd " .. selection.path)
-      end,
-      after_action = function(selection)
-        print("Directory changed to " .. selection.path)
-      end
-    },
-    ["<C-g>"] = {
-      keepinsert = true,
-      action = function(selection)
-        require('telescope.builtin').live_grep({ cwd = selection.path, hidden = true })
-      end
-    },
-    ["<C-f>"] = {
-      keepinsert = true,
-      action = function(selection)
-        require('telescope.builtin').find_files({ cwd = selection.path })
-      end
-    }
-  }
-})
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {

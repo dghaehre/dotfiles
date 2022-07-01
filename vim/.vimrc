@@ -28,7 +28,6 @@ Plug 'ThePrimeagen/harpoon'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'chentoast/marks.nvim'
-Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
@@ -303,13 +302,13 @@ nnoremap <Leader>to :FloatermNew --name=tui --autoclose=2 taskwarrior-tui<CR>
 
 " ########## Harpoon ###########
 """"""""""""""""""""""""""""""""
-nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>hh :lua require("harpoon.mark").add_file()<CR>
 nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap 'a :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap 's :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap 'd :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap 'f :lua require("harpoon.ui").nav_file(4)<CR>
-nnoremap 'g :lua require("harpoon.ui").nav_file(5)<CR>
+nnoremap <leader>ha :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <leader>hs :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <leader>hd :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <leader>hf :lua require("harpoon.ui").nav_file(4)<CR>
+nnoremap <leader>hg :lua require("harpoon.ui").nav_file(5)<CR>
 
 " Terminal
 nnoremap 'q :lua require("harpoon.term").gotoTerminal(1)<CR>
