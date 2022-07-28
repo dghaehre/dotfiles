@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+set -e
+
+token=$(cat ~/.todoist.token)
+
+n=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=@now"  -H "Authorization: Bearer $token" | jq '.[0].content')
+
+# TODO:
+# - [ ] handle multiple tasks labeled as @now
+
+if [[ "$n" == "null" ]]; then
+  echo "{\"icon\":\"headphones\", \"text\": \"\", \"state\": \"Info\"}"
+else
+  echo "{\"icon\":\"headphones\", \"text\": $n, \"state\": \"Info\"}"
+fi
