@@ -1,15 +1,13 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-set -e
+# TODO:
+# - [ ] handle multiple tasks labeled as @now
 
 token=$(cat ~/.todoist.token)
 
 n=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=@now"  -H "Authorization: Bearer $token" | jq '.[0].content')
 
-# TODO:
-# - [ ] handle multiple tasks labeled as @now
-
-if [[ "$n" == "null" ]]; then
+if [[ "$n" == "null" || "$n" == "parse error:"* ]]; then
   echo "{\"icon\":\"headphones\", \"text\": \"\", \"state\": \"Info\"}"
 else
   echo "{\"icon\":\"headphones\", \"text\": $n, \"state\": \"Info\"}"
