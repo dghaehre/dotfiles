@@ -48,6 +48,9 @@ abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 abbr -a lg lazygit
 
+alias hf="hledger -f ~/projects/personal/ledger/2022/felles.journal"
+alias hd="hledger -f ~/projects/personal/ledger/2022/daniel.journal"
+
 # Open remote note
 abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
 
