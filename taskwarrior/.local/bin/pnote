@@ -9,7 +9,11 @@ else
 fi
 
 PROJECTPATH=$(echo $project | sed 's/\./\//g')
-NOTE=~/wikis/vimwiki/taskwarrior-notes/projects/$PROJECTPATH.md
+if [[ $project == "vipps"* ]]; then
+  NOTE=~/wikis/work/taskwarrior-notes/projects/$PROJECTPATH.md
+else
+  NOTE=~/wikis/vimwiki/taskwarrior-notes/projects/$PROJECTPATH.md
+fi
 DIRPATH=$(dirname "$NOTE")
 
 if [ ! -f "$NOTE" ]; then # If file does not exist
