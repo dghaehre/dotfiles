@@ -180,19 +180,19 @@ function fish_mode_prompt
   switch $fish_bind_mode
     case default
       set_color --bold yellow
-      echo -n "["(date "+%H:%M")"] "
+      echo -n "[N] "
     case insert
       set_color brblack
-      echo -n "["(date "+%H:%M")"] "
+      echo -n "[I] "
     case replace_one
       set_color --bold blue
-      echo -n "["(date "+%H:%M")"] "
+      echo -n "[R] "
     case visual
       set_color --bold brmagenta
-      echo -n "["(date "+%H:%M")"] "
-    case '*'
-      set_color --bold red
-      echo '? '
+      echo -n "[V] "
+    case '*' # replace_something
+      set_color --bold brmagenta
+      echo -n "[R] "
     end
     set_color normal
 end

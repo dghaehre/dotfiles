@@ -4,6 +4,10 @@ set -e
 
 token=$(cat ~/.todoist.token)
 
-count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)"  -H "Authorization: Bearer $token" | jq '. | length')
+count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)
 
-echo "Today: $count"
+if [[ "$n" == "null" || "$n" == "parse error:"* ]]; then
+  echo ""
+else
+  echo "Today: $count"
+fi

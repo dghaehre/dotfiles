@@ -122,6 +122,7 @@ nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
 " Open html file in firefox
 nnoremap go :silent !firefox <cfile><cr>
 
+nnoremap <Leader>wp :let @" = expand("%")<CR>
 
 
 " ################ Tests #################
@@ -153,7 +154,7 @@ nnoremap <leader>N :LfCurrentFile<CR>
 
 " ################ BROOT #################
 """"""""""""""""""""""""""""""""""""""""""""
-noremap  <leader>br :FloatermNew --name=broot --autoclose=2 broot<CR>
+nnoremap  <leader>br :FloatermNew --name=broot --autoclose=2 br<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
