@@ -19,6 +19,7 @@
     (fromInput args)
     (string/replace "\n" "")
     (string/split ",")
+    (filter |(not= "" $0))
     (map |(string "+" $0))
     (|(string/join $0 " "))
-    (print)))
+    (prin)))

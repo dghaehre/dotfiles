@@ -23,7 +23,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
-" Plug 'tools-life/taskwiki'
+Plug 'tools-life/taskwiki'
 Plug 'ThePrimeagen/harpoon'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
@@ -34,9 +34,9 @@ Plug 'Olical/conjure'
 Plug 'tpope/vim-unimpaired'
 Plug 'kdheepak/lazygit.nvim'
 Plug 'aklt/plantuml-syntax'
-Plug 'weirongxu/plantuml-previewer.vim'
-
+Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
 " Debugging
+
 Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
 Plug 'rcarriga/nvim-dap-ui'
@@ -68,14 +68,12 @@ set wrapmargin=0
 set undodir=~/.vim/undo-dir
 set undofile
 
-set foldmethod=indent
+set foldmethod=syntax
 set foldlevel=0
 set foldlevelstart=50
 set nocompatible
 filetype plugin on
 syntax on
-set number relativenumber
-set nu rnu
 
 set splitbelow
 set splitright
@@ -165,9 +163,12 @@ set t_Co=256
 set fillchars=""
 set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
+set signcolumn=number
+set nonumber
+set nu rnu
 set number
-set numberwidth=5
-:set scrolloff=6
+set numberwidth=4
+:set scrolloff=3
 :set cursorline
 
 " Statusline
@@ -232,7 +233,7 @@ highlight LspDiagnosticsFloatingError ctermfg=9 cterm=none
 " MISC
 highlight VertSplit cterm=NONE guibg=NONE
 highlight clear SignColumn
-highlight LineNr cterm=none ctermfg=DarkGrey ctermbg=none guibg=none guifg=DarkGrey
+highlight LineNr cterm=none ctermfg=Black ctermbg=none guibg=none guifg=DarkGrey
 highlight CursorLineNr cterm=none ctermfg=249 guifg=Grey
 highlight CursorLine cterm=none ctermbg=Black ctermfg=none
 highlight SpellBad ctermfg=none ctermbg=none cterm=underline
@@ -484,9 +485,9 @@ function! MarkdownLevel()
     endif
     return "=" 
 endfunction
-autocmd BufEnter *.md setlocal foldexpr=MarkdownLevel()  
-autocmd BufEnter *.md setlocal foldmethod=expr   
-autocmd BufEnter *.md setlocal foldlevelstart=1   
+autocmd FileType markdown setlocal foldexpr=MarkdownLevel()  
+autocmd FileType markdown setlocal foldmethod=expr   
+autocmd FileType markdown setlocal foldlevelstart=1   
 
 " Capture a note/idea fast for sorting later
 function Capture()

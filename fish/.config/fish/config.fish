@@ -41,12 +41,13 @@ abbr -a td task done
 abbr -a tp task plan
 abbr -a tl task later
 abbr -a tw task waiting
-abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls
+abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls --cache-file ~/wikis/vimwiki/rss.db
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
 abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 abbr -a lg lazygit
+abbr -a todo rg -N -A 2 TODO
 
 alias hf="hledger -f ~/projects/personal/ledger/2022/felles.journal"
 alias hd="hledger -f ~/projects/personal/ledger/2022/daniel.journal"
@@ -206,6 +207,7 @@ set fish_color_param blue
 set fish_color_search_match '--background=666'
 set fish_color_autosuggestion '888'
 set fish_color_comment '999'
+set fish_color_selection '--background=666'
 set fish_pager_color_description yellow
 
 
