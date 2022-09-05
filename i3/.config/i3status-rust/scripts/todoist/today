@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-set -e
-
 token=$(cat ~/.todoist.token)
 
 count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)

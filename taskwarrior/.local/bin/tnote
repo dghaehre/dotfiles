@@ -7,10 +7,16 @@ if [[ -z "$1" ]]; then
 fi
 
 UUID=$(task _get "$1".uuid)
+PROJECT=$(task _get "$1".project)
 
-mkdir -p ~/wikis/vimwiki/taskwarrior-notes
 
-NOTE=~/wikis/vimwiki/taskwarrior-notes/$UUID.md
+if [[ $PROJECT == "vipps"* ]]; then
+  mkdir -p ~/wikis/work/taskwarrior-notes
+  NOTE=~/wikis/work/taskwarrior-notes/$UUID.md
+else
+  mkdir -p ~/wikis/vimwiki/taskwarrior-notes
+  NOTE=~/wikis/vimwiki/taskwarrior-notes/$UUID.md
+fi
 
 if [ ! -f "$NOTE" ]; then # If file does not exist
   desc=$(task _get "$1".description)
