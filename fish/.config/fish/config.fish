@@ -49,6 +49,10 @@ abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 abbr -a lg lazygit
 abbr -a todo rg -N -A 2 TODO
 
+# Screen cast laptop size from the left (without audio)
+# https://wiki.archlinux.org/title/FFmpeg#Screen_capture
+abbr -a screencast ffmpeg -f x11grab -video_size 1920x1200 -framerate 30 -i $DISPLAY -c:v libx264 -preset ultrafast -c:a aac screencast.mp4
+
 alias hf="hledger -f ~/projects/personal/ledger/2022/felles.journal"
 alias hd="hledger -f ~/projects/personal/ledger/2022/daniel.journal"
 
@@ -157,6 +161,16 @@ function add-project-fzf
   end
 end
 bind -M insert \cp 'add-project-fzf'
+
+function add-tags-fzf
+  set -l selected (task _unique tags | fzf -m --prompt="tags> ")
+  if test -n "$selected"
+    set -l tags (echo "$selected" | format-tags)
+    commandline -i -- " $tags"
+  end
+end
+bind -M insert \ct 'add-tags-fzf'
+
 
 
 ############## Fish Prompt and Colors ####################

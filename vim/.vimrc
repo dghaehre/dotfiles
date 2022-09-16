@@ -81,6 +81,10 @@ set splitright
 " tmux cursor
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
+" Paste in visual mode without fucking up the yank register
+vnoremap P "_dP
+" Delete in visual mode without fucking up the yank register
+vnoremap D "_d
 
 " ################ Default keys/commands #################
 """""""""""""""""""""""""""""""""""""""""""""""
@@ -340,6 +344,9 @@ nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" }, no_ignore = true })<cr>
 " The no_ignore doesnt work with live_grep
 nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }})<cr>
+" vimwiki work (jobb)
+nnoremap <Leader>sjf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/" }, no_ignore = true })<cr>
+nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/" }})<cr>
 " dotfiles
 nnoremap <Leader>sdf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>
 nnoremap <Leader>sdg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>
