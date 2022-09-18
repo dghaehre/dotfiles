@@ -38,12 +38,12 @@ uda.note.values=,s,l
 # Custom reports
 
 # simple
-# pending tasks that are scheduled
+# for pi
 report.simple.description=Simple list
-report.simple.columns=id,description.count,note
-report.simple.labels=Id,Description,note
-report.simple.filter=status:pending and scheduled
-report.simple.sort=urgency-
+report.simple.columns=id,description.count,project
+report.simple.labels=Id,Description,project
+report.simple.filter=+READY
+report.simple.sort=urgency+
 
 # Maybe
 # tasks that I want to work on someday, but have no plan on how or when
@@ -105,6 +105,7 @@ urgency.user.tag.fun.coefficient=-2.0
 urgency.user.tag.waiting.coefficient=-8.0
 urgency.user.tag.next.coefficient=10.0
 urgency.user.tag.hero.coefficient=8.0
+urgency.user.project.familie.coefficient=8.0
 
 calendar.details=full
 calendar.holidays=full
