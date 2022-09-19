@@ -37,6 +37,7 @@ abbr -a tm task mod
 abbr -a ts task start
 abbr -a tss task (task ids +ACTIVE) stop
 abbr -a tdd task (task ids +ACTIVE) done
+abbr -a tand task +LATEST mod
 abbr -a td task done
 abbr -a tp task plan
 abbr -a tl task later
@@ -62,6 +63,9 @@ abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
 # Edit commandline in editor
 bind \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
+bind -M insert \cl accept-autosuggestion
+bind -M insert \t  complete-and-search
+
 
 if type -q docker
   abbr -a dockerrm docker rm (docker ps -q)
@@ -170,8 +174,6 @@ function add-tags-fzf
   end
 end
 bind -M insert \ct 'add-tags-fzf'
-
-
 
 ############## Fish Prompt and Colors ####################
 #--------------------------------------------------------#
