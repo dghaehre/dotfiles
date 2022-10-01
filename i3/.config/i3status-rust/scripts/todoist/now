@@ -2,6 +2,7 @@
 
 # TODO:
 # - [ ] handle multiple tasks labeled as @now
+# - [ ] handle no internet
 
 token=$(cat ~/.todoist.token)
 

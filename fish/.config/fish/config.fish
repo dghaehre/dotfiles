@@ -49,6 +49,7 @@ abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 abbr -a lg lazygit
 abbr -a todo rg -N -A 2 TODO
+abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
 
 # Screen cast laptop size from the left (without audio)
 # https://wiki.archlinux.org/title/FFmpeg#Screen_capture
