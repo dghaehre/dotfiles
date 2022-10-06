@@ -228,7 +228,7 @@ bindsym $mod+n exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 # Startup
 exec unclutter -b
-exec_always xset r rate 300 60
+exec_always xset r rate 300 80
 exec_always feh --bg-scale ~/.config/i3/background.jpg
 
 # Caps lock works as Esc and Ctrl and set variant to mac

@@ -237,7 +237,7 @@ highlight LspDiagnosticsFloatingError ctermfg=9 cterm=none
 " MISC
 highlight VertSplit cterm=NONE guibg=NONE
 highlight clear SignColumn
-highlight LineNr cterm=none ctermfg=Black ctermbg=none guibg=none guifg=DarkGrey
+highlight LineNr cterm=none ctermfg=DarkGrey ctermbg=none guibg=none guifg=DarkGrey
 highlight CursorLineNr cterm=none ctermfg=249 guifg=Grey
 highlight CursorLine cterm=none ctermbg=Black ctermfg=none
 highlight SpellBad ctermfg=none ctermbg=none cterm=underline
@@ -246,7 +246,11 @@ highlight clear TabLineFill
 highlight clear TabLine
 highlight TabLine ctermfg=8
 highlight TabLineSel ctermfg=white
-
+:highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " GIT
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
@@ -258,6 +262,8 @@ highlight DiffDelete     ctermfg=1 ctermbg=none cterm=italic
 highlight DiffAdd        ctermfg=none ctermbg=23
 highlight DiffText       ctermfg=none ctermbg=8 cterm=italic
 highlight clear DiffChange
+
+highlight TelescopeNormal guibg=Black
 
 
 " ################ GIT #################
@@ -281,7 +287,7 @@ nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
 nnoremap <leader>gl :0Gclog<cr>
 
 " TODO: how to make this work with git gutter..?
-nnoremap <leader>gd :Gvdiffsplit 
+nnoremap <leader>gd :Gvdiffsplit
 
 " Lets try to use terminal instead of floatterm
 nnoremap <C-t> :b term:<cr>
@@ -496,11 +502,11 @@ function! MarkdownLevel()
     if getline(v:lnum) =~ '^###### .*$'
         return ">6"
     endif
-    return "=" 
+    return "="
 endfunction
-autocmd FileType markdown setlocal foldexpr=MarkdownLevel()  
-autocmd FileType markdown setlocal foldmethod=expr   
-autocmd FileType markdown setlocal foldlevelstart=1   
+autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
+autocmd FileType markdown setlocal foldmethod=expr
+autocmd FileType markdown setlocal foldlevelstart=1
 
 " Capture a note/idea fast for sorting later
 function Capture()
