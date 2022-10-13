@@ -297,3 +297,9 @@ if test -e ~/.config/fish/secret.fish
   source ~/.config/fish/secret.fish
 end
 
+
+##################### NVM ####################
+#-----------------------------------------------------#
+if type -q nvm
+  nvm use lts/gallium > /dev/null
+end

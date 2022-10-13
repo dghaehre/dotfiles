@@ -38,6 +38,8 @@
   rebase = false
 [includeIf "gitdir:~/Desktop/tomb/"]
   path = ~/Desktop/tomb/.gitconfig
+[includeIf "gitdir:~/projects/vipps/"]
+  path = ~/projects/vipps/.gitconfig
 [merge]
 	summary = true
 [url "ssh://git@github.com/"]
