@@ -4,15 +4,19 @@ token=$(cat ~/.todoist.token)
 
 today_date=$(date -d "00:00" --iso-8601=seconds)
 
-todo_today_count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)
-completed_today_count=$(curl -s -X GET  "https://api.todoist.com/sync/v9/completed/get_all?limit=200&since=$today_date"  -H "Authorization: Bearer $token" | jq '.items | length' 2> /dev/null)
-todo_count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)
+{
+  todo_today_count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)
+  completed_today_count=$(curl -s -X GET  "https://api.todoist.com/sync/v9/completed/get_all?limit=200&since=$today_date"  -H "Authorization: Bearer $token" | jq '.items | length' 2> /dev/null)
+  todo_count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)
 
-# TODO: this should be fetched from a sqlite db that has populated all my completed todos
-completed_count=$(curl -s -X GET  "https://api.todoist.com/sync/v9/completed/get_all?limit=200" -H "Authorization: Bearer $token" | jq '.items | length' 2> /dev/null)
+  # TODO: this should be fetched from a sqlite db that has populated all my completed todos
+  completed_count=$(sqlite3 ~/.cache/todo.db "select count(*) from completed limit 10;" || 0)
 
-if [[ "$todo_count" == "null" || "$todo_count" == "parse error:"* || "$completed_count" == "null" || "$completed_count" == "parse error:"* ]]; then
-  echo ""
-else
-  echo " ☐ $todo_today_count ■ $completed_today_count  ☐ $todo_count ■ $completed_count"
-fi
+  if [[ "$todo_count" == "null" || "$todo_count" == "parse error:"* || "$completed_count" == "null" || "$completed_count" == "parse error:"* ]]; then
+    echo ""
+  else
+    echo " ☐ $todo_today_count ■ $completed_today_count  ☐ $todo_count ■ $completed_count"
+  fi
+} || {
+  echo " ☐ 0 ■ 0  ☐ 0 ■ 0"
+}

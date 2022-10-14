@@ -6,10 +6,14 @@
 
 token=$(cat ~/.todoist.token)
 
-n=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=@now"  -H "Authorization: Bearer $token" | jq '.[0].content' 2> /dev/null)
+{
+  n=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=@now"  -H "Authorization: Bearer $token" | jq '.[0].content' 2> /dev/null)
 
-if [[ "$n" == "null" || "$n" == "parse error:"* ]]; then
+  if [[ "$n" == "null" || "$n" == "parse error:"* ]]; then
+    echo "{\"icon\":\"headphones\", \"text\": \"\", \"state\": \"Info\"}"
+  else
+    echo "{\"icon\":\"headphones\", \"text\": $n, \"state\": \"Info\"}"
+  fi
+} || {
   echo "{\"icon\":\"headphones\", \"text\": \"\", \"state\": \"Info\"}"
-else
-  echo "{\"icon\":\"headphones\", \"text\": $n, \"state\": \"Info\"}"
-fi
+}
