@@ -40,6 +40,8 @@
   path = ~/Desktop/tomb/.gitconfig
 [includeIf "gitdir:~/projects/vipps/"]
   path = ~/projects/vipps/.gitconfig
+[includeIf "gitdir:~/projects/personal/"]
+  path = ~/projects/personal/.gitconfig
 [merge]
 	summary = true
 [url "ssh://git@github.com/"]

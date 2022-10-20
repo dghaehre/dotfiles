@@ -506,7 +506,7 @@ function! MarkdownLevel()
 endfunction
 autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
 autocmd FileType markdown setlocal foldmethod=expr
-autocmd FileType markdown setlocal foldlevelstart=1
+autocmd FileType markdown setlocal foldlevelstart=50
 
 " Capture a note/idea fast for sorting later
 function Capture()
