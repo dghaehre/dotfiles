@@ -86,6 +86,8 @@ map m cut
 map gh cd ~
 map gd cd ~/Downloads
 map gw cd ~/wikis
+map gij cd ~/wikis/work/Inbox
+map giw cd ~/wikis/vimwiki/Inbox
 map gp cd ~/projects
 map g. cd ~/dotfiles
 

@@ -1,0 +1,15 @@
+#!/usr/bin/env janet
+
+(defn count-files [dir]
+  (-> (os/getenv "HOME")
+      (string dir)
+      (os/dir)
+      (length)))
+
+(defn main [& args]
+  (let [p         (count-files "/wikis/vimwiki/Inbox")
+        w         (count-files "/wikis/work/Inbox")
+        p-string  (if (= p 0) "" (string "personal-inbox: " p "  "))
+        w-string  (if (= w 0) "" (string "work-inbox: " w))]
+    (prin (string p-string w-string))))
+

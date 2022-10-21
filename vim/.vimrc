@@ -509,10 +509,14 @@ autocmd FileType markdown setlocal foldmethod=expr
 autocmd FileType markdown setlocal foldlevelstart=50
 
 " Capture a note/idea fast for sorting later
-function Capture()
+function CaptureVimwiki()
   execute ":e ~/wikis/vimwiki/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
 endfunction
-nnoremap <Leader>ca :call Capture()<CR>"cpggA
+function CaptureWork()
+  execute ":e ~/wikis/work/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
+endfunction
+nnoremap <Leader>ca :call CaptureVimwiki()<CR>"cpggA
+nnoremap <Leader>cja :call CaptureWork()<CR>"cpggA
 
 " Search for todo's
 " function VimwikiFindIncompleteTasks()
