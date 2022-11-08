@@ -12,7 +12,7 @@ set shellopts '-eu'
 set ifs "\n"
 
 # Make display more minimal
-set ratios 1:2
+# set ratios 1:2
 
 # Bindings
 # Remove some defaults
@@ -91,6 +91,12 @@ map giw cd ~/wikis/vimwiki/Inbox
 map gp cd ~/projects
 map g. cd ~/dotfiles
 
+# Follow symlink
+cmd follow_link %{{
+  lf -remote "send ${id} select '$(readlink $f)'"
+}}
+map gl follow_link
+
 map dd delete
 
 cmd fzf_grep ${{
@@ -101,7 +107,7 @@ cmd fzf_grep ${{
 map sg fzf_grep
 
 cmd fzf_jump ${{
-  res="$(find . -maxdepth 5 | fzf --header='Jump to location' --preview-window=right,70% --preview 'bat --color always {}')"
+  res="$(find . -maxdepth 15 | fzf --header='Jump to location' --preview-window=right,70% --preview 'bat --color always {}')"
   if [ -f "$res" ]; then
     cmd="select"
   elif [ -d "$res" ]; then
