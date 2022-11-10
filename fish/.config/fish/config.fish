@@ -51,6 +51,8 @@ abbr -a lg lazygit
 abbr -a todo rg -N -A 2 TODO
 abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
 
+abbr -a ts trans -shell
+
 # Screen cast laptop size from the left (without audio)
 # https://wiki.archlinux.org/title/FFmpeg#Screen_capture
 abbr -a screencast ffmpeg -f x11grab -video_size 1920x1200 -framerate 30 -i $DISPLAY -c:v libx264 -preset ultrafast -c:a aac screencast.mp4
@@ -70,6 +72,13 @@ bind -M insert \t  complete-and-search
 
 if type -q docker
   abbr -a dockerrm docker rm (docker ps -q)
+end
+
+# Set keyboard layout (is set by i3, but nice to have)
+function my-layout
+  setxkbmap -option 'caps:ctrl_modifier' -option 'lv3:ralt_switch' -variant 'mac'
+  xcape -e '#66=Escape'
+  xset r rate 300 80
 end
 
 # set webcam to 50hz

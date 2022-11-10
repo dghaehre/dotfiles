@@ -32,8 +32,8 @@ Plug 'chentoast/marks.nvim'
 Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
+Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-unimpaired'
-Plug 'kdheepak/lazygit.nvim'
 Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
 " Debugging
@@ -154,10 +154,6 @@ let g:lf_map_keys = 0
 let g:lf_replace_netrw = 1 " Open lf when vim opens a directory
 nnoremap <leader>n :LfWorkingDirectory<CR>
 nnoremap <leader>N :LfCurrentFile<CR>
-
-" ################ BROOT #################
-""""""""""""""""""""""""""""""""""""""""""""
-nnoremap  <leader>br :FloatermNew --name=broot --autoclose=2 br<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
@@ -287,8 +283,10 @@ nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
 " Open up git log for current file
 nnoremap <leader>gl :0Gclog<cr>
 
-" TODO: how to make this work with git gutter..?
-nnoremap <leader>gd :Gvdiffsplit
+" Diffview
+nnoremap <leader>gdo :DiffviewOpen 
+nnoremap <leader>gdt :DiffviewToggleFiles<CR>
+
 
 " Lets try to use terminal instead of floatterm
 nnoremap <C-t> :b term:<cr>
@@ -300,9 +298,10 @@ nnoremap <silent> <leader>G :LazyGit<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
-" let g:floaterm_keymap_new = '<C-t>'
+let g:floaterm_opener = 'vsplit'
+let g:floaterm_keymap_new = '<C-t>'
 let g:floaterm_keymap_next = '<C-n>'
-" let g:floaterm_keymap_prev = '<C-p>'
+let g:floaterm_keymap_prev = '<C-p>'
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
@@ -310,7 +309,6 @@ highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <C-o> <C-\><C-n>
-nnoremap <Leader>to :FloatermNew --name=tui --autoclose=2 taskwarrior-tui<CR>
 
 
 " ########## Harpoon ###########
