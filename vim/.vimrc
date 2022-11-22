@@ -172,10 +172,16 @@ set numberwidth=4
 :set scrolloff=3
 :set cursorline
 
+function! GitStatusLine()
+  return '[' . FugitiveStatusline()[5:-3] . ']'
+endfunction
+
 " Statusline
 set statusline=
 set statusline+=%#StatusBarLeft#
 set statusline+=\ %f
+set statusline+=%#StatusBarGit#
+set statusline+=\ %{GitStatusLine()}
 set statusline+=%#StatusBarWarning#
 set statusline+=\ %m
 set statusline+=%#StatusBarError#
@@ -206,6 +212,7 @@ highlight TaskWikiTaskPriority ctermbg=none ctermfg=9 cterm=italic
 highlight Search            ctermfg=none ctermbg=242 cterm=none
 highlight StatusBarLeft     ctermfg=none ctermbg=none cterm=none
 highlight StatusBarRight    ctermfg=12 ctermbg=none cterm=italic
+highlight StatusBarGit      ctermfg=223 ctermbg=none cterm=none
 highlight StatusBarWarning  ctermfg=11 ctermbg=none cterm=none
 highlight StatusBarError    ctermfg=9 ctermbg=none cterm=none
 highlight PMenu ctermfg=none ctermbg=Black
@@ -467,7 +474,7 @@ let g:go_highlight_types = 1
 
 " ################ Vimwiki/markdown #################
 """"""""""""""""""""""""""""""""""""""""""""
-let g:vimwiki_list = [{'path': '~/wikis/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/wikis/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Create link
 :vmap <Leader>l di[](<Esc>pa)<Esc>f[,a
