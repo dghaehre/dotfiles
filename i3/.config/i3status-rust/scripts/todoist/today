@@ -1,22 +1,65 @@
-#!/usr/bin/env sh
+#!/usr/bin/env janet
+(import sh)
+(import json)
+(import sqlite3 :as sql)
 
-token=$(cat ~/.todoist.token)
+(defn read-from-file [file-path]
+  (let [f         (file/open file-path :r)
+        content   (file/read f :all)]
+    (file/close f)
+    content))
 
-today_date=$(date -d "00:00" --iso-8601=seconds)
+(defn setup []
+  (let [path  (string (os/getenv "HOME") "/.todoist.token")
+        token (-> (read-from-file path) (string/trim))]
+    (setdyn :todoist/token token)))
 
-{
-  todo_today_count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)
-  completed_today_count=$(curl -s -X GET  "https://api.todoist.com/sync/v9/completed/get_all?limit=200&since=$today_date"  -H "Authorization: Bearer $token" | jq '.items | length' 2> /dev/null)
-  todo_count=$(curl -s -X GET  "https://api.todoist.com/rest/v1/tasks"  -H "Authorization: Bearer $token" | jq '. | length' 2> /dev/null)
+(defn token []
+  (dyn :todoist/token))
 
-  # TODO: this should be fetched from a sqlite db that has populated all my completed todos
-  completed_count=$(sqlite3 ~/.cache/todo.db "select count(*) from completed limit 10;" || 0)
+(defn today-date []
+  (let [d (os/date (os/time) :local)
+        y (get d :year)
+        m (+ 1 (get d :month))
+        day (+ 1 (get d :month-day))]
+    (string y "-" m "-" day "T00:00:00+01:00")))
 
-  if [[ "$todo_count" == "null" || "$todo_count" == "parse error:"* || "$completed_count" == "null" || "$completed_count" == "parse error:"* ]]; then
-    echo ""
-  else
-    echo " ☐ $todo_today_count ■ $completed_today_count  ☐ $todo_count ■ $completed_count"
-  fi
-} || {
-  echo " ☐ 0 ■ 0  ☐ 0 ■ 0"
-}
+(defn get-todoist [path]
+  (let [auth (string "Authorization: Bearer " (token))
+        res (sh/$< curl -s -X GET ,path  -H ,auth)]
+    (json/decode res)))
+
+(defn get-today-count []
+  (-> (get-todoist "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)")
+      (length)))
+
+(defn get-completed-today-count []
+  (-> (get-todoist (string "https://api.todoist.com/sync/v9/completed/get_all?limit=200&since=" (today-date)))
+      (get "items")
+      (length)))
+
+(defn get-todo-count []
+  (-> (get-todoist "https://api.todoist.com/rest/v1/tasks")
+      (length)))
+
+(defn get-completed-total []
+  (let [conn (sql/open "/home/dghaehre/.cache/todo.db")]
+    (defer (sql/close conn)
+      (-> (sql/eval conn "select count(*) from completed")
+          (get 0)
+          (get (keyword "count(*)") 0)))))
+
+(defn display [today-count today-completed]
+  (let [donebar     (string/repeat "▰" today-completed) 
+        notdonebar  (string/repeat "▱" today-count)]
+        # todo        (string "☐ " count-)
+        # alltimedone (string "■ " completed)]
+    (prin (string donebar notdonebar "  "))))
+
+(defn main [& args]
+  (setup)
+  (try
+    (let [today-count     (get-today-count)
+          completed-count (get-completed-today-count)]
+      (display today-count completed-count))
+    ([err] (prin "err"))))

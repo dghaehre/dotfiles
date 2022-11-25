@@ -23,6 +23,8 @@ alias.s=long scheduled
 # Context
 context.home.read=-work and proj.not:vipps
 context.home.write=
+context.arch.read=proj:arch
+context.arch.write=proj:arch
 context.work.read=+work
 context.work.write=+work
 context.vipps.read=proj:vipps or +work
@@ -94,6 +96,7 @@ report.ready.dateformat=a, d
 # Modify next report
 report.next.columns=id,start.age,priority,project,tags,description.count,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency.integer
 report.next.labels=ID,Active,P,Project,Tag,Description,Recur,S,Due,Until,Deps,Note,Urg
+report.next.filter=+READY
 report.next.dateformat=d b
 
 # Modify all report (project column)

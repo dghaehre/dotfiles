@@ -1,7 +1,32 @@
-#!/bin/bash
-todos=$(task status:pending or status:waiting count)
-today=$(task status:completed end.after:today count)
-ready=$(task +READY count)
-done=$(task status:completed count)
-context=$(task context show | awk -F "'" '{print $2}' | head -n 1)
-echo "@$context    ☐ $ready ■ $today   ☐ $todos ■ $done"
+#!/usr/bin/env janet
+(use sh)
+
+(defn display-today [done todo]
+  (let [donebar     (string/repeat "▰" done) 
+        notdonebar  (string/repeat "▱" todo)]
+    (string donebar notdonebar "  ")))
+
+(def context-grammar
+  (peg/compile ~(* :a* :s* "'" (capture :a* :context) "'")))
+
+(defn get-context []
+  (let [s ($< task context show)
+        c (-> (peg/match context-grammar s)
+              (get 0))]
+    (if (nil? c) "" (string "@" c))))
+
+(defn to-number [s]
+  (try
+    (-> (string/trim s)
+        (int/u64)
+        (int/to-number))
+    ([_] 0)))
+
+(defn main [& args]
+  (let [todos     (-> ($< task status:pending or status:waiting count) (to-number))
+        today     (-> ($< task status:completed end.after:today count) (to-number))
+        ready     (-> ($< task +READY count) (to-number))
+        done      (-> ($< task status:completed count) (to-number))
+        context   (get-context)
+        today-bar (display-today today ready)]
+    (prin (string context "  " today-bar " ☐ " todos " ■ " done))))

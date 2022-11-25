@@ -21,20 +21,23 @@
         res (sh/$< curl -s -X GET ,path  -H ,auth)]
     (json/decode res)))
 
-(defn get-now-label []
-  (-> (get-todoist "https://api.todoist.com/rest/v1/tasks?filter=@now")
-      (get 0)
-      (get "content")))
+(defn get-overdues []
+  (->> (get-todoist "https://api.todoist.com/rest/v1/tasks?filter=due%20before%3A%20%2B2%20minutes")
+      (map |(get $0 "content"))))
 
 (defn display [l]
   (if (nil? l)
-    (json/encode {:icon "headphones" :text "" :state "Info"})
-    (json/encode {:icon "headphones" :text l :state "Info"})))
+    (json/encode {:icon "time" :text "" :state "Warning"})
+    (if (= 1 (length l))
+      (json/encode {:icon "time" :text (get l 0) :state "Warning"})
+      (if (= 0 (length l))
+        (json/encode {:icon "time" :text "" :state "Warning"})
+        (json/encode {:icon "time" :text (string "ovedue: " (length l)) :state "Warning"})))))
 
 (defn main [& args]
   (setup)
   (try
-    (-> (get-now-label)
+    (-> (get-overdues)
         (display)
         (prin))
     ([_] (prin (display "")))))
