@@ -133,6 +133,7 @@ nnoremap <Leader>wp :let @" = expand("%")<CR>
 """"""""""""""""""""""""""""""""""""""""""""
 let g:test#neovim#start_normal = 1
 let g:test#basic#start_normal = 1
+let g:test#neovim#term_position = "bel 20"
 nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
 nmap <silent> <leader>gT :TestFile -strategy=neovim<cr>
 
@@ -197,13 +198,16 @@ set statusline+=\ %l:%c
 set statusline+=\ 
 
 " Colors
-"
+
 " CODE
 highlight Type              ctermfg=151
+highlight Function          ctermfg=12
+highlight PreProc           ctermfg=117
 highlight Statement         ctermfg=12
-highlight PreProc           ctermfg=12
 highlight Keyword           ctermfg=11
-highlight Special           ctermfg=12
+" highlight Identifier        ctermfg=13
+" highlight Operator          ctermfg=224
+highlight Special           ctermfg=13
 highlight Delimiter         ctermfg=224
 highlight Comment           ctermfg=243 guifg=Grey
 highlight TODO              ctermfg=211 ctermbg=none cterm=italic
@@ -213,10 +217,11 @@ highlight TaskWikiTaskPriority ctermbg=none ctermfg=9 cterm=italic
 highlight Search            ctermfg=none ctermbg=242 cterm=none
 highlight StatusBarLeft     ctermfg=none ctermbg=none cterm=none
 highlight StatusBarRight    ctermfg=12 ctermbg=none cterm=italic
-highlight StatusBarGit      ctermfg=223 ctermbg=none cterm=none
+highlight StatusBarGit      ctermfg=14 ctermbg=none cterm=none
 highlight StatusBarWarning  ctermfg=11 ctermbg=none cterm=none
 highlight StatusBarError    ctermfg=9 ctermbg=none cterm=none
 highlight PMenu ctermfg=none ctermbg=Black
+" highlight PreProc           ctermfg=12
 
 " Markdown
 highlight Title ctermfg=223 ctermbg=none
