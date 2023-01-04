@@ -22,7 +22,7 @@
     (json/decode res)))
 
 (defn get-now-label []
-  (-> (get-todoist "https://api.todoist.com/rest/v1/tasks?filter=@now")
+  (-> (get-todoist "https://api.todoist.com/rest/v2/tasks?filter=@now")
       (get 0)
       (get "content")))
 

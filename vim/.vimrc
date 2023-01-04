@@ -375,7 +375,7 @@ nnoremap         gi  <cmd>lua require('telescope.builtin').lsp_implementations()
 nnoremap         gI  <cmd>lua require('telescope.builtin').lsp_implementations({jump_type="tab"})<cr>
 nnoremap         gr  <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap         gR  <cmd>lua require('telescope.builtin').lsp_references({jump_type="tabs"})<cr>
-nnoremap <Leader>ga  <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
+nnoremap <Leader>ga  <cmd>lua vim.lsp.buf.code_action()<cr>
 
 
 " #################### Zen Mode ########################

@@ -30,7 +30,7 @@
     (json/decode res)))
 
 (defn get-today-count []
-  (-> (get-todoist "https://api.todoist.com/rest/v1/tasks?filter=(today|overdue)")
+  (-> (get-todoist "https://api.todoist.com/rest/v2/tasks?filter=(today|overdue)")
       (length)))
 
 (defn get-completed-today-count []
@@ -39,7 +39,7 @@
       (length)))
 
 (defn get-todo-count []
-  (-> (get-todoist "https://api.todoist.com/rest/v1/tasks")
+  (-> (get-todoist "https://api.todoist.com/rest/v2/tasks")
       (length)))
 
 (defn get-completed-total []

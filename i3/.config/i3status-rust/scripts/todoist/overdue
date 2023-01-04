@@ -22,7 +22,7 @@
     (json/decode res)))
 
 (defn get-overdues []
-  (->> (get-todoist "https://api.todoist.com/rest/v1/tasks?filter=due%20before%3A%20%2B2%20minutes")
+  (->> (get-todoist "https://api.todoist.com/rest/v2/tasks?filter=due%20before%3A%20%2B2%20minutes")
       (map |(get $0 "content"))))
 
 (defn display [l]
