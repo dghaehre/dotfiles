@@ -44,6 +44,9 @@ Plug 'leoluz/nvim-dap-go'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'nvim-telescope/telescope-dap.nvim'
 
+Plug 'dghaehre/raja.vim'
+" Plug '~/projects/personal/raja.vim'
+
 call plug#end()
 
 
@@ -475,6 +478,7 @@ let g:go_highlight_types = 1
 
 " ################ Vimwiki/markdown #################
 """"""""""""""""""""""""""""""""""""""""""""
+let g:vimwiki_global_ext = 0 " Dont use vimviki syntax for non wiki files
 let g:vimwiki_list = [{'path': '~/wikis/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Create link
@@ -514,6 +518,7 @@ endfunction
 autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
 autocmd FileType markdown setlocal foldmethod=expr
 autocmd FileType markdown setlocal foldlevelstart=50
+autocmd FileType vimwiki set filetype=markdown
 
 " Capture a note/idea fast for sorting later
 function CaptureVimwiki()
