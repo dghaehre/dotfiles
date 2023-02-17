@@ -1,10 +1,11 @@
 #!/usr/bin/env janet
 
 (defn count-files [dir]
-  (-> (os/getenv "HOME")
-      (string dir)
-      (os/dir)
-      (length)))
+  (as-> (os/getenv "HOME") _
+        (string _ dir)
+        (os/dir _)
+        (filter |(not (= $0 "index.md")) _)
+        (length _)))
 
 (defn main [& args]
   (let [p         (count-files "/wikis/vimwiki/Inbox")
