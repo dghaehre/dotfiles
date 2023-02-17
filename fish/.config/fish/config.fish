@@ -92,6 +92,7 @@ function ttt
   task mod $argv[1] sch:today
 end
 
+abbr -a th todoist-history
 # function th -d "List all completed task since {days} ago, for given {project}"
 #   if test -n "$argv[2]"
 #     task all "(status:pending or status:completed)" end.after:-$argv[1]d $argv[2..-1] 
