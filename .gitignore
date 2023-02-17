@@ -4,3 +4,5 @@ newsboat/.newsboat/urls
 newsboat/.newsboat/cache.db
 newsboat/.newsboat/history.search
 scripts/.local/bin/vipps
+cargo/.cargo/*
+!cargo/.cargo/config.toml

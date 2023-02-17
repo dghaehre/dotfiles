@@ -8,3 +8,6 @@ r = "run"
 name = "Daniel Hæhre"
 email = "dghaehre@gmail.com"
 vcs = "git"
+
+[net]
+git-fetch-with-cli = true
