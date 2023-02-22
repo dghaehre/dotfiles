@@ -9,6 +9,7 @@ fish_add_path ~/.local/bin
 setenv GOPATH (go env GOPATH)
 fish_add_path (go env GOPATH)/bin
 source ~/.config/fish/git.fish
+set -ag FZF_DEFAULT_OPTS '--color=bg+:24,gutter:-1'
 
 
 ##################### Vim Keys  ########################
