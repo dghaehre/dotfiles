@@ -24,12 +24,11 @@ Plug 'vimwiki/vimwiki'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
-Plug 'tools-life/taskwiki'
+" Plug 'tools-life/taskwiki'
 Plug 'ThePrimeagen/harpoon'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'chentoast/marks.nvim'
-Plug 'folke/zen-mode.nvim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'sindrets/diffview.nvim'
@@ -38,11 +37,12 @@ Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
 " Debugging
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'nvim-telescope/telescope-dap.nvim'
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'dghaehre/raja.vim'
 " Plug '~/projects/personal/raja.vim'
@@ -59,6 +59,8 @@ set tabstop=2
 set autoindent
 set smartindent
 set lcs=tab:›\ ,trail:·
+set ignorecase
+set smartcase
 
 " NOTE: Needed once to fix bug in fish
 " set shell=/usr/bin/bash
@@ -159,6 +161,23 @@ let g:lf_map_keys = 0
 let g:lf_replace_netrw = 1 " Open lf when vim opens a directory
 nnoremap <leader>n :LfWorkingDirectory<CR>
 nnoremap <leader>N :LfCurrentFile<CR>
+
+" nnoremap <leader>T :NvimTreeToggle<CR>
+nnoremap <leader>T :NERDTreeToggle<CR>
+let g:NERDTreeStatusline = '%#NonText#'
+
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+                \ 'Modified'  :'m',
+                \ 'Staged'    :'s',
+                \ 'Untracked' :'n',
+                \ 'Renamed'   :'->',
+                \ 'Unmerged'  :'═',
+                \ 'Deleted'   :'d',
+                \ 'Dirty'     :'m',
+                \ 'Ignored'   :'i',
+                \ 'Clean'     :'✔︎',
+                \ 'Unknown'   :'?',
+                \ }
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
@@ -287,7 +306,7 @@ nnoremap gu <Plug>(GitGutterUndoHunk)
 
 " Open up git status
 nnoremap <leader>gs :G<cr>
-nnoremap <leader>gS :0G<cr>
+nnoremap <leader>gS :Gtabedit :<cr>
 nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
@@ -379,12 +398,6 @@ nnoremap         gI  <cmd>lua require('telescope.builtin').lsp_implementations({
 nnoremap         gr  <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap         gR  <cmd>lua require('telescope.builtin').lsp_references({jump_type="tabs"})<cr>
 nnoremap <Leader>ga  <cmd>lua vim.lsp.buf.code_action()<cr>
-
-
-" #################### Zen Mode ########################
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>Z :ZenMode<cr>
-
 
 
 " ############# NAVIGATION ##########

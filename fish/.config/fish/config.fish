@@ -11,6 +11,10 @@ fish_add_path (go env GOPATH)/bin
 source ~/.config/fish/git.fish
 set -ag FZF_DEFAULT_OPTS '--color=bg+:24,gutter:-1'
 
+# Flyctl
+setenv FLYCTL_INSTALL '~/.fly'
+fish_add_path ~/.fly/bin
+
 
 ##################### Vim Keys  ########################
 #------------------------------------------------------#
