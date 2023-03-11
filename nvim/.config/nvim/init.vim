@@ -206,18 +206,6 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require('zen-mode').setup({
-  window = {
-    height = 0.9,
-    options = {
-      number = false,
-      relativenumber = false,
-      cursorline = false,
-      foldcolumn = "0"
-    }
-  }
-})
-
 -- Comment.nvim
 require('Comment').setup({
   toggler = {
