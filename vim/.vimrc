@@ -25,10 +25,8 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 " Plug 'tools-life/taskwiki'
-Plug 'ThePrimeagen/harpoon'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
-Plug 'chentoast/marks.nvim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'sindrets/diffview.nvim'
@@ -61,6 +59,7 @@ set smartindent
 set lcs=tab:›\ ,trail:·
 set ignorecase
 set smartcase
+set updatetime=500
 
 " NOTE: Needed once to fix bug in fish
 " set shell=/usr/bin/bash
@@ -188,7 +187,8 @@ set t_Co=256
 set fillchars=""
 set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
-set signcolumn=number
+" set signcolumn=number
+" ^ puts gitgutter signs together with linenr
 set nonumber
 set nu rnu
 set number
@@ -305,8 +305,8 @@ vnoremap ga <Plug>(GitGutterStageHunk)
 nnoremap gu <Plug>(GitGutterUndoHunk)
 
 " Open up git status
-nnoremap <leader>gs :G<cr>
-nnoremap <leader>gS :Gtabedit :<cr>
+nnoremap <leader>gs :0G<cr>
+nnoremap <leader>gt :Gtabedit :<cr>
 nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
@@ -321,8 +321,6 @@ nnoremap <leader>gdt :DiffviewToggleFiles<CR>
 " Lets try to use terminal instead of floatterm
 nnoremap <C-t> :b term:<cr>
 
-" setup mapping to call :LazyGit
-nnoremap <silent> <leader>G :LazyGit<CR>
 
 " #################### Floatterm ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -423,23 +421,6 @@ nnoremap <C-d> :m .+1<CR>==
 vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
 
-" Make it simpler to use marks
-" nnoremap ma mA
-" nnoremap ms mS
-" nnoremap md mD
-" nnoremap mf mF
-" nnoremap mt mT
-
-" NOTE: using harpoon instead for now
-" nnoremap 'j 'J
-" nnoremap 'k 'K
-" nnoremap 'l 'L
-" nnoremap 't 'T
-" nnoremap 'a 'A
-" nnoremap 's 'S
-" nnoremap 'd 'D
-" nnoremap 'f 'F
-" nnoremap 't 'T
 
 
 " ############ Resizing ############
