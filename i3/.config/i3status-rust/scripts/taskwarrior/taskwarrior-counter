@@ -22,6 +22,8 @@
         (int/to-number))
     ([_] 0)))
 
+# We are currently not using today-bar
+# This needs refinement if we are going to use it.
 (defn main [& args]
   (let [todos     (-> ($< task status:pending or status:waiting count) (to-number))
         today     (-> ($< task status:completed end.after:today count) (to-number))
@@ -29,4 +31,4 @@
         done      (-> ($< task status:completed count) (to-number))
         context   (get-context)
         today-bar (display-today today ready)]
-    (prin (string context "  " today-bar " ☐ " todos " ■ " done))))
+    (prin (string context "  ☐ " todos " ■ " done))))

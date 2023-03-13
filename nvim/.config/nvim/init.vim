@@ -7,6 +7,7 @@ source ~/.vimrc
 " lsp for neovim
 lua << EOF
 local nvim_lsp = require('lspconfig')
+local job = require('plenary.job')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -209,5 +210,104 @@ require('Comment').setup({
     eol = 'gcA',
   }
 })
+
+------------------------------------------------------------
+--   TASKWIKI                                             --
+------------------------------------------------------------
+
+function get_uuid(taskid, callback)
+  job:new({
+    command = 'task',
+    args = { '_get', taskid .. '.uuid' },
+    cwd = '/usr/bin',
+    on_stderr = function(j, return_val)
+      print("Error: " .. return_val)
+    end,
+    on_stdout = vim.schedule_wrap(function(j, uuid)
+      callback(uuid)
+    end),
+  }):start()
+end
+
+function get_description(taskid, callback)
+  job:new({
+    command = 'task',
+    args = { '_get', taskid .. '.description' },
+    cwd = '/usr/bin',
+    on_stderr = function(j, return_val)
+      print("Error: " .. return_val)
+    end,
+    on_stdout = vim.schedule_wrap(function(j, desc)
+      callback(desc)
+    end),
+  }):start()
+end
+
+
+function get_project_name(taskid, callback)
+  job:new({
+    command = 'task',
+    args = { '_get', taskid .. '.project' },
+    cwd = '/usr/bin',
+    on_stderr = function(j, return_val)
+      print("Error: " .. return_val)
+    end,
+    on_stdout = vim.schedule_wrap(function(j, project_name)
+      callback(project_name)
+    end),
+  }):start()
+end
+
+function file_not_exist(dir, filename)
+  local res = vim.fs.find(filename, { path = dir})
+  return res[1] == nil
+end
+
+function create_taskwiki_file(full_path, uuid, callback)
+  get_description(uuid, function(desc)
+    local out = io.open(full_path, "w+")
+    out:write("# " .. desc)
+    out:close()
+    callback()
+  end)
+end
+
+function open_taskwiki_file(uuid) 
+  get_project_name(uuid, function(project_name)
+    local filename = uuid .. ".md"
+    local dir = "/home/dghaehre/wikis/vimwiki/taskwarrior-notes/"
+    if string.match(project_name, "%a+") == "vipps" then
+      dir = "/home/dghaehre/wikis/work/taskwarrior-notes/"
+    end
+    local full_path = dir .. filename
+    local res = vim.fs.find(filename, {
+      path = dir,
+    })
+    if file_not_exist(dir, filename) then
+      create_taskwiki_file(full_path, uuid, function()
+        vim.api.nvim_command('e ' .. full_path)
+      end)
+      return
+    end
+    vim.api.nvim_command('e ' .. full_path)
+  end)
+end
+
+function tnote()
+  local linenr = vim.api.nvim_win_get_cursor(0)[1]
+  local curline = vim.api.nvim_buf_get_lines(0, linenr - 1, linenr, false)[1]
+  local taskid = string.match(curline, "#%w+", -10)
+  if taskid == nil then
+    print("Could not find taskwiki task")
+    return nil
+    else
+      taskid = string.sub(taskid, 2)
+  end
+  get_uuid(taskid, function(uuid)
+    open_taskwiki_file(uuid)
+  end)
+end
+
+vim.keymap.set('n', '<Leader>tn', tnote)
 
 EOF

@@ -24,7 +24,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
-" Plug 'tools-life/taskwiki'
+Plug 'tools-life/taskwiki'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'vim-test/vim-test'
@@ -122,7 +122,7 @@ nmap <leader>in :set invlist<cr>
 " Edit vimrc
 :nnoremap <leader>qe :e ~/.vimrc<cr>
 " Source .vimrc
-:nnoremap <leader>qs :source ~/.vimrc<cr>
+:nnoremap <leader>qs :source ~/.vimrc<cr>:source ~/.config/nvim/init.vim<cr>
 
 " Set current file as current dir
 nmap <Leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -306,7 +306,6 @@ nnoremap gu <Plug>(GitGutterUndoHunk)
 
 " Open up git status
 nnoremap <leader>gs :0G<cr>
-nnoremap <leader>gt :Gtabedit :<cr>
 nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
@@ -375,11 +374,17 @@ nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 " vimwiki
 nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" }, no_ignore = true })<cr>
+" taskwiki
+nnoremap <Leader>swtf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/taskwarrior-notes/" }, no_ignore = true })<cr>
+nnoremap <Leader>swtg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/taskwarrior-notes/" }})<cr>
 " The no_ignore doesnt work with live_grep
 nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }})<cr>
 " vimwiki work (jobb)
 nnoremap <Leader>sjf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/" }, no_ignore = true })<cr>
 nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/" }})<cr>
+" taskwiki (jobb)
+nnoremap <Leader>swtf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }, no_ignore = true })<cr>
+nnoremap <Leader>swtg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }})<cr>
 " dotfiles
 nnoremap <Leader>sdf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>
 nnoremap <Leader>sdg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>

@@ -56,7 +56,7 @@ abbr -a lg lazygit
 abbr -a todo rg -N -A 2 TODO
 abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
 
-abbr -a ts trans -shell
+# abbr -a ts trans -shell
 
 # Screen cast laptop size from the left (without audio)
 # https://wiki.archlinux.org/title/FFmpeg#Screen_capture
@@ -97,14 +97,14 @@ function ttt
   task mod $argv[1] sch:today
 end
 
-abbr -a th todoist-history
-# function th -d "List all completed task since {days} ago, for given {project}"
-#   if test -n "$argv[2]"
-#     task all "(status:pending or status:completed)" end.after:-$argv[1]d $argv[2..-1] 
-#   else 
-#     task all "(status:pending or status:completed)" end.after:-$argv[1]d
-#   end
-# end
+# abbr -a th todoist-history
+function th -d "List all completed task since {days} ago, for given {project}"
+  if test -n "$argv[2]"
+    task all "(status:pending or status:completed)" end.after:-$argv[1]d $argv[2..-1] 
+  else 
+    task all "(status:pending or status:completed)" end.after:-$argv[1]d
+  end
+end
 
 
 # Usage:
