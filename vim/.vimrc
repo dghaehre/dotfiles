@@ -328,7 +328,8 @@ let g:floaterm_height = 0.8
 let g:floaterm_opener = 'vsplit'
 let g:floaterm_keymap_new = '<C-t>'
 let g:floaterm_keymap_next = '<C-n>'
-let g:floaterm_keymap_prev = '<C-p>'
+" let g:floaterm_keymap_prev = '<C-p>'
+" ^ taskwarrior projects instead
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
@@ -477,7 +478,8 @@ let g:go_highlight_types = 1
 
 " ################ Vimwiki/markdown #################
 """"""""""""""""""""""""""""""""""""""""""""
-let g:vimwiki_global_ext = 0 " Dont use vimviki syntax for non wiki files
+" let g:vimwiki_global_ext = 1 " Dont use vimviki syntax for non wiki files
+" ^ cant have this with taskwiki
 let g:vimwiki_list = [{'path': '~/wikis/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Create link
@@ -517,7 +519,8 @@ endfunction
 autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
 autocmd FileType markdown setlocal foldmethod=expr
 autocmd FileType markdown setlocal foldlevelstart=50
-autocmd FileType vimwiki set filetype=markdown
+" autocmd FileType vimwiki set filetype=markdown
+" ^ breaks taskwiki
 
 " Capture a note/idea fast for sorting later
 function CaptureVimwiki()
