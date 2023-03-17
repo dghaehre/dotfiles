@@ -21,7 +21,7 @@ alias.sch=scheduled
 alias.s=long scheduled
 
 # Context
-context.home.read=-work and proj.not:vipps
+context.home.read=-work and proj.not:vipps proj.not:arch
 context.home.write=
 context.arch.read=proj:arch
 context.arch.write=proj:arch
