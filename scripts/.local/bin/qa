@@ -1,0 +1,33 @@
+#!/usr/bin/env janet
+#
+# Quick add for todoist
+#
+(import spork/sh :as sh)
+(import spork/json :as json)
+
+(defn setup []
+  (let [path  (string (os/getenv "HOME") "/.todoist.token")
+        token (-> (slurp path) (string/trim))]
+    (setdyn :todoist/token token)))
+
+(defn token []
+  (dyn :todoist/token))
+
+(defn quick-add [content]
+  (let [path "https://api.todoist.com/sync/v9/quick/add"
+        auth (string "Authorization: Bearer " (token))
+        res  (sh/exec-slurp "curl" "-s" "-X" "POST" path "-H" auth "-d" (string "text=" content))]
+    (json/decode res)))
+
+(defn display-res [res]
+  (let [added_at (get res "added_at" nil)]
+   (if (nil? added_at)
+      (print "Something failed")
+      (print "Success")))) 
+
+(defn main [_ & args]
+  (setup)
+  (-> (flatten args)
+      (string/join " ")
+      (quick-add)
+      (display-res)))

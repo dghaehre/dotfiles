@@ -207,10 +207,10 @@ color.summary.bar=color0 on color6
 # Command: calendar
 color.calendar.due=color0 on color9
 color.calendar.due.today=color0 on color1
-color.calendar.holiday=color0 on color3
+color.calendar.holiday=
 color.calendar.overdue=color0 on color5
 color.calendar.today=color0 on color4
-color.calendar.weekend=on color0
+color.calendar.weekend=
 color.calendar.weeknumber=color4
 color.sync.added=color14
 color.sync.changed=color9
