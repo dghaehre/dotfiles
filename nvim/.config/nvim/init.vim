@@ -4,50 +4,141 @@ let &packpath = &runtimepath
 " set termguicolors
 source ~/.vimrc
 
-" lsp for neovim
 lua << EOF
-local nvim_lsp = require('lspconfig')
-local job = require('plenary.job')
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+----------------------------------------------------------------
+-- TELESCOPE                                                  --
+----------------------------------------------------------------
 
-  -- Enable completion triggered by <c-x><c-o>
-  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-  vim.lsp.set_log_level("debug")
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
-  buf_set_keymap('n', 'ge', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-
-end
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { "gopls", "rust_analyzer", "tsserver", "hls", "pyright", "racket_langserver" }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
+local telescope = require('telescope')
+local actions = require('telescope.actions')
+local builtin = require('telescope.builtin')
+telescope.setup({
+  pickers = {
+    buffers = {
+      show_all_buffers = true,
+      sort_lastused = true,
+      mappings = {
+        i = {
+          ["<c-d>"] = "delete_buffer",
+        },
+        n = {
+          ["<c-d>"] = "delete_buffer",
+        }
+      }
+    }
+  },
+  defaults = {
+    hidden = true,
+    mappings = {
+      i = {
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-l>"] = actions.select_vertical,
+      },
+    },
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
     }
   }
-end
+})
 
--- Debugging setup (dap)
+telescope.load_extension('fzf')
+telescope.load_extension('dap')
+
+
+--------------------------------------------------------------------------
+-- Treesitter                                                           --
+--------------------------------------------------------------------------
+
+local treesitter = require('nvim-treesitter.configs')
+treesitter.setup({
+  ensure_installed = "all",
+  highlight = {
+    enable = true,    -- false will disable the whole extension
+  },
+  indentation = {
+    enable = true,    -- false will disable the whole extension
+  },
+  folding = {
+    enable = true,    -- false will disable the whole extension
+  },
+})
+
+
+
+------------------------------------------------------------
+-- LSP                                                    --
+------------------------------------------------------------
+local lsp = require("lsp-zero")
+
+lsp.preset({
+  name = "minimal",
+  manage_nvim_cmp = true,
+})
+
+lsp.ensure_installed({
+  'tsserver',
+  'rust_analyzer',
+})
+
+lsp.set_preferences({
+  suggest_lsp_servers = true,
+  sign_icons = {
+    error = 'E',
+    warn = 'W',
+    hint = 'H',
+    info = 'I'
+  }
+})
+
+local cmp = require('cmp')
+local cmp_action = lsp.cmp_action()
+lsp.setup_nvim_cmp({
+  mapping = cmp.mapping.preset.insert({
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item()),
+    ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
+    ['<C-l>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  documentation = {
+    side_padding = 10,
+    border = false,
+    zindex = 1001,
+  },
+})
+
+lsp.on_attach(function(client, bufnr)
+  local opts = {buffer = bufnr, remap = false}
+
+  vim.keymap.set("n", "gd", function() builtin.lsp_definitions() end, opts)
+  vim.keymap.set("n", "gt", function() builtin.lsp_type_definitions() end, opts)
+  vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
+  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+  vim.keymap.set("n", "gi", function() builtin.lsp_implementations() end, opts)
+  vim.keymap.set("n", "gr", function() builtin.lsp_references() end, opts)
+  vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end, opts)
+  vim.keymap.set("n", "ge", function() vim.diagnostic.show_line_diagnostics() end, opts)
+  vim.keymap.set("n", "]e", function() vim.diagnostic.goto_next() end, opts)
+  vim.keymap.set("n", "[e", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
+  vim.keymap.set("n", "<leader>ga", function() vim.lsp.buf.code_action() end, opts)
+end)
+
+lsp.setup()
+
+
+--------------------------------------------------------
+-- Debugging setup (dap)                              --
+--------------------------------------------------------
+
 local ok, dap = pcall(require, "dap")
 if ok then
   vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<CR>")
@@ -102,101 +193,11 @@ if ok then
   end
 end
 
--- comp setup
 
-local cmp = require('cmp')
-cmp.setup {
-  -- snippet = {
-  --   -- REQUIRED - you must specify a snippet engine
-  --   expand = function(args)
-  --     -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-  --     -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-  --     -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-  --     -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-  --   end,
-  -- },
-  mapping = {
-    ['<C-y>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<C-e>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item()),
-    ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
-    ['<C-l>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    -- ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-    ['<C-f>'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
-  },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
-    { name = 'buffer' },
-    { name = 'path' },
-  })
-}
+---------------------------------------------------------------------
+-- Comment.nvim                                                    --
+---------------------------------------------------------------------
 
-
-
--- TELESCOPE
-local actions = require('telescope.actions')
-require('telescope').setup{
-  pickers = {
-    buffers = {
-      show_all_buffers = true,
-      sort_lastused = true,
-      mappings = {
-        i = {
-          ["<c-d>"] = "delete_buffer",
-        },
-        n = {
-          ["<c-d>"] = "delete_buffer",
-        }
-      }
-    }
-  },
-  defaults = {
-    hidden = true,
-    mappings = {
-      i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-l>"] = actions.select_vertical,
-      },
-    },
-  },
-  extensions = {
-    fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = false, -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
-    }
-  }
-}
-require('telescope').load_extension('fzf')
-require('telescope').load_extension('dap')
-
--- Treesitter
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-  },
-  indentation = {
-    enable = true,              -- false will disable the whole extension
-  },
-  folding = {
-    enable = true,              -- false will disable the whole extension
-  },
-}
-
--- Comment.nvim
 require('Comment').setup({
   toggler = {
     line = 'gcl'
@@ -211,9 +212,12 @@ require('Comment').setup({
   }
 })
 
-------------------------------------------------------------
---   TASKWIKI                                             --
-------------------------------------------------------------
+
+------------------------------------------------------------------
+-- TASKWIKI                                                     --
+------------------------------------------------------------------
+
+local job = require('plenary.job')
 
 function get_uuid(taskid, callback)
   job:new({

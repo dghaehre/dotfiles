@@ -3,15 +3,10 @@
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-cmdline' " TODO(useful?)
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -33,17 +28,42 @@ Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-unimpaired'
 Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
-" Debugging
 
+""""""""""""""""""""""""""""""""""""""""""
+" lsp-zero                               "
+""""""""""""""""""""""""""""""""""""""""""
+Plug 'neovim/nvim-lspconfig'             " Required
+Plug 'williamboman/mason.nvim'           " Optional
+Plug 'williamboman/mason-lspconfig.nvim' " Optional
+
+" Autocompletion Engine
+Plug 'hrsh7th/nvim-cmp'         " Required
+Plug 'hrsh7th/cmp-nvim-lsp'     " Required
+Plug 'hrsh7th/cmp-buffer'       " Optional
+Plug 'hrsh7th/cmp-path'         " Optional
+Plug 'saadparwaiz1/cmp_luasnip' " Optional
+Plug 'hrsh7th/cmp-nvim-lua'     " Optional
+"  Snippets
+Plug 'L3MON4D3/LuaSnip'             " Required
+Plug 'rafamadriz/friendly-snippets' " Optional
+
+Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v1.x'}
+
+"""""""""""""""""""""""""""""""""""""""""""""
+" Debugging                                 "
+"""""""""""""""""""""""""""""""""""""""""""""
 Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'nvim-telescope/telescope-dap.nvim'
-Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""
+" Raja                                         "
+""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'dghaehre/raja.vim'
-" Plug '~/projects/personal/raja.vim'
+
+
 
 call plug#end()
 
@@ -161,22 +181,6 @@ let g:lf_replace_netrw = 1 " Open lf when vim opens a directory
 nnoremap <leader>n :LfWorkingDirectory<CR>
 nnoremap <leader>N :LfCurrentFile<CR>
 
-" nnoremap <leader>T :NvimTreeToggle<CR>
-nnoremap <leader>T :NERDTreeToggle<CR>
-let g:NERDTreeStatusline = '%#NonText#'
-
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-                \ 'Modified'  :'m',
-                \ 'Staged'    :'s',
-                \ 'Untracked' :'n',
-                \ 'Renamed'   :'->',
-                \ 'Unmerged'  :'═',
-                \ 'Deleted'   :'d',
-                \ 'Dirty'     :'m',
-                \ 'Ignored'   :'i',
-                \ 'Clean'     :'✔︎',
-                \ 'Unknown'   :'?',
-                \ }
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
