@@ -231,8 +231,6 @@ highlight Function          ctermfg=12
 highlight PreProc           ctermfg=117
 highlight Statement         ctermfg=12
 highlight Keyword           ctermfg=11
-" highlight Identifier        ctermfg=13
-" highlight Operator          ctermfg=224
 highlight Special           ctermfg=13
 highlight Delimiter         ctermfg=224
 highlight Comment           ctermfg=243 guifg=Grey
@@ -246,8 +244,8 @@ highlight StatusBarRight    ctermfg=12 ctermbg=none cterm=italic
 highlight StatusBarGit      ctermfg=14 ctermbg=none cterm=none
 highlight StatusBarWarning  ctermfg=11 ctermbg=none cterm=none
 highlight StatusBarError    ctermfg=9 ctermbg=none cterm=none
-highlight PMenu ctermfg=none ctermbg=Black
-" highlight PreProc           ctermfg=12
+highlight PMenu ctermfg=none ctermbg=none
+highlight PMenuSel ctermfg=224 ctermbg=Black
 
 " Markdown
 highlight Title ctermfg=223 ctermbg=none

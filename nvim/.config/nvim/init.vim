@@ -108,11 +108,11 @@ lsp.setup_nvim_cmp({
     ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
     ['<C-l>'] = cmp.mapping.confirm({ select = true }),
   }),
-  documentation = {
-    side_padding = 10,
-    border = false,
-    zindex = 1001,
-  },
+  -- documentation = {
+  --   side_padding = 10,
+  --   border = false,
+  --   zindex = 1001,
+  -- },
 })
 
 lsp.on_attach(function(client, bufnr)
