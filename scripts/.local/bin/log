@@ -1,0 +1,42 @@
+#!/usr/bin/env janet
+#
+# Log for todoist:
+# - Create the task
+# - Finish the task
+#
+(import spork/sh :as sh)
+(import spork/json :as json)
+
+(defn setup []
+  (let [path  (string (os/getenv "HOME") "/.todoist.token")
+        token (-> (slurp path) (string/trim))]
+    (setdyn :todoist/token token)))
+
+(defn token []
+  (dyn :todoist/token))
+
+(defn quick-add [content]
+  (let [path "https://api.todoist.com/sync/v9/quick/add"
+        auth (string "Authorization: Bearer " (token))
+        res  (sh/exec-slurp "curl" "-s" "-X" "POST" path "-H" auth "-d" (string "text=" content))]
+    (json/decode res)))
+
+(defn to-id [res]
+  (get res "id"))
+
+(defn complete [id]
+  (let [path (string "https://api.todoist.com/rest/v2/tasks/" id "/close")
+        auth (string "Authorization: Bearer " (token))]
+    (sh/exec-slurp "curl" "-s" "-X" "POST" path "-H" auth)))
+
+(defn display-res [res]
+  (print "Success"))
+
+(defn main [_ & args]
+  (setup)
+  (-?> (flatten args)
+       (string/join " ")
+       (quick-add)
+       (to-id)
+       (complete)
+       (display-res)))

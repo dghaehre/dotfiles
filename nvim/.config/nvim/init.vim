@@ -268,6 +268,12 @@ function file_not_exist(dir, filename)
 end
 
 function create_taskwiki_file(full_path, uuid, callback)
+  local create = vim.fn.input("File missing. Create file [y/N]: ", "")
+  if not (create == "y") then
+    print("File not created")
+    return
+  end
+  print("Creating file")
   get_description(uuid, function(desc)
     local out = io.open(full_path, "w+")
     out:write("# " .. desc)

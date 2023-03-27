@@ -21,6 +21,8 @@ if [ ! -f "$NOTE" ]; then # If file does not exist
 
 ## TODO(s) | status:pending project:$project
 
+
+## DONE | status:completed project:$project
 "
   mkdir -p $DIRPATH
   echo "$content" >> $NOTE
