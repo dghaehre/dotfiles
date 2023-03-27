@@ -12,8 +12,7 @@ separator_bg = "auto"
 separator_fg = "auto"
 
 [icons]
-name = "awesome5"
-[icons.overrides]
+icons = "awesome6"
 
 # # Vpn
 [[block]]
@@ -76,7 +75,7 @@ hide_when_empty = true
 
 [[block]]
 block = "sound"
-format = "{volume}"
+format = "$volume $icon "
 driver = "auto"
 
 [[block]]
@@ -87,15 +86,12 @@ format_singular = "{both} update available"
 format_up_to_date = "system up to date"
 critical_updates_regex = "(linux |linux-lts|linux-zen)"
 aur_command = "yay -Qua"
-on_click = "alacritty -e sudo pacman -Syu"
 [block.theme_overrides]
 critical_bg = "#BF616A"
 
 [[block]]
-block = "networkmanager"
-primary_only = true
-on_click = "alacritty -e nmtui"
-device_format = "{icon} {ap}"
+block = "net"
+format = " $icon $ssid "
 
 [[block]]
 block = "cpu"
@@ -105,31 +101,24 @@ interval = 4
 block = "disk_space"
 path = "/"
 info_type = "available"
-format = "{available}"
-unit = "GB"
+format = "$available"
+alert_unit = "GB"
 interval = 20
 warning = 30.0
 alert = 10.0
 
 [[block]]
 block = "memory"
-format_mem = "{mem_used_percents}"
-format_swap = "{swap_used}/{swap_total}({swap_used_percents})"
-display_type = "memory"
-icons = true
-clickable = false
-interval = 5
-warning_mem = 80
-warning_swap = 80
-critical_mem = 95
-critical_swap = 95
+format = " $icon $mem_used_percents"
 
 [[block]]
 block = "time"
 interval = 60
-format = "%a %d/%m %R"
+format = " $timestamp.datetime(f:'%a %d/%m %R')"
 
 [[block]]
 block = "battery"
-interval = 10
-format = "{percentage}"
+missing_format = "missing"
+format = " $percentage $icon "
+full_format = " $icon $percentage"
+not_charging_format = " $icon $percentage"
