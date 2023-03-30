@@ -32,16 +32,16 @@ interval = 20
 hide_when_empty = true
 
 # Taskwarrior
-# [[block]]
-# block = "custom"
-# command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-active"
-# interval = 25
-# hide_when_empty = true
-# json = true
-# [block.theme_overrides]
-# info_bg = "#8FBCBB"
-# 
-# # Taskwarrior counter
+[[block]]
+block = "custom"
+command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-active"
+interval = 25
+hide_when_empty = true
+json = true
+[block.theme_overrides]
+info_bg = "#8FBCBB"
+
+# Taskwarrior counter
 # [[block]]
 # block = "custom"
 # command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-counter"
