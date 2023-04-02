@@ -27,7 +27,7 @@
 (defn main [& args]
   (let [todos     (-> ($< task status:pending or status:waiting count) (to-number))
         today     (-> ($< task status:completed end.after:today count) (to-number))
-        ready     (-> ($< task +READY -maybe -milestone count) (to-number))
+        ready     (-> ($< task +READY sch.not: or +TODAY count) (to-number))
         done      (-> ($< task status:completed count) (to-number))
         context   (get-context)
         today-bar (display-today today ready)]

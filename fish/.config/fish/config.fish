@@ -47,6 +47,7 @@ abbr -a td task done
 abbr -a tp task plan
 abbr -a tl task later
 abbr -a tw task waiting
+abbr -a tt task ready sch.not: or +TODAY
 abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls --cache-file ~/wikis/vimwiki/rss.db
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"

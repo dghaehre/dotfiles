@@ -122,7 +122,7 @@ urgency.user.tag.waiting.coefficient=-8.0
 urgency.user.tag.milestone.coefficient=-10.0
 urgency.user.tag.next.coefficient=10.0
 urgency.user.project.vipps.hero.coefficient=4.0
-urgency.user.project.familie.coefficient=8.0
+urgency.user.project.familie.coefficient=2.0
 
 calendar.details=full
 calendar.holidays=full
