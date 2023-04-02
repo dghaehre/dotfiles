@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+set -e
+
+project="$1"
+PROJECTPATH=$(echo $project | sed 's/\./\//g')
+if [[ $project == "vipps"* ]]; then
+  NOTE=~/wikis/work/taskwarrior-notes/projects/$PROJECTPATH.md
+else
+  NOTE=~/wikis/vimwiki/taskwarrior-notes/projects/$PROJECTPATH.md
+fi
+if [ ! -f "$NOTE" ]; then
+  echo "No note for $project"
+else
+  bat --color="always" "$NOTE"
+fi

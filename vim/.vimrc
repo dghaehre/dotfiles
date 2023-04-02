@@ -337,6 +337,7 @@ hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
 highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
+noremap  <C-p>  :FloatermNew pnote-floaterm<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <C-o> <C-\><C-n>
 
