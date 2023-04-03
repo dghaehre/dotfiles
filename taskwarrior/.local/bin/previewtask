@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+set -e
+
+id=$(echo $@ | awk '{print $1}')
+project=$(task _get $id.project)
+UUID=$(task _get $id.uuid)
+
+if [[ $project == "vipps"* ]]; then
+  NOTE=~/wikis/work/taskwarrior-notes/$UUID.md
+else
+  NOTE=~/wikis/vimwiki/taskwarrior-notes/$UUID.md
+fi
+
+
+if [ ! -f "$NOTE" ]; then
+  task $id
+else
+  bat --color="always" "$NOTE"
+fi

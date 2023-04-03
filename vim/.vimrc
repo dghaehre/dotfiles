@@ -49,6 +49,8 @@ Plug 'rafamadriz/friendly-snippets' " Optional
 
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v1.x'}
 
+Plug 'github/copilot.vim'
+
 """""""""""""""""""""""""""""""""""""""""""""
 " Debugging                                 "
 """""""""""""""""""""""""""""""""""""""""""""
@@ -337,7 +339,6 @@ hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
 highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
-noremap  <C-p>  :FloatermNew pnote-floaterm<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <C-o> <C-\><C-n>
 
@@ -362,6 +363,7 @@ nnoremap 't :lua require("harpoon.term").gotoTerminal(5)<CR>
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
 nnoremap <leader>sf <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>sp :FloatermNew pnote-floaterm<cr>
 nnoremap <leader>scf <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true, no_ignore = true })<cr>
 nnoremap <leader>scg <cmd>lua require('telescope.builtin').live_grep({ cwd = require('telescope.utils').buffer_dir(), hidden = true, no_ignore = true })<cr>
 nnoremap <leader>sg <cmd>lua require('telescope.builtin').live_grep()<cr>

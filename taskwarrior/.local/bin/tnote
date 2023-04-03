@@ -1,14 +1,16 @@
 #!/usr/bin/env sh
 
+set -e
+
 if [[ -z "$1" ]]; then
-  echo "Usage: tnote {id}"
-  echo ""
-  exit
+  TASK=$(task status:pending or status:waiting export | jq -r '.[] | (.id | tostring) + " " + .description + " +" + (.project | tostring)' | fzf --preview="previewtask {}" --prompt="task> ")
+  ID=$(echo $TASK | awk '{print $1}')
+  UUID=$(task _get $ID.uuid)
+  PROJECT=$(task _get "$1".project)
+else
+  UUID=$(task _get "$1".uuid)
+  PROJECT=$(task _get "$1".project)
 fi
-
-UUID=$(task _get "$1".uuid)
-PROJECT=$(task _get "$1".project)
-
 
 if [[ $PROJECT == "vipps"* ]]; then
   mkdir -p ~/wikis/work/taskwarrior-notes
@@ -24,17 +26,3 @@ if [ ! -f "$NOTE" ]; then # If file does not exist
 fi
 
 $EDITOR "$NOTE"
-
-if [ -f "$NOTE" ]; then # File exist
-
-  LINES=$(wc -l "$NOTE" | awk '{print $1;}')
-  if [ "$LINES" -ge 10 ]; then
-    task $UUID mod note:l
-  else
-    task $UUID mod note:s
-  fi
-
-else
-  task $UUID mod note:
-fi
-

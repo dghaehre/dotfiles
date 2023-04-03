@@ -10,7 +10,8 @@ else
   NOTE=~/wikis/vimwiki/taskwarrior-notes/projects/$PROJECTPATH.md
 fi
 if [ ! -f "$NOTE" ]; then
-  echo "No note for $project"
+  # echo "No note for $project"
+  task project:$project
 else
   bat --color="always" "$NOTE"
 fi
