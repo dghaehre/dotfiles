@@ -479,6 +479,10 @@ let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 
 
+" ############# Copilot ################
+""""""""""""""""""""""""""""""""""""""""
+nnoremap <Leader>coe :Copilot enable<CR>
+nnoremap <Leader>cod :Copilot disable<CR>
 
 
 " ################ Vimwiki/markdown #################
