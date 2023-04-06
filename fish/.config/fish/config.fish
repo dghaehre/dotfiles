@@ -40,8 +40,6 @@ abbr -a tr task ready
 abbr -a te task edit
 abbr -a tm task mod
 abbr -a ts task start
-abbr -a tss task (task ids +ACTIVE) stop
-abbr -a tdd task (task ids +ACTIVE) done
 abbr -a tand task +LATEST mod
 abbr -a td task done
 abbr -a tp task plan
@@ -96,6 +94,14 @@ end
 
 function ttt
   task mod $argv[1] sch:today
+end
+
+function tdd
+  task (task ids +ACTIVE) done
+end
+
+function tss
+  task (task ids +ACTIVE) stop
 end
 
 # abbr -a th todoist-history
