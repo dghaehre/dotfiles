@@ -29,8 +29,10 @@ context.raja.read=proj:arch.lang.raja
 context.raja.write=proj:arch.lang.raja
 context.work.read=+work
 context.work.write=+work
-context.vipps.read=proj:vipps or +work
+context.vipps.read=proj:vipps
 context.vipps.write=proj:vipps
+context.notwork.read=proj.not:vipps
+context.notwork.write=
 context.hero.read=pro:vipps.hero
 context.hero.write=pro:vipps.hero
 
