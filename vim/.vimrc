@@ -364,6 +364,7 @@ nnoremap 't :lua require("harpoon.term").gotoTerminal(5)<CR>
 """""""""""""""""""""""""""""
 nnoremap <leader>sf <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>sp :FloatermNew pnote-floaterm<cr>
+nnoremap <leader>st :FloatermNew tnote-floaterm<cr>
 nnoremap <leader>scf <cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir(), hidden = true, no_ignore = true })<cr>
 nnoremap <leader>scg <cmd>lua require('telescope.builtin').live_grep({ cwd = require('telescope.utils').buffer_dir(), hidden = true, no_ignore = true })<cr>
 nnoremap <leader>sg <cmd>lua require('telescope.builtin').live_grep()<cr>

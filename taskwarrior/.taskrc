@@ -46,10 +46,10 @@ uda.note.values=,s,l
 # simple
 # for pi
 report.simple.description=Simple list
-report.simple.columns=id,description.count,project
+report.simple.columns=id,description.count,project.parent
 report.simple.labels=Id,Description,project
-report.simple.filter=+READY
-report.simple.sort=urgency+
+report.simple.filter=+READY -later -maybe
+report.simple.sort=urgency-
 
 # Maybe
 # tasks that I want to work on someday, but have no plan on how or when
@@ -66,7 +66,7 @@ report.maybe.dateformat=a, d b
 report.later.description=List of tasks to do later
 report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency.integer
 report.later.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
-report.later.filter=status:pending scheduled.after:3000-12-30
+report.later.filter=status.not:completed status.not:deleted +later
 report.later.dateformat=a, d b
 report.later.sort=urgency-
 
@@ -97,19 +97,19 @@ report.plan.description=List of planned tasks
 report.plan.columns=id,project,description.count,scheduled,scheduled.remaining,due.remaining,urgency.integer
 report.plan.labels=Id,Project,Description,Scheduled,In,Due,Urg
 report.plan.sort=scheduled+
-report.plan.filter=status:pending scheduled.before:3000-12-30
+report.plan.filter=status:pending (+SCHEDULED or +DUE)
 report.plan.dateformat=a, d b
 
 # Modify Ready report
 report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Note,Due,Urg
 report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,note,due.relative,urgency.integer
-report.ready.filter=+READY -maybe -milestone 
+report.ready.filter=+READY -maybe -later -milestone 
 report.ready.dateformat=a, d
 
 
 # Modify next report
-report.next.columns=id,start.age,priority,project,tags,description.count,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency.integer
-report.next.labels=ID,Active,P,Project,Tag,Description,Recur,S,Due,Until,Deps,Note,Urg
+report.next.columns=id,start.age,priority,project,description.count,tags,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency.integer
+report.next.labels=ID,Active,P,Project,Description,Tag,Recur,S,Due,Until,Deps,Note,Urg
 report.next.filter=status:pending
 report.next.dateformat=d b
 
@@ -120,6 +120,7 @@ report.all.columns=id,status.short,uuid.short,start.active,entry.age,end.age,dep
 # Urgency
 urgency.user.tag.fun.coefficient=-2.0
 urgency.user.tag.maybe.coefficient=-10.0
+urgency.user.tag.later.coefficient=-6.0
 urgency.user.tag.waiting.coefficient=-8.0
 urgency.user.tag.milestone.coefficient=-10.0
 urgency.user.tag.next.coefficient=10.0
@@ -153,7 +154,8 @@ color.footnote=color6
 color.warning=color0 on color3
 color.error=color6
 color.debug=color6
-color.tag.maybe=color13
+color.tag.maybe=color102
+color.tag.later=color102
 color.tag.milestone=color0 on color13
 
 

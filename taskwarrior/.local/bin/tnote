@@ -5,14 +5,14 @@ set -e
 if [[ -z "$1" ]]; then
   TASK=$(task status:pending or status:waiting export | jq -r '.[] | (.id | tostring) + " " + .description + " +" + (.project | tostring)' | fzf --preview="previewtask {}" --prompt="task> ")
   ID=$(echo $TASK | awk '{print $1}')
-  UUID=$(task _get $ID.uuid)
-  PROJECT=$(task _get "$1".project)
 else
-  UUID=$(task _get "$1".uuid)
-  PROJECT=$(task _get "$1".project)
+  ID=$1
 fi
 
-if [[ $PROJECT == "vipps"* ]]; then
+UUID=$(task _get "$ID".uuid)
+PROJECT=$(task _get "$ID".project)
+
+if [[ "$PROJECT" == "vipps"* ]]; then
   mkdir -p ~/wikis/work/taskwarrior-notes
   NOTE=~/wikis/work/taskwarrior-notes/$UUID.md
 else
@@ -21,8 +21,8 @@ else
 fi
 
 if [ ! -f "$NOTE" ]; then # If file does not exist
-  desc=$(task _get "$1".description)
-  echo "# $desc" >> $NOTE
+  desc=$(task _get "$ID".description)
+  echo "# $desc" >> "$NOTE"
 fi
 
 $EDITOR "$NOTE"
