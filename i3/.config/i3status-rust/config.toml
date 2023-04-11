@@ -31,6 +31,13 @@ info_bg = "#8FBCBB"
 # interval = 20
 # hide_when_empty = true
 
+# Github notification counter
+[[block]]
+block = "custom"
+command = "~/.config/i3status-rust/scripts/github/notifications"
+interval = 40
+hide_when_empty = true
+
 # Taskwarrior
 [[block]]
 block = "custom"

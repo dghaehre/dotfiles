@@ -1,0 +1,12 @@
+#!/bin/env bash
+#
+# Show how many notifications you have in GitHub
+
+number=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /notifications | jq '. | length')
+
+# Checks if its a numeric value
+if [[ "$number" =~ ^[0-9]+$ ]]; then
+    echo "🐙 $number"
+  else
+    echo ""
+fi
