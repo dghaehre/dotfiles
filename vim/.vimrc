@@ -282,6 +282,7 @@ highlight clear TabLineFill
 highlight clear TabLine
 highlight TabLine ctermfg=8
 highlight TabLineSel ctermfg=white
+highlight CopilotSuggestion ctermfg=102
 
 " GIT
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
@@ -491,6 +492,11 @@ nnoremap <Leader>cod :Copilot disable<CR>
 " let g:vimwiki_global_ext = 1 " Dont use vimviki syntax for non wiki files
 " ^ cant have this with taskwiki
 let g:vimwiki_list = [{'path': '~/wikis/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
+" Disable vimwiki key mappings (to not fuck with copilot)
+let g:vimwiki_key_mappings =
+  \ {
+  \ 'table_mappings': 0,
+  \ }
 
 " Create link
 :vmap <Leader>l di[](<Esc>pa)<Esc>f[,a
