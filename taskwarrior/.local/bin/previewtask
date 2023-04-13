@@ -2,7 +2,7 @@
 
 set -e
 
-id=$(echo $@ | awk '{print $1}')
+id=$(echo "$@" | awk '{print $1}')
 project=$(task _get $id.project)
 UUID=$(task _get $id.uuid)
 

@@ -23,7 +23,7 @@ Plug 'tools-life/taskwiki'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'vim-test/vim-test'
-Plug 'Olical/conjure'
+" Plug 'Olical/conjure'
 Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-unimpaired'
 Plug 'aklt/plantuml-syntax'
@@ -355,11 +355,11 @@ nnoremap <leader>hf :lua require("harpoon.ui").nav_file(4)<CR>
 nnoremap <leader>hg :lua require("harpoon.ui").nav_file(5)<CR>
 
 " Terminal
-nnoremap 'q :lua require("harpoon.term").gotoTerminal(1)<CR>
-nnoremap 'w :lua require("harpoon.term").gotoTerminal(2)<CR>
-nnoremap 'e :lua require("harpoon.term").gotoTerminal(3)<CR>
-nnoremap 'r :lua require("harpoon.term").gotoTerminal(4)<CR>
-nnoremap 't :lua require("harpoon.term").gotoTerminal(5)<CR>
+" nnoremap 'q :lua require("harpoon.term").gotoTerminal(1)<CR>
+" nnoremap 'w :lua require("harpoon.term").gotoTerminal(2)<CR>
+" nnoremap 'e :lua require("harpoon.term").gotoTerminal(3)<CR>
+" nnoremap 'r :lua require("harpoon.term").gotoTerminal(4)<CR>
+" nnoremap 't :lua require("harpoon.term").gotoTerminal(5)<CR>
 
 " ########## Telescope ###########
 """""""""""""""""""""""""""""

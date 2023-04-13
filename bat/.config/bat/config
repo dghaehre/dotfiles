@@ -2,4 +2,4 @@
 --theme="ansi"
 
 # Remove fluff
---style="numbers"
+--style="plain"
