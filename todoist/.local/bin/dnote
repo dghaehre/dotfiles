@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+set -e
+
+token=$(cat ~/.todoist.token)
+
+# Add no child to filter?
+n=$(curl -s -X GET  "https://api.todoist.com/rest/v2/tasks"  -H "Authorization: Bearer $token" | jq -r '.[] | (.id | tostring) + " " + .content')
+
+task=$(echo "$n" | fzf --preview="previewtask-todoist {}" --prompt="task> ")
+ID=$(echo "$task" | awk '{print $1}')
+
+NOTE=~/wikis/vimwiki/todoist-notes/$ID.md
+
+if [ ! -f "$NOTE" ]; then # If file does not exist
+  desc=$(echo "$task" | awk '{$1=""; print $0}')
+  echo "#$desc" >> "$NOTE"
+fi
+
+$EDITOR "$NOTE"

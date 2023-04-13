@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -e
+
+id=$(echo "$@" | awk '{print $1}')
+NOTE=~/wikis/vimwiki/todoist-notes/$id.md
+
+if [ ! -f "$NOTE" ]; then
+  echo "no note"
+else
+  bat --color="always" "$NOTE"
+fi
