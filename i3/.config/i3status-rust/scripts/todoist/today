@@ -9,13 +9,35 @@
     (file/close f)
     content))
 
+# Hacky 🙃
+(defn url-escape [s]
+  (->> s
+      (string/replace-all " " "%20")
+      (string/replace-all "#" "%23")
+      (string/replace-all "&" "%26")))
+
+(defn parse-filter [f]
+  (let [[name s] (string/split "=" f)
+        filter_ (if (empty? s) "" s)]
+    {:name name :filter s}))
+
 (defn setup []
-  (let [path  (string (os/getenv "HOME") "/.todoist.token")
-        token (-> (read-from-file path) (string/trim))]
-    (setdyn :todoist/token token)))
+  (let [path        (string (os/getenv "HOME") "/.todoist.token")
+        token       (-> (read-from-file path) (string/trim))
+        filter-path (string (os/getenv "HOME") "/.todoist.filter")
+        t-filter (try # Defaults to no filter
+                   (-> (read-from-file filter-path)
+                       (string/trim)
+                       (parse-filter))
+                   ([err] ""))]
+    (setdyn :todoist/token token)
+    (setdyn :todoist/filter t-filter)))
 
 (defn token []
   (dyn :todoist/token))
+
+(defn f-filter []
+  (dyn :todoist/filter))
 
 (defn today-date []
   (let [d (os/date (os/time) :local)
@@ -30,31 +52,26 @@
     (json/decode res)))
 
 (defn get-today-count []
-  (-> (get-todoist "https://api.todoist.com/rest/v2/tasks?filter=(today|overdue)")
-      (length)))
+  (let [filter_ (if (empty? (f-filter))
+                  "(today|overdue)"
+                  (string "(today|overdue)%26" (-> (get (f-filter) :filter)
+                                                   (url-escape))))]
+    (-> (get-todoist (string "https://api.todoist.com/rest/v2/tasks?filter=" filter_))
+        (length))))
 
+# Filter doesnt work for sync api
 (defn get-completed-today-count []
   (-> (get-todoist (string "https://api.todoist.com/sync/v9/completed/get_all?limit=200&since=" (today-date)))
       (get "items")
       (length)))
 
-(defn get-todo-count []
-  (-> (get-todoist "https://api.todoist.com/rest/v2/tasks")
-      (length)))
-
-(defn get-completed-total []
-  (let [conn (sql/open "/home/dghaehre/.cache/todo.db")]
-    (defer (sql/close conn)
-      (-> (sql/eval conn "select count(*) from completed")
-          (get 0)
-          (get (keyword "count(*)") 0)))))
-
 (defn display [today-count today-completed]
   (let [donebar     (string/repeat "▰" today-completed) 
+        context     (if (empty? (f-filter))
+                        ""
+                        (string " " (get (f-filter) :name) " "))
         notdonebar  (string/repeat "▱" today-count)]
-        # todo        (string "☐ " count-)
-        # alltimedone (string "■ " completed)]
-    (prin (string donebar notdonebar "  "))))
+    (prin (string context donebar notdonebar "  "))))
 
 (defn main [& args]
   (setup)
@@ -62,4 +79,4 @@
     (let [today-count     (get-today-count)
           completed-count (get-completed-today-count)]
       (display today-count completed-count))
-    ([err] (prin "err"))))
+    ([err] (prin err))))
