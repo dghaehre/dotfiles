@@ -79,4 +79,4 @@
     (let [today-count     (get-today-count)
           completed-count (get-completed-today-count)]
       (display today-count completed-count))
-    ([err] (prin err))))
+    ([err] (prin "todoist failed"))))

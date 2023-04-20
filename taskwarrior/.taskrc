@@ -84,8 +84,8 @@ report.todo.sort=urgency-
 # tasks that need to be handled
 # no project
 report.inbox.description=Inbox
-report.inbox.columns=id,entry.age,project,tags,description,note
-report.inbox.labels=ID,Age,Project,Tags,Description,Note
+report.inbox.columns=id,entry.age,project,tags,description
+report.inbox.labels=ID,Age,Project,Tags,Description
 report.inbox.filter=status:pending (project: )
 report.inbox.dateformat=a, d b
 
@@ -96,13 +96,14 @@ report.inbox.dateformat=a, d b
 report.plan.description=List of planned tasks
 report.plan.columns=id,project,description.count,scheduled,scheduled.remaining,due.remaining,urgency.integer
 report.plan.labels=Id,Project,Description,Scheduled,In,Due,Urg
-report.plan.sort=scheduled+
-report.plan.filter=status:pending (+SCHEDULED or +DUE)
+report.plan.sort=due+,scheduled+
+# report.plan.sort=urgency-
+report.plan.filter=status:pending (scheduled.before=now+4w or due.before=now+4w)
 report.plan.dateformat=a, d b
 
 # Modify Ready report
-report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Note,Due,Urg
-report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,note,due.relative,urgency.integer
+report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Urg
+report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,urgency.integer
 report.ready.filter=+READY -maybe -later -milestone 
 report.ready.dateformat=a, d
 
@@ -118,14 +119,11 @@ report.all.columns=id,status.short,uuid.short,start.active,entry.age,end.age,dep
 
 
 # Urgency
-urgency.user.tag.fun.coefficient=-2.0
 urgency.user.tag.maybe.coefficient=-10.0
 urgency.user.tag.later.coefficient=-6.0
 urgency.user.tag.waiting.coefficient=-8.0
-urgency.user.tag.milestone.coefficient=-10.0
 urgency.user.tag.next.coefficient=10.0
 urgency.user.project.vipps.hero.coefficient=4.0
-urgency.user.project.familie.coefficient=2.0
 
 calendar.details=full
 calendar.holidays=full
@@ -231,10 +229,10 @@ uda.taskwarrior-tui.shortcuts.1=tblock
 uda.taskwarrior-tui.shortcuts.2=tsub
 
 # Remove context
-verbose=affected,blank,edit,header,footnote,label,new-id,project,special,sync,override,recur
+verbose=affected,blank,edit,header,footnote,label,new-id,project,special,sync,recur
 
 # Command: undo
 color.undo.after=color2
 color.undo.before=color1
 news.version=2.6.0
-context=work
+context=home

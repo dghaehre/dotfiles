@@ -1,0 +1,15 @@
+#!/usr/bin/env janet
+(use sh)
+
+(defn to-number [s]
+  (try
+    (-> (string/trim s)
+        (int/u64)
+        (int/to-number))
+    ([_] 0)))
+
+(defn main [& args]
+  (let [inbox (-> ($< task rc.context=none count "(status:pending or status:waiting) pro: ") (to-number))]
+    (if (zero? inbox)
+      (prin "")
+      (prin "inbox: " inbox))))
