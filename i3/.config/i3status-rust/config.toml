@@ -54,7 +54,7 @@ block = "custom"
 command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-inbox"
 interval = "once"
 hide_when_empty = true
-watch_files = ["~/.task/pending.data", "~/.taskrc"]
+# watch_files = ["~/.task/pending.data", "~/.taskrc"]
 
 # Taskwarrior counter
 [[block]]
@@ -62,7 +62,7 @@ block = "custom"
 command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-counter"
 interval = "once"
 hide_when_empty = true
-watch_files = ["~/.task/pending.data", "~/.taskrc"]
+# watch_files = ["~/.task/pending.data", "~/.taskrc"]
 
 # # Todoist overdue
 # [[block]]

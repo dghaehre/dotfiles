@@ -20,7 +20,7 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 Plug 'tools-life/taskwiki'
-Plug 'neovimhaskell/haskell-vim'
+" Plug 'neovimhaskell/haskell-vim'
 Plug 'bakpakin/janet.vim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
@@ -458,14 +458,14 @@ autocmd TermOpen * setlocal nonu nornu
 " ################ Haskell #################
 """"""""""""""""""""""""""""""""""""""""""""
 " uses haskell-vim plugin
-autocmd FileType haskell setlocal shiftwidth=2 tabstop=2 expandtab
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+" autocmd FileType haskell setlocal shiftwidth=2 tabstop=2 expandtab
+" let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+" let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+" let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+" let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+" let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+" let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+" let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 " https://github.com/chrisdone/hindent#vim
 " Using Hindent in V mode: gq
 
