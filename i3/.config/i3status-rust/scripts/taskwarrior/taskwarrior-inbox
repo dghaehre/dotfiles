@@ -9,7 +9,7 @@
     ([_] 0)))
 
 (defn main [& args]
-  (let [inbox (-> ($< task rc.context=none count "(status:pending or status:waiting) pro: ") (to-number))]
+  (let [inbox (-> ($< task rc.context=none count "(status:pending or status:waiting)" pro:) (to-number))]
     (if (zero? inbox)
       (prin "")
       (prin "inbox: " inbox))))

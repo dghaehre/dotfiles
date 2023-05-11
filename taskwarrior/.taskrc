@@ -33,6 +33,8 @@ context.vipps.read=proj:vipps
 context.vipps.write=proj:vipps
 context.notwork.read=proj.not:vipps
 context.notwork.write=
+context.notarch.read=proj.not:arch
+context.notarch.write=
 context.hero.read=pro:vipps.hero
 context.hero.write=pro:vipps.hero
 
@@ -123,6 +125,8 @@ urgency.user.tag.maybe.coefficient=-10.0
 urgency.user.tag.later.coefficient=-6.0
 urgency.user.tag.waiting.coefficient=-8.0
 urgency.user.tag.next.coefficient=10.0
+
+urgency.user.tag.focus.coefficient=4.0
 urgency.user.project.vipps.hero.coefficient=4.0
 
 calendar.details=full
@@ -229,7 +233,7 @@ uda.taskwarrior-tui.shortcuts.1=tblock
 uda.taskwarrior-tui.shortcuts.2=tsub
 
 # Remove context
-verbose=affected,blank,edit,header,footnote,label,new-id,project,special,sync,recur
+verbose=affected,blank,edit,header,footnote,label,new-id,special,sync,recur
 
 # Command: undo
 color.undo.after=color2

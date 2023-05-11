@@ -236,6 +236,7 @@ highlight Statement         ctermfg=12
 highlight Keyword           ctermfg=11
 highlight Special           ctermfg=13
 highlight Delimiter         ctermfg=224
+highlight JanetParen        ctermfg=243
 highlight Comment           ctermfg=243 guifg=Grey
 highlight TODO              ctermfg=211 ctermbg=none cterm=italic
 highlight Title             ctermfg=224
