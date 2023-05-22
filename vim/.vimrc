@@ -19,9 +19,8 @@ Plug 'vimwiki/vimwiki'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
-Plug 'tools-life/taskwiki'
-" Plug 'neovimhaskell/haskell-vim'
-Plug 'bakpakin/janet.vim'
+" Plug 'tools-life/taskwiki'
+Plug 'janet-lang/janet.vim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
@@ -29,6 +28,8 @@ Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-unimpaired'
 Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
 
 """"""""""""""""""""""""""""""""""""""""""
 " lsp-zero                               "
@@ -97,7 +98,8 @@ set wrapmargin=0
 set undodir=~/.vim/undo-dir
 set undofile
 
-set foldmethod=syntax
+" set foldmethod=syntax
+set foldmethod=indent
 set foldlevel=0
 set foldlevelstart=50
 set nocompatible
@@ -236,7 +238,15 @@ highlight Statement         ctermfg=12
 highlight Keyword           ctermfg=11
 highlight Special           ctermfg=13
 highlight Delimiter         ctermfg=224
+
+" Janet specific highlightning
 highlight JanetParen        ctermfg=243
+" ^ Used for janet.vim
+autocmd FileType janet highlight link @punctuation.bracket Comment
+autocmd FileType janet highlight link @symbol Keyword
+autocmd FileType janet highlight Identifier ctermfg=15
+" ^ Janet with treesitter
+
 highlight Comment           ctermfg=243 guifg=Grey
 highlight TODO              ctermfg=211 ctermbg=none cterm=italic
 highlight Title             ctermfg=224
