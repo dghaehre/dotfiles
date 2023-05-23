@@ -193,8 +193,7 @@ nnoremap <leader>N :LfCurrentFile<CR>
 
 " ################ NeoTree #################
 """"""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>to :NeoTreeShowToggle<CR>
-nnoremap <leader>tf :NeoTreeFocus<CR>
+nnoremap <leader>to :NeoTreeFocusToggle<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
