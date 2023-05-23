@@ -19,7 +19,6 @@ Plug 'vimwiki/vimwiki'
 Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
-" Plug 'tools-life/taskwiki'
 Plug 'janet-lang/janet.vim'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
@@ -29,7 +28,13 @@ Plug 'tpope/vim-unimpaired'
 Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'nvim-tree/nvim-web-devicons'
 
+""""""""""""""""""""""""""""""""""""""""""
+" neo-tree
+""""""""""""""""""""""""""""""""""""""""""
+Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'MunifTanjim/nui.nvim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " lsp-zero                               "
@@ -186,6 +191,10 @@ let g:lf_replace_netrw = 1 " Open lf when vim opens a directory
 nnoremap <leader>n :LfWorkingDirectory<CR>
 nnoremap <leader>N :LfCurrentFile<CR>
 
+" ################ NeoTree #################
+""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>to :NeoTreeShowToggle<CR>
+nnoremap <leader>tf :NeoTreeFocus<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
@@ -415,11 +424,12 @@ nnoremap <leader>scd :Telescope zoxide list<cr>
 " LSP
 nnoremap <Leader>D   <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
 nnoremap         gd  <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap         ged  <cmd>lua require('telescope.builtin').lsp_definitions({jump_type="vsplit"})<cr>
 nnoremap         gtd  <cmd>lua require('telescope.builtin').lsp_definitions({jump_type="tab"})<cr>
 nnoremap         gi  <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
 nnoremap         gI  <cmd>lua require('telescope.builtin').lsp_implementations({jump_type="tab"})<cr>
 nnoremap         gr  <cmd>lua require('telescope.builtin').lsp_references()<cr>
-nnoremap         gR  <cmd>lua require('telescope.builtin').lsp_references({jump_type="tabs"})<cr>
+nnoremap         gR  <cmd>lua require('telescope.builtin').lsp_references({jump_type="tab"})<cr>
 nnoremap <Leader>ga  <cmd>lua vim.lsp.buf.code_action()<cr>
 
 
