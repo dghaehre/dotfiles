@@ -177,13 +177,12 @@ bar {
         }
 }
 
-set $mode_system System (l) lock, (e) logout, (s) my-suspend, (r) reboot, (Shift+s) shutdown, (m) suspend
+set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
 
 mode "$mode_system" {
     bindsym l exec --no-startup-id i3lock -c 263238, mode "default"
     bindsym e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-    bindsym s exec --no-startup-id "~/.local/bin/my-suspend", mode "default"
-    bindsym m exec --no-startup-id "i3lock -c 263238 && systemctl suspend", mode "default"
+    bindsym s exec --no-startup-id "i3lock -c 263238 && systemctl suspend", mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
 
@@ -196,6 +195,7 @@ bindsym $mod+Shift+e mode "$mode_system"
 
 bindsym $mod+c exec CM_LAUNCHER=rofi clipmenu -i -show window
 
+# TODO: fix
 set $mode_monitor Monitor laptop (l), HDMI only (h), DP1 only (d)
 mode "$mode_monitor" {
     bindsym l exec --no-startup-id "xrandr --output eDP1 --primary --auto", mode "default"
