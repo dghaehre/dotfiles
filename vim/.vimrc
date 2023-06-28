@@ -29,6 +29,7 @@ Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'nvim-tree/nvim-web-devicons'
+Plug 'ggandor/leap.nvim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
