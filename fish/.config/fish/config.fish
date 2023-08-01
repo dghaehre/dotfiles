@@ -33,20 +33,7 @@ abbr -a ss sudo systemctl
 abbr -a untar tar -xvzf
 abbr -a dotar tar -czvf
 abbr -a sudov sudo -E nvim
-abbr -a t task
-abbr -a tui taskwarrior-tui
-abbr -a ta task add
-abbr -a tr task ready
-abbr -a te task edit
-abbr -a ti task rc.context=none inbox
-abbr -a tm task mod
-abbr -a ts task start
-abbr -a tand task +LATEST mod
-abbr -a td task done
-abbr -a tp task plan
-abbr -a tl task later
-abbr -a tw task waiting
-abbr -a tt task ready +SCHEDULED or +TODAY or +OVERDUE
+
 abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls --cache-file ~/wikis/vimwiki/rss.db
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
@@ -55,6 +42,7 @@ abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 abbr -a lg lazygit
 abbr -a todo rg -N -A 2 TODO
 abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
+# abbr -a th todoist-history
 
 # abbr -a ts trans -shell
 
@@ -89,13 +77,27 @@ end
 # set webcam to 50hz
 abbr -a camflickering v4l2-ctl --set-ctrl power_line_frequency=1
 
-function ttw
-  task mod $argv[1] sch:tomorrow
-end
 
-function ttt
-  task mod $argv[1] sch:today
-end
+##################### Taskwarrior ####################
+#----------------------------------------------------#
+abbr -a t task
+abbr -a tui taskwarrior-tui
+abbr -a ta task add
+abbr -a tr task ready
+abbr -a te task edit
+abbr -a ti task rc.context=none inbox
+abbr -a tm task mod
+abbr -a ts task start
+abbr -a tand task +LATEST mod
+abbr -a td task done
+abbr -a tp task plan
+abbr -a tl task later
+abbr -a tw task waiting
+# task today
+abbr -a tt task ready scheduled.before=eod or due.before=eod
+# task scheduled none
+abbr -a tsn task scheduled.none:
+abbr -a plan task plan
 
 function tdd
   task (task ids +ACTIVE) done
@@ -105,7 +107,6 @@ function tss
   task (task ids +ACTIVE) stop
 end
 
-# abbr -a th todoist-history
 function th -d "List all completed task since {days} ago, for given {project}"
   if test -n "$argv[2]"
     task all "(status:pending or status:completed)" end.after:-$argv[1]d $argv[2..-1] 
@@ -113,6 +114,24 @@ function th -d "List all completed task since {days} ago, for given {project}"
     task all "(status:pending or status:completed)" end.after:-$argv[1]d
   end
 end
+
+# Example usage:
+#
+# tpr but-1234 +name
+# tpr but-1234 +name proj:project
+function tpr -d "A task template for pr reviews"
+  task add review PR $argv
+end
+
+function tprn -d "A task template for pr reviews to be review now"
+  tpr $argv sch:tod
+  task (task ids +ACTIVE) stop
+  task (task ids +LATEST) start
+end
+
+
+
+
 
 
 # Usage:

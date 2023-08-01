@@ -30,7 +30,7 @@ context.raja.write=proj:arch.lang.raja
 context.work.read=+work
 context.work.write=+work
 context.vipps.read=proj:vipps
-context.vipps.write=proj:vipps
+context.vipps.write=
 context.notwork.read=proj.not:vipps
 context.notwork.write=
 context.notarch.read=proj.not:arch
@@ -96,8 +96,8 @@ report.inbox.dateformat=a, d b
 # Tasks that have a plan
 # (sch<later)
 report.plan.description=List of planned tasks
-report.plan.columns=id,project,description.count,scheduled,scheduled.remaining,due.remaining,urgency.integer
-report.plan.labels=Id,Project,Description,Scheduled,In,Due,Urg
+report.plan.columns=id,project,description.count,recur,scheduled,scheduled.remaining,due.remaining,urgency.integer
+report.plan.labels=Id,Project,Description,Recur,Scheduled,In,Due,Urg
 report.plan.sort=due+,scheduled+
 # report.plan.sort=urgency-
 report.plan.filter=status:pending (scheduled.before=now+4w or due.before=now+4w)

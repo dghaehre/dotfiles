@@ -21,6 +21,7 @@ if [ ! -f "$NOTE" ]; then # If file does not exist
 
 ## TODO(s) | status:pending project:$project
 
+## WAITING | status:waiting project:$project
 
 ## DONE | status:completed project:$project
 "
