@@ -29,6 +29,7 @@
   (->> ($< task +ACTIVE uuids)
        (string/trim)
        (string/split " ")
+       (filter |(not (empty? $)))
        (display)))
 
 #
@@ -62,5 +63,6 @@
   (->> ($< task +ACTIVE uuids)
       (string/trim)
       (string/split " ")
-      (get-most-urgent)))
+      (filter |(not (empty? $)))
+      (length)))
 
