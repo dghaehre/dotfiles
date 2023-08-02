@@ -5,18 +5,62 @@
 (defn json-res [i]
   (json/encode {:icon "headphones" :text i :state "Info"}))
 
+(defn to-number [a]
+  (-> (int/s64 a) (int/to-number)))
 
-# TODO: handle multple ids
-(defn display [id]
-  (if-not (empty? id)
-    (let [cmd (string id ".description")
-          desc ($< task _get ,cmd)
-          res (string/trim desc)]
-      (prin (json-res res)))
-    (print (json-res ""))))
+(defn get-desc [id]
+  (let [cmd (string id ".description")
+        desc ($< task _get ,cmd)]
+    (string/trim desc)))
+
+(defn display [ids]
+  (cond
+      (empty? ids)       (print (json-res ""))
+
+      (= (length ids) 1) (-> (get-desc (first ids))
+                             (json-res)
+                             (print))
+
+      (-> (string "active: " (length ids))
+          (json-res)
+          (print))))
 
 (defn main [&]
-  (-> ($< task +ACTIVE ids)
+  (->> ($< task +ACTIVE uuids)
+       (string/trim)
+       (string/split " ")
+       (display)))
+
+#
+# TODO(show the most urgent)
+#
+
+(defn add-urgency [id]
+  (let [cmd (string id ".urgency")
+        urg (-> ($< task _get ,cmd) (to-number))]
+    {:id id
+     :urgency urg}))
+
+(defn by-urgency [a b]
+  (> (get a :urgency) (get b :urgency)))
+
+# Cant seem to get this to work because of:
+# (to-number "14.2") => error
+(defn get-most-urgent [ids]
+  (as-> ids _
+      (map add-urgency _)
+      (sort _ by-urgency)
+      (first _)
+      (get _ :id)))
+
+(comment
+  (->> ($< task +ACTIVE uuids)
+      (string/trim))
+
+  (int/u64 "14.2")
+
+  (->> ($< task +ACTIVE uuids)
       (string/trim)
-      (display)))
+      (string/split " ")
+      (get-most-urgent)))
 
