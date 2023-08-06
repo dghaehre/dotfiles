@@ -73,7 +73,11 @@ treesitter.setup({
     enable = true,    -- false will disable the whole extension
   },
 })
-
+require('treesitter-context').setup({
+  enable = true,
+  max_lines = 1,
+  trim_scope = 'inner',
+})
 
 
 ------------------------------------------------------------

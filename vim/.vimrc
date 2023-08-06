@@ -9,6 +9,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-surround'
 Plug 'numToStr/Comment.nvim'
@@ -248,6 +249,8 @@ highlight Statement         ctermfg=12
 highlight Keyword           ctermfg=11
 highlight Special           ctermfg=13
 highlight Delimiter         ctermfg=224
+
+hi TreesitterContext        ctermbg=Black ctermfg=none
 
 " Janet specific highlightning
 highlight JanetParen        ctermfg=243
