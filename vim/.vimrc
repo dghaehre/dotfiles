@@ -334,6 +334,9 @@ vnoremap ga <Plug>(GitGutterStageHunk)
 " Undo changes/hunk
 nnoremap gu <Plug>(GitGutterUndoHunk)
 
+" Open lazygit
+nnoremap <leader>lg :FloatermNew lazygit<cr>
+
 " Open up git status
 nnoremap <leader>gs :0G<cr>
 nnoremap <leader>gb :Git blame<cr>
