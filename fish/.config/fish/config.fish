@@ -96,8 +96,9 @@ abbr -a tw task waiting
 # task today
 abbr -a tt task ready scheduled.before=eod or due.before=eod
 # task scheduled none
-abbr -a tsn task scheduled.none:
+abbr -a tsn task ready scheduled.none:
 abbr -a plan task plan
+abbr -a th task all status:completed end.after:
 
 function tdd
   task (task ids +ACTIVE) done

@@ -31,7 +31,6 @@ Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'ggandor/leap.nvim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
@@ -197,6 +196,8 @@ nnoremap <leader>N :LfCurrentFile<CR>
 " ################ NeoTree #################
 """"""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>to :NeoTreeFocusToggle<CR>
+nnoremap <leader>tb :NeoTreeFocusToggle buffers<CR>
+nnoremap <leader>tg :NeoTreeFocusToggle git_status<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""

@@ -6,9 +6,6 @@ source ~/.vimrc
 
 lua << EOF
 
-local leap = require('leap')
-leap.add_default_mappings()
-
 ----------------------------------------------------------------
 -- TELESCOPE                                                  --
 ----------------------------------------------------------------
@@ -148,12 +145,12 @@ lsp.setup()
 
 local ok, dap = pcall(require, "dap")
 if ok then
-  vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<CR>")
-  vim.keymap.set("n", "<F3>", ":lua require'dap'.step_over()<CR>")
-  vim.keymap.set("n", "<F2>", ":lua require'dap'.step_into()<CR>")
-  vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<CR>")
-  vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
-  vim.keymap.set("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+  vim.keymap.set("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>")
+  vim.keymap.set("n", "<leader>dc", ":lua require'dap'.continue()<CR>")
+  vim.keymap.set("n", "<leader>do", ":lua require'dap'.step_over()<CR>")
+  vim.keymap.set("n", "<leader>dO", ":lua require'dap'.step_out()<CR>")
+  vim.keymap.set("n", "<leader>di", ":lua require'dap'.step_into()<CR>")
+  vim.keymap.set("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
   vim.keymap.set("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
   vim.keymap.set("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
   vim.keymap.set("n", "<leader>dt", ":lua require'dap-go'.debug_test()<CR>")
@@ -326,5 +323,20 @@ function tnote()
 end
 
 vim.keymap.set('n', '<Leader>tn', tnote)
+
+
+------------------------------------------------------------------
+-- Judge
+------------------------------------------------------------------
+
+function judge()
+  local filename = vim.fn.expand('%')
+  local linenr = vim.api.nvim_win_get_cursor(0)[1]
+  local command = "judge -a " .. filename .. ":" .. linenr .. ":0"
+  vim.api.nvim_command('silent !' .. command)
+  -- print(string.format("Current line [%d:%d]", 2, linenr[1]))
+end
+
+vim.keymap.set('n', '<Leader>le', judge)
 
 EOF
