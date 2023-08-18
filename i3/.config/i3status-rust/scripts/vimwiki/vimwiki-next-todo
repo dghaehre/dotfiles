@@ -1,0 +1,51 @@
+#!/usr/bin/env janet
+
+# I guess we could use PEG here
+(defn get-todo [path]
+  "Get the todo from a vimwiki file
+  Might error"
+  (let [lines (->> (slurp path)
+                   (string/split "\n")
+                   (map string/triml))
+        todos (filter |(string/has-prefix? "- [ ]" (string/triml $)) lines)
+        dones (filter |(string/has-prefix? "- [X]" (string/triml $)) lines)
+        todo (if (< 0 (length todos))
+                (->> (get todos 0)
+                     (string/replace "- [ ]" "")
+                     (string/triml))
+                "")]
+    {:todo todo
+     :total-done (length dones)
+     :total-todo (length todos)}))
+
+(defn get-today-path []
+  (defn with-zero [n]
+    (if (< n 10)
+      (string "0" n)
+      (string n)))
+  (let [{:year y :month m :month-day d} (os/date (os/time) :local)]
+    (string "/home/dghaehre/wikis/vimwiki/diary/" y "-" (with-zero (+ 1 m)) "-" (with-zero (+ 1 d)) ".md")))
+
+(defn display [{:todo todo
+                :total-done dones
+                :total-todo todos}]
+  (let [donebar     (string/repeat "▰" dones) 
+        notdonebar  (string/repeat "▱" todos)]
+    (string todo " " donebar notdonebar "  ")))
+
+(comment
+  (display {:todo "" :total-done 0 :total-todo 1})
+
+  (get-today-path)
+
+  (-> (get-today-path)
+      (get-todo)
+      (display)))
+
+(defn main [& args]
+  (try (-> (get-today-path)
+        (get-todo)
+        (display)
+        (prin))
+    ([_] (prin "Could not find today's diary file")))) # we think that is the error at least
+

@@ -326,6 +326,39 @@ vim.keymap.set('n', '<Leader>tn', tnote)
 
 
 ------------------------------------------------------------------
+-- Capture vimwiki
+------------------------------------------------------------------
+
+
+function capture_wiki(is_work)
+  local header = vim.fn.input("Header: ", "")
+  local filename = string.gsub(header, "%s+", "-") .. ".md"
+  if is_work then
+    filename = "/home/dghaehre/wikis/vimwiki/vipps/Inbox/" .. filename
+  else
+    filename = "/home/dghaehre/wikis/vimwiki/Inbox/" .. filename
+  end
+  local out = io.open(filename, "w+")
+  local t = vim.api.nvim_call_function('strftime', {'%d/%m/%y %H:%M'})
+  out:write("# " .. header .. "\n")
+  out:write("captured: " .. t .. "\n")
+  out:close()
+  vim.api.nvim_command('e ' .. filename)
+end
+
+function capture_wiki_vimwiki()
+  capture_wiki(false)
+end
+
+function capture_wiki_work()
+  capture_wiki(true)
+end
+
+vim.keymap.set('n', '<Leader>ca', capture_wiki_vimwiki)
+vim.keymap.set('n', '<Leader>cja', capture_wiki_work)
+
+
+------------------------------------------------------------------
 -- Judge
 ------------------------------------------------------------------
 

@@ -21,7 +21,7 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 Plug 'janet-lang/janet.vim'
-Plug 'tools-life/taskwiki'
+" Plug 'tools-life/taskwiki'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
@@ -417,8 +417,8 @@ nnoremap <Leader>swtg <cmd>lua require('telescope.builtin').live_grep({ search_d
 " The no_ignore doesnt work with live_grep
 nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }})<cr>
 " vimwiki work (jobb)
-nnoremap <Leader>sjf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/" }, no_ignore = true })<cr>
-nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/" }})<cr>
+nnoremap <Leader>sjf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/vipps/" }, no_ignore = true })<cr>
+nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/vipps/" }})<cr>
 " taskwiki (jobb)
 nnoremap <Leader>sjtf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }, no_ignore = true })<cr>
 nnoremap <Leader>sjtg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }})<cr>
@@ -567,16 +567,6 @@ autocmd FileType markdown setlocal foldmethod=expr
 autocmd FileType markdown setlocal foldlevelstart=50
 " autocmd FileType vimwiki set filetype=markdown
 " ^ breaks taskwiki
-
-" Capture a note/idea fast for sorting later
-function CaptureVimwiki()
-  execute ":e ~/wikis/vimwiki/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
-endfunction
-function CaptureWork()
-  execute ":e ~/wikis/work/Inbox/".strftime("%d-%m-%y-%H%M").expand(".md")
-endfunction
-nnoremap <Leader>ca :call CaptureVimwiki()<CR>"cpggA
-nnoremap <Leader>cja :call CaptureWork()<CR>"cpggA
 
 " Search for todo's
 " function VimwikiFindIncompleteTasks()
