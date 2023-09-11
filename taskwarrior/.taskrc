@@ -54,8 +54,8 @@ uda.note.values=,s,l
 # simple
 # for pi
 report.simple.description=Simple list
-report.simple.columns=id,description.count,project.parent
-report.simple.labels=Id,Description,project
+report.simple.columns=id,project,description.count
+report.simple.labels=Id,project,Description
 report.simple.filter=+READY -later -maybe
 report.simple.sort=urgency-
 
