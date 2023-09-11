@@ -1,19 +1,11 @@
 #!/usr/bin/env janet
 (use sh)
 
-(defn display-today [done todo]
-  (let [donebar     (string/repeat "▰" done) 
-        notdonebar  (string/repeat "▱" todo)]
-    (string donebar notdonebar "  ")))
-
-(def context-grammar
-  (peg/compile ~(* :a* :s* "'" (capture :a* :context) "'")))
-
-(defn get-context []
-  (let [s ($< task context show)
-        c (-> (peg/match context-grammar s)
-              (get 0))]
-    (if (nil? c) "" (string "@" c))))
+(defn display-today [name done todo]
+  (if (and (zero? done) (zero? todo)) ""
+    (let [donebar     (string/repeat "▰" done) 
+          notdonebar  (string/repeat "▱" todo)]
+      (string name " " donebar notdonebar "  "))))
 
 (defn to-number [s]
   (try
@@ -25,10 +17,18 @@
 # We are currently not using today-bar
 # This needs refinement if we are going to use it.
 (defn main [& args]
-  (let [todos     (-> ($< task status:pending or status:waiting count) (to-number))
-        today     (-> ($< task status:completed end.after:today count) (to-number))
-        ready     (-> ($< task "+READY (scheduled.before=eod or due.before=eod)" count) (to-number) (min 20))
-        done      (-> ($< task status:completed count) (to-number))
-        context   (get-context)
-        today-bar (display-today today ready)]
-    (prin (string context " " today-bar "  ☐ " todos " ■ " done))))
+  (let [todos       (-> ($< task rc.context=none status:pending or status:waiting count) (to-number))
+        done      (-> ($< task rc.context=none status:completed count) (to-number))
+
+        vipps-today-completed    (-> ($< task rc.context=vipps status:completed end.after:today count) (to-number))
+        home-today-completed (-> ($< task rc.context=home status:completed end.after:today count) (to-number))
+        arch-today-completed (-> ($< task rc.context=arch status:completed end.after:today count) (to-number))
+        vipps-ready     (-> ($< task rc.context=vipps "+READY (scheduled.before=eod or due.before=eod)" count) (to-number) (min 20))
+        home-ready (-> ($< task rc.context=home  "+READY (scheduled.before=eod or due.before=eod)" count) (to-number) (min 20))
+        arch-ready (-> ($< task rc.context=arch  "+READY (scheduled.before=eod or due.before=eod)" count) (to-number) (min 20))
+
+        today-bar (display-today "🏠" home-today-completed home-ready)
+        vipps-bar (display-today "vipps" vipps-today-completed vipps-ready)
+        arch-bar (display-today "arch" arch-today-completed arch-ready)]
+
+    (prin (string vipps-bar arch-bar today-bar "  ☐ " todos " ■ " done))))

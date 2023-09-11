@@ -291,7 +291,7 @@ function open_taskwiki_file(uuid)
     local filename = uuid .. ".md"
     local dir = "/home/dghaehre/wikis/vimwiki/taskwarrior-notes/"
     if string.match(project_name, "%a+") == "vipps" then
-      dir = "/home/dghaehre/wikis/work/taskwarrior-notes/"
+      dir = "/home/dghaehre/wikis/vimwiki/vipps/taskwarrior-notes/"
     end
     local full_path = dir .. filename
     local res = vim.fs.find(filename, {
@@ -334,7 +334,7 @@ function capture_wiki(is_work)
   local header = vim.fn.input("Header: ", "")
   local filename = string.gsub(header, "%s+", "-") .. ".md"
   if is_work then
-    filename = "/home/dghaehre/wikis/vimwiki/vipps/Inbox/" .. filename
+    filename = "/home/dghaehre/wikis/work/Inbox/" .. filename
   else
     filename = "/home/dghaehre/wikis/vimwiki/Inbox/" .. filename
   end
@@ -365,9 +365,9 @@ vim.keymap.set('n', '<Leader>cja', capture_wiki_work)
 function judge()
   local filename = vim.fn.expand('%')
   local linenr = vim.api.nvim_win_get_cursor(0)[1]
-  local command = "judge -a " .. filename .. ":" .. linenr .. ":0"
+  local columnnr = vim.fn.col('$')-1
+  local command = "judge -a " .. filename .. ":" .. linenr .. ":" .. columnnr
   vim.api.nvim_command('silent !' .. command)
-  -- print(string.format("Current line [%d:%d]", 2, linenr[1]))
 end
 
 vim.keymap.set('n', '<Leader>le', judge)

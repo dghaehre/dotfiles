@@ -21,7 +21,9 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 Plug 'janet-lang/janet.vim'
-" Plug 'tools-life/taskwiki'
+Plug 'ThePrimeagen/harpoon'
+Plug 'wlangstroth/vim-racket'
+Plug 'tools-life/taskwiki'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
@@ -181,9 +183,9 @@ nmap <silent> <leader>gT :TestFile -strategy=neovim<cr>
 abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
 abbr iferr if err != nil {<CR><CR>}<esc>kddko
 :iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
-:iab <expr> plantoday printf("## TODO(s) today \| status:pending sch:%s \n\n\n## DONE today \| status:completed end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
-let @c = "#\ncaptured: " . strftime("%d/%m/%y %H:%M")
-" ^ Used by capture.
+" :iab <expr> plantoday printf("## TODO(s) today \| status:pending sch:%s \n\n\n## DONE today \| status:completed end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
+:iab <expr> planhome printf("## TODO (today) \| status:pending pro.not:vipps sch.before:%sT23:59:59 \n\n\n## DONE (today) \| status:completed pro.not:vipps end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
+:iab <expr> planwork printf("## TODO (today) \| status:pending pro:vipps sch.before:%sT23:59:59 \n\n\n## DONE (today) \| status:completed pro:vipps end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
 
 
 " ################ LF #################
@@ -254,9 +256,9 @@ highlight Delimiter         ctermfg=224
 hi TreesitterContext        ctermbg=Black ctermfg=none
 
 " Janet specific highlightning
-highlight JanetParen        ctermfg=243
+" highlight JanetParen        ctermfg=243
 " ^ Used for janet.vim
-autocmd FileType janet highlight link @punctuation.bracket Comment
+" autocmd FileType janet highlight link @punctuation.bracket Comment
 autocmd FileType janet highlight link @symbol Keyword
 autocmd FileType janet highlight Identifier ctermfg=15
 " ^ Janet with treesitter
@@ -417,8 +419,8 @@ nnoremap <Leader>swtg <cmd>lua require('telescope.builtin').live_grep({ search_d
 " The no_ignore doesnt work with live_grep
 nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }})<cr>
 " vimwiki work (jobb)
-nnoremap <Leader>sjf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/vipps/" }, no_ignore = true })<cr>
-nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/vipps/" }})<cr>
+nnoremap <Leader>sjf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/" }, no_ignore = true })<cr>
+nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/" }})<cr>
 " taskwiki (jobb)
 nnoremap <Leader>sjtf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }, no_ignore = true })<cr>
 nnoremap <Leader>sjtg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }})<cr>

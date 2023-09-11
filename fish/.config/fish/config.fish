@@ -40,7 +40,7 @@ abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md 
 abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 abbr -a lg lazygit
-abbr -a todo rg -N -A 2 TODO
+abbr -a todo rg -N -A 2 -e \"- \\[ \\]\"
 abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
 # abbr -a th todoist-history
 
@@ -94,7 +94,7 @@ abbr -a tp task plan
 abbr -a tl task later
 abbr -a tw task waiting
 # task today
-abbr -a tt task ready scheduled.before=eod or due.before=eod
+abbr -a tt task ready scheduled.before=eod or due.before=tom+24h
 # task scheduled none
 abbr -a tsn task ready scheduled.none:
 abbr -a plan task plan
@@ -108,13 +108,13 @@ function tss
   task (task ids +ACTIVE) stop
 end
 
-function th -d "List all completed task since {days} ago, for given {project}"
-  if test -n "$argv[2]"
-    task all "(status:pending or status:completed)" end.after:-$argv[1]d $argv[2..-1] 
-  else 
-    task all "(status:pending or status:completed)" end.after:-$argv[1]d
-  end
-end
+# function th -d "List all completed task since {days} ago, for given {project}"
+#   if test -n "$argv[2]"
+#     task all "(status:pending or status:completed)" end.after:-$argv[1]d $argv[2..-1] 
+#   else 
+#     task all "(status:pending or status:completed)" end.after:-$argv[1]d
+#   end
+# end
 
 # Example usage:
 #

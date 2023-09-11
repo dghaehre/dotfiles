@@ -19,12 +19,19 @@
      :total-todo (length todos)}))
 
 (defn get-today-path []
+  "If work diary exists, use that, otherwise use personal diary"
   (defn with-zero [n]
     (if (< n 10)
       (string "0" n)
       (string n)))
-  (let [{:year y :month m :month-day d} (os/date (os/time) :local)]
-    (string "/home/dghaehre/wikis/vimwiki/diary/" y "-" (with-zero (+ 1 m)) "-" (with-zero (+ 1 d)) ".md")))
+  (let [{:year y :month m :month-day d} (os/date (os/time) :local)
+        filename (string y "-" (with-zero (+ 1 m)) "-" (with-zero (+ 1 d)) ".md")
+        base-dir (string "/home/dghaehre/wikis")
+        work-path (string base-dir "/work/diary/" filename)
+        personal-path (string base-dir "/vimwiki/diary/" filename)]
+    (if (not (nil? (os/stat work-path)))
+      work-path
+      personal-path)))
 
 (defn display [{:todo todo
                 :total-done dones

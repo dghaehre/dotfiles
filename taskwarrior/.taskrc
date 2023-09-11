@@ -43,6 +43,12 @@ uda.note.type=string
 uda.note.label=Note
 uda.note.values=,s,l
 
+# Effor
+# uda.effort.type=numeric
+# uda.effort.label=Effort
+# uda.effort.default=2
+# uda.effort.values=1,2,3,4,5,10,20
+
 # Custom reports
 
 # simple
@@ -128,6 +134,10 @@ urgency.user.tag.next.coefficient=10.0
 
 urgency.user.tag.focus.coefficient=4.0
 urgency.user.project.vipps.hero.coefficient=4.0
+
+urgency.blocking.coefficient=1.0
+urgency.user.tag.CHILD.coefficient=-10.0 # Recurring task
+urgency.annotations.coefficient=0
 
 calendar.details=full
 calendar.holidays=full
@@ -239,4 +249,4 @@ verbose=affected,blank,edit,header,footnote,label,new-id,special,sync,recur
 color.undo.after=color2
 color.undo.before=color1
 news.version=2.6.0
-context=home
+context=notarch
