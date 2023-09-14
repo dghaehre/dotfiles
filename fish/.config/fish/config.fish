@@ -94,7 +94,7 @@ abbr -a tp task plan
 abbr -a tl task later
 abbr -a tw task waiting
 # task today
-abbr -a tt task ready scheduled.before=eod or due.before=tom+24h
+abbr -a tt task ready scheduled.before=eod or due.before=tom+48h
 # task scheduled none
 abbr -a tsn task ready scheduled.none:
 abbr -a plan task plan
