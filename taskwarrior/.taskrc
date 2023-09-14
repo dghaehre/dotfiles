@@ -106,7 +106,7 @@ report.plan.columns=id,project,description.count,recur,scheduled,scheduled.remai
 report.plan.labels=Id,Project,Description,Recur,Scheduled,In,Due,Urg
 report.plan.sort=due+,scheduled+
 # report.plan.sort=urgency-
-report.plan.filter=status:pending (scheduled.before=now+4w or due.before=now+4w)
+report.plan.filter=status:pending (scheduled.before=now+4w or due.before=now+4w) -CHILD
 report.plan.dateformat=a, d b
 
 # Modify Ready report
