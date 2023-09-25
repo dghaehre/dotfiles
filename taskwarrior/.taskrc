@@ -18,7 +18,6 @@ search.case.sensitive=no
 alias.a=add
 alias.@=context
 alias.sch=scheduled
-alias.s=long scheduled
 
 # Context
 context.home.read=-work and proj.not:vipps proj.not:arch
@@ -43,11 +42,10 @@ uda.note.type=string
 uda.note.label=Note
 uda.note.values=,s,l
 
-# Effor
-# uda.effort.type=numeric
-# uda.effort.label=Effort
-# uda.effort.default=2
-# uda.effort.values=1,2,3,4,5,10,20
+# Score / effort
+uda.score.label=score
+uda.score.type=numeric
+uda.score.default=1
 
 # Custom reports
 
@@ -110,8 +108,8 @@ report.plan.filter=status:pending (scheduled.before=now+4w or due.before=now+4w)
 report.plan.dateformat=a, d b
 
 # Modify Ready report
-report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Urg
-report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,urgency.integer
+report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Score,Urg,Note
+report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,score,urgency.integer,note
 report.ready.filter=+READY -maybe -later -milestone 
 report.ready.dateformat=a, d
 

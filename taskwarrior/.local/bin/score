@@ -1,0 +1,34 @@
+#!/usr/bin/env janet
+(use sh)
+(import json)
+
+(defmacro task [& query]
+  ~(let [res (->> ($< task ,;query export)
+                  (json/decode)
+                  (map |(get $ "score" 0)))]
+     {:score (sum res)
+      :count (length res)}))
+
+(defn width [ss n]
+  (let [s (string ss)
+        l (length s)]
+    (if (> l n)
+      s
+      (string s (string/repeat " " (- n l))))))
+
+(defn main [&]
+  (let [{:score today :count today-c} (task end:tod)
+        {:score week :count week-c} (task end:sow)]
+    (print "------------------------")
+    (print "Time       Count   Score")
+    (print "------------------------")
+    (print "Today      " (width today-c 6) "  " today)
+    (print "Week       " (width week-c 6)  "  " week)
+    (print "")))
+
+(comment
+
+  (task end:sow)
+
+  (spork/print-table @[{:header @{:header2 3}}])
+  (get-today-score))
