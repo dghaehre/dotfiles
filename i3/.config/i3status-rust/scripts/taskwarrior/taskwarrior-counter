@@ -1,5 +1,6 @@
 #!/usr/bin/env janet
 (use sh)
+(import json)
 
 (defn display-today [name done todo]
   (if (and (zero? done) (zero? todo)) ""
@@ -20,6 +21,11 @@
   (let [todos       (-> ($< task rc.context=none status:pending or status:waiting count) (to-number))
         done      (-> ($< task rc.context=none status:completed count) (to-number))
 
+        score-today (->> ($< task rc.context=none status:completed end.after:today export)
+                         (json/decode)
+                         (map |(get $ "score" 0))
+                         (sum))
+
         vipps-today-completed    (-> ($< task rc.context=vipps status:completed end.after:today count) (to-number))
         home-today-completed (-> ($< task rc.context=home status:completed end.after:today count) (to-number))
         arch-today-completed (-> ($< task rc.context=arch status:completed end.after:today count) (to-number))
@@ -31,4 +37,4 @@
         vipps-bar (display-today "vipps" vipps-today-completed vipps-ready)
         arch-bar (display-today "arch" arch-today-completed arch-ready)]
 
-    (prin (string vipps-bar arch-bar today-bar "  ☐ " todos " ■ " done))))
+    (prin (string "🏆 " score-today "  " vipps-bar arch-bar today-bar "  ☐ " todos " ■ " done))))

@@ -102,6 +102,20 @@ lsp.set_preferences({
   }
 })
 
+-- sudo jpm install https://github.com/CFiggers/janet-lsp
+local lsp_configurations = require('lspconfig.configs')
+if not lsp_configurations.janet_lsp then
+  lsp_configurations.janet_lsp = {
+    default_config = {
+      name = 'janet-lsp',
+      cmd = {'janet-lsp'},
+      filetypes = {'janet'},
+      root_dir = require('lspconfig.util').root_pattern('project.janet')
+    }
+  }
+end
+require('lspconfig').janet_lsp.setup({})
+
 local cmp = require('cmp')
 local cmp_action = lsp.cmp_action()
 lsp.setup_nvim_cmp({

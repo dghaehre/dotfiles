@@ -3,7 +3,7 @@
 (import json)
 
 (defmacro task [& query]
-  ~(let [res (->> ($< task ,;query export)
+  ~(let [res (->> ($< task status:completed ,;query export)
                   (json/decode)
                   (map |(get $ "score" 0)))]
      {:score (sum res)
@@ -17,13 +17,23 @@
       (string s (string/repeat " " (- n l))))))
 
 (defn main [&]
-  (let [{:score today :count today-c} (task end:tod)
-        {:score week :count week-c} (task end:sow)]
+  (let [{:score today :count today-c} (task end.after:tod)
+        {:score yesterday :count yest-c} (task end.after:yesterday end.before:tod)
+        {:score week :count week-c} (task end.after:sow)
+        {:score last-week :count last-week-c} (task end.after:sow-7d end.before:sow)
+        {:score month :count month-c} (task end.after:som)
+        {:score last-month :count last-month-c} (task end.after:som-31d end.before:som)]
     (print "------------------------")
     (print "Time       Count   Score")
     (print "------------------------")
     (print "Today      " (width today-c 6) "  " today)
-    (print "Week       " (width week-c 6)  "  " week)
+    (print "Yesterday  " (width yest-c 6)  "  " yesterday)
+    (print "------------------------")
+    (print "This week  " (width week-c 6)  "  " week)
+    (print "Last week  " (width last-week-c 6)  "  " last-week)
+    (print "------------------------")
+    (print "This month " (width month-c 6)  "  " month)
+    (print "Last month " (width last-month-c 6)  "  " last-month)
     (print "")))
 
 (comment

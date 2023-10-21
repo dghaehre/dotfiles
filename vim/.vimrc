@@ -281,7 +281,7 @@ highlight PMenuSel ctermfg=224 ctermbg=Black
 
 " Markdown
 highlight Title ctermfg=223 ctermbg=none
-highlight Folded ctermfg=14 ctermbg=none
+highlight Folded ctermfg=243 ctermbg=none
 
 
 " LSP
