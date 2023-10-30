@@ -10,22 +10,23 @@
   "Defaults to #"
   (def supported-filetypes
     {:go          "//"
-     :golang      "#"
+     :golang      "//"
      :js          "//"
      :vim         "\""
      :javascript  "//"
      :janet       "#"
+     :roc         "#"
      :haskell     "--"
      :hs          "--"
      :rust        "//"
      :rs          "//"
-     :bash        "#" })
+     :bash        "#"})
   (if (nil? ftype) "#"
     (get supported-filetypes (keyword ftype) "#")))
 
 (def left-padding "   ")
 
-(defn add-header-and-footer [input comment-chars]
+(defn add-header-and-footer [input comment-chars space-padding]
   "Adding header and footer for the whole input string"
   (defn get-max [len line] (if (> len (length line)) len (length line)))
   (def max-length (reduce get-max 0 (string/split "\n" input)))
@@ -33,7 +34,8 @@
                  (math/ceil)
                  (+ 2)
                  (string/repeat comment-chars)))
-  (string line "\n" comment-chars "\n" input "\n" comment-chars "\n" line))
+  (def with-space-padding (string/repeat (string comment-chars "\n") space-padding))
+  (string line "\n" with-space-padding input  "\n" with-space-padding line))
 
 (defn add-line-endings [input comment-chars]
   "Add `commant-chars` at the end of every line"
@@ -52,7 +54,7 @@
   (-> (map add-line-ending lines)
       (string/join "\n")))
 
-(defn format [input comment-chars]
+(defn format [input comment-chars space-padding]
   "Make input fancy"
   (as-> input _
       (string/trim _ "\n") # Remove trailing newline
@@ -60,10 +62,21 @@
       (map |(string/trim $0 comment-chars) _) # Remove comments
       (map |(string comment-chars left-padding $0) _) # Add comments
       (string/join _ "\n")
-      (add-header-and-footer _ comment-chars)
+      (add-header-and-footer _ comment-chars space-padding)
       (add-line-endings _ comment-chars)))
 
-(defn main [_ &opt ftype]
+(comment
+  (prin (as-> (add-header-and-footer "some test" "//") _
+              (add-line-endings _ "//")))
+  (prin (format "some test" (get-comment-chars "go") 0)))
+
+
+(defn main [_ &opt ftype space-padding]
+  """
+  space-padding is how much space you want between the comment chars and the text. default: 0
+  """
+  (def space-padding (if (nil? space-padding) 0 (scan-number space-padding)))
+  (default space-padding 0)
   (-> (file/read stdin :all)
-      (format (get-comment-chars ftype))
+      (format (get-comment-chars ftype) space-padding)
       (print)))
