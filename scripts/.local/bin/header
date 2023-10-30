@@ -1,10 +1,10 @@
 #!/usr/bin/env janet
 
-##################################################################
-# Lets dog food this shit.                                       #
-#                                                                #
-# This script tries to make it easy to create headers like this. #
-##################################################################
+#####################################################################
+#   Lets dog food this shit.                                        #
+#                                                                   #
+#   This script tries to make it easy to create headers like this.  #
+#####################################################################
 
 (defn get-comment-chars [ftype]
   "Defaults to #"
@@ -57,9 +57,11 @@
 (defn format [input comment-chars space-padding]
   "Make input fancy"
   (as-> input _
-      (string/trim _ "\n") # Remove trailing newline
+      (string/replace-all comment-chars "" _) # Remove all comment-chars, should be done better
+      (string/trim _) # Remove all leading and trailing whitespace
       (string/split "\n" _) # Make list of lines
       (map |(string/trim $0 comment-chars) _) # Remove comments
+      (map |(string/trim $0) _) # Remove leading and trailing whitespace again..
       (map |(string comment-chars left-padding $0) _) # Add comments
       (string/join _ "\n")
       (add-header-and-footer _ comment-chars space-padding)
@@ -68,7 +70,10 @@
 (comment
   (prin (as-> (add-header-and-footer "some test" "//") _
               (add-line-endings _ "//")))
-  (prin (format "some test" (get-comment-chars "go") 0)))
+
+  (let [res (format "some test" (get-comment-chars "go") 1)
+        double-res (format res (get-comment-chars "go") 1)]
+    (prin double-res)))
 
 
 (defn main [_ &opt ftype space-padding]
