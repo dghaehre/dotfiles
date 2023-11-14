@@ -19,7 +19,8 @@
 # This needs refinement if we are going to use it.
 (defn main [& args]
   (let [todos       (-> ($< task rc.context=none status:pending or status:waiting count) (to-number))
-        done      (-> ($< task rc.context=none status:completed count) (to-number))
+        done        (-> ($< task rc.context=none status:completed count) (to-number))
+        done-today  (-> ($< task rc.context=none status:completed end.after:today count) (to-number))
 
         score-today (->> ($< task rc.context=none status:completed end.after:today export)
                          (json/decode)
@@ -37,4 +38,4 @@
         vipps-bar (display-today "vipps" vipps-today-completed vipps-ready)
         arch-bar (display-today "arch" arch-today-completed arch-ready)]
 
-    (prin (string "🏆 " score-today "  " vipps-bar arch-bar today-bar "  ☐ " todos " ■ " done))))
+    (prin (string "🏆 " score-today "  " vipps-bar arch-bar today-bar "  ■ " done-today  " ☐ " todos " ■ " done))))

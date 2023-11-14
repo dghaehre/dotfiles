@@ -20,6 +20,7 @@
      :hs          "--"
      :rust        "//"
      :rs          "//"
+     :lua         "--"
      :bash        "#"})
   (if (nil? ftype) "#"
     (get supported-filetypes (keyword ftype) "#")))

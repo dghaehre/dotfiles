@@ -24,6 +24,8 @@ context.home.read=-work and proj.not:vipps proj.not:arch
 context.home.write=
 context.arch.read=proj:arch
 context.arch.write=proj:arch
+context.tracker.read=proj:arch.tracker
+context.tracker.write=proj:arch.tracker
 context.raja.read=proj:arch.lang.raja
 context.raja.write=proj:arch.lang.raja
 context.work.read=+work
@@ -121,8 +123,8 @@ report.next.filter=status:pending
 report.next.dateformat=d b
 
 # Modify all report (project column)
-report.all.columns=id,status.short,uuid.short,start.active,entry.age,end.age,depends.indicator,priority,project,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
-
+report.all.columns=id,status.short,uuid.short,start.active,entry.age,score,end.age,depends.indicator,priority,project,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
+report.all.labels=ID,St,UUID,A,Age,Score,Done,D,P,Project,Tags,R,Wait,Sch,Due,Until,Description
 
 # Urgency
 urgency.user.tag.maybe.coefficient=-10.0
