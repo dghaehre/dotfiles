@@ -24,6 +24,11 @@ json = true
 [block.theme_overrides]
 info_bg = "#8FBCBB"
 
+[[block]]
+block = "pomodoro"
+notify_cmd = "notify-send '{msg}'"
+blocking_cmd = false
+
 # Vimwiki Next todo
 # [[block]]
 # block = "custom"
