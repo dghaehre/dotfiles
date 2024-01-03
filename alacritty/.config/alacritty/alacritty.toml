@@ -1,0 +1,42 @@
+[colors.bright]
+black = "#4C566A"
+blue = "#81A1C1"
+cyan = "#8FBCBB"
+green = "#A3BE8C"
+magenta = "#B48EAD"
+red = "#BF616A"
+white = "#ECEFF4"
+yellow = "#EBCB8B"
+
+[colors.normal]
+black = "#3B4252"
+blue = "#81A1C1"
+cyan = "#88C0D0"
+green = "#A3BE8C"
+magenta = "#B48EAD"
+red = "#BF616A"
+white = "#E5E9F0"
+yellow = "#EBCB8B"
+
+[colors.primary]
+background = "#22272e"
+foreground = "#D8DEE9"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 8
+
+[font.normal]
+family = "Source Code Pro Semibold"
+
+[mouse]
+hide_when_typing = false
+
+[window]
+decorations = "none"
+
+[window.padding]
+x = 5
+y = 5

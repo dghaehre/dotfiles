@@ -6,7 +6,7 @@ Plug 'ap/vim-css-color'
 Plug 'hrsh7th/cmp-cmdline' " TODO(useful?)
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -21,9 +21,9 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 Plug 'janet-lang/janet.vim'
-Plug 'ThePrimeagen/harpoon'
+Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 Plug 'wlangstroth/vim-racket'
-Plug 'tools-life/taskwiki'
+" Plug 'tools-life/taskwiki'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
@@ -39,8 +39,8 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
 """"""""""""""""""""""""""""""""""""""""""
-Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
 
 """"""""""""""""""""""""""""""""""""""""""
 " lsp-zero                               "
@@ -214,8 +214,8 @@ set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
 " set signcolumn=number
 " ^ puts gitgutter signs together with linenr
-set nonumber
-set nu rnu
+" set nonumber
+" set nu rnu
 set number
 set numberwidth=4
 :set scrolloff=3
@@ -377,23 +377,6 @@ tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <C-o> <C-\><C-n>
 
 
-" ########## Harpoon ###########
-""""""""""""""""""""""""""""""""
-nnoremap <leader>hh :lua require("harpoon.mark").add_file()<CR>
-nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap <leader>ha :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap <leader>hs :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap <leader>hd :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap <leader>hf :lua require("harpoon.ui").nav_file(4)<CR>
-nnoremap <leader>hg :lua require("harpoon.ui").nav_file(5)<CR>
-
-" Terminal
-" nnoremap 'q :lua require("harpoon.term").gotoTerminal(1)<CR>
-" nnoremap 'w :lua require("harpoon.term").gotoTerminal(2)<CR>
-" nnoremap 'e :lua require("harpoon.term").gotoTerminal(3)<CR>
-" nnoremap 'r :lua require("harpoon.term").gotoTerminal(4)<CR>
-" nnoremap 't :lua require("harpoon.term").gotoTerminal(5)<CR>
-
 " ########## Telescope ###########
 """""""""""""""""""""""""""""
 nnoremap <leader>sf <cmd>lua require('telescope.builtin').find_files()<cr>
@@ -467,8 +450,6 @@ nnoremap <C-u> :m .-2<CR>==
 nnoremap <C-d> :m .+1<CR>==
 vnoremap <C-u> :m '<-2<CR>gv=gv
 vnoremap <C-d> :m '>+1<CR>gv=gv
-
-
 
 " ############ Resizing ############
 """"""""""""""""""""""""""""""""""""
