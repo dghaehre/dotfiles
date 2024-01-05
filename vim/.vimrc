@@ -199,9 +199,9 @@ nnoremap <leader>N :LfCurrentFile<CR>
 
 " ################ NeoTree #################
 """"""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>to :NeoTreeFocusToggle<CR>
-nnoremap <leader>tb :NeoTreeFocusToggle buffers<CR>
-nnoremap <leader>tg :NeoTreeFocusToggle git_status<CR>
+nnoremap <leader>to :Neotree toggle focus<CR>
+nnoremap <leader>tb :Neotree toggle focus buffers<CR>
+nnoremap <leader>tg :Neotree toggle focus git_status<CR>
 
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
