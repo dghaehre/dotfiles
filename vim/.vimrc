@@ -21,7 +21,7 @@ Plug 'ptzz/lf.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 Plug 'janet-lang/janet.vim'
-Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
+Plug 'ThePrimeagen/harpoon'
 Plug 'wlangstroth/vim-racket'
 " Plug 'tools-life/taskwiki'
 Plug 'vim-test/vim-test'
@@ -375,6 +375,17 @@ highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <C-o> <C-\><C-n>
+
+
+" ########## Harpoon ###########
+""""""""""""""""""""""""""""""""
+nnoremap <leader>hh :lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap <leader>ha :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <leader>hs :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <leader>hd :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <leader>hf :lua require("harpoon.ui").nav_file(4)<CR>
+nnoremap <leader>hg :lua require("harpoon.ui").nav_file(5)<CR>
 
 
 " ########## Telescope ###########
