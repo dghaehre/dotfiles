@@ -175,7 +175,7 @@ let g:test#neovim#start_normal = 1
 let g:test#basic#start_normal = 1
 let g:test#neovim#term_position = "bel 20"
 nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
-nmap <silent> <leader>gT :TestFile -strategy=neovim<cr>
+nmap <silent> <leader>gT :TestLast -strategy=neovim<cr>
 
 
 
