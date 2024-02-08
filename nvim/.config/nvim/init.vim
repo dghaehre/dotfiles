@@ -373,6 +373,22 @@ vim.keymap.set('n', '<Leader>cja', capture_wiki_work)
 
 
 ------------------------------------------------------------------
+-- Generate github link
+------------------------------------------------------------------
+
+function generate_github_link()
+  local commit = vim.fn.system("git rev-parse HEAD 2> /dev/null | tr -d '\n'")
+  local linenr = vim.api.nvim_win_get_cursor(0)[1]
+  local filename = vim.fn.expand('%')
+  local github = string.gsub(string.gsub(string.gsub(vim.fn.system("git remote get-url origin 2> /dev/null | tr -d '\n'"), "git@", "https://"), "%.git", ""), "com%:", "com/")
+  local link = github .. "/blob/" .. commit .. "/" .. filename .. "#L" .. linenr
+  vim.fn.setreg('+y', link)
+  print("copied: " .. link)
+end
+vim.keymap.set('n', '<Leader>gy', generate_github_link)
+
+
+------------------------------------------------------------------
 -- Judge
 ------------------------------------------------------------------
 
