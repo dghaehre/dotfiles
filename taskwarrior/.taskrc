@@ -130,7 +130,7 @@ report.all.labels=ID,St,UUID,A,Age,Score,Done,D,P,Project,Tags,R,Wait,Sch,Due,Un
 urgency.user.tag.maybe.coefficient=-10.0
 urgency.user.tag.later.coefficient=-6.0
 urgency.user.tag.waiting.coefficient=-8.0
-urgency.user.tag.next.coefficient=10.0
+urgency.user.tag.next.coefficient=5.0
 
 urgency.user.tag.focus.coefficient=4.0
 urgency.user.project.vipps.hero.coefficient=4.0

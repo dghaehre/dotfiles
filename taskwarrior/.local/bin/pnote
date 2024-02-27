@@ -19,7 +19,11 @@ DIRPATH=$(dirname "$NOTE")
 if [ ! -f "$NOTE" ]; then # If file does not exist
   content="# $project
 
-## TODO(s) | status:pending project:$project
+## TODO(s) | status:pending project:$project -later -maybe
+
+## LATER | status:waiting project:$project +later
+
+## MAYBE | status:waiting project:$project +maybe
 
 ## WAITING | status:waiting project:$project
 

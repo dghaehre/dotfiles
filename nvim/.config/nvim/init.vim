@@ -305,7 +305,7 @@ function open_taskwiki_file(uuid)
     local filename = uuid .. ".md"
     local dir = "/home/dghaehre/wikis/vimwiki/taskwarrior-notes/"
     if string.match(project_name, "%a+") == "vipps" then
-      dir = "/home/dghaehre/wikis/vimwiki/vipps/taskwarrior-notes/"
+      dir = "/home/dghaehre/wikis/work/taskwarrior-notes/"
     end
     local full_path = dir .. filename
     local res = vim.fs.find(filename, {

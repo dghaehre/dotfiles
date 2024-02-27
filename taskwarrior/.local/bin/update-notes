@@ -1,0 +1,82 @@
+#!/usr/bin/env janet
+(use sh)
+
+(def folders
+  ["/home/dghaehre/wikis/work/taskwarrior-notes/"
+   "/home/dghaehre/wikis/vimwiki/taskwarrior-notes/"])
+
+(defn usage []
+  (print "Usage: update-notes [all]\n")
+  (print "Will update all pending tasks that has corresponding note with +note")
+  (print "")
+  (print "OPTIONS:")
+  (print "    all:     will update all tasks that has corresponding note with +note")
+  (print "             will update all tasks that DO NOT have a corresponding note with -note"))
+
+(defn has-note-fn? [ids]
+  (fn [id]
+    (-> (filter |(= id $) ids)
+        (length)
+        (not= 0))))
+
+(defn all-ids []
+  (->> ($< task uuids)
+       (string/split " ")
+       (filter |(not (= (string/trim $) "")))))
+
+(defn ids-from-folder [folder]
+  (->> (os/dir folder)
+       (filter |(string/has-suffix? ".md" $))
+       (map |(string/replace ".md" "" $))))
+  
+(defn ids-from-folders []
+  (-> (map ids-from-folder folders)
+      (flatten)))
+
+(defn pending-ids []
+  (->> ($< task uuids status:pending)
+       (string/split " ")
+       (filter |(not (= (string/trim $) "")))))
+
+(defn update-all []
+  (let [ids (ids-from-folders)
+        has-note? (has-note-fn? ids)]
+    (loop [id :in (all-ids)]
+      (if (has-note? id)
+        ($ task ,id mod +note)
+        ($ task ,id mod -note)))))
+
+(defn update-fast []
+  (let [pending-ids (pending-ids)
+        note-ids    (ids-from-folders)
+        to-be-updated (filter |(has-value? note-ids $) pending-ids)]
+    (print (string "Updating all relevant pending tasks with +note (" (length to-be-updated) ")"))
+    (loop [t :in to-be-updated]
+      ($ task ,t mod +note))))
+
+(defn main [_ & args]
+  (cond
+    (empty? args)
+    (update-fast)
+
+    (= (first args) "all")
+    (update-all)
+
+    (usage)))
+
+
+(comment
+  (length (all-ids))
+
+  # To check if a given task has a note
+  (let [ids (ids-from-folders)
+        has-note? (has-note-fn? ids)]
+    (has-note? "116e6ef2-7610-4228-aaa8-04c7023f7d0a"))
+    
+  (let [ids (-> (map ids-from-folder folders)
+                (flatten))]
+    ids)
+  (let [ids (pending-ids)]
+    (length ids))
+  (ids-from-folder (first folders)))
+  

@@ -21,7 +21,8 @@
                              (json-res)
                              (print))
 
-      (-> (string "active: " (length ids))
+      (-> (map get-desc ids)
+          (string/join ", ")
           (json-res)
           (print))))
 
@@ -32,6 +33,14 @@
        (filter |(not (empty? $)))
        (display)))
 
+(comment
+  (let [ids (->> ($< task +ACTIVE uuids)
+                 (string/trim)
+                 (string/split " ")
+                 (filter |(not (empty? $))))]
+
+    (-> (map get-desc ids)
+        (string/join ", "))))
 #
 # TODO(show the most urgent)
 #

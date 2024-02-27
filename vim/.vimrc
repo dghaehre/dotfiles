@@ -23,7 +23,7 @@ Plug 'wellle/targets.vim'
 Plug 'janet-lang/janet.vim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'wlangstroth/vim-racket'
-" Plug 'tools-life/taskwiki'
+Plug 'tools-life/taskwiki'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
@@ -85,7 +85,13 @@ call plug#end()
 
 " ################ Defaults #################
 """""""""""""""""""""""""""""""""""""""""""""
-set expandtab
+" Use tabs (default)
+set noexpandtab
+" Use spaces for specific file types
+autocmd FileType sql setlocal expandtab
+autocmd FileType janet setlocal expandtab
+
+" Use 2 spaces for tabs/spaces regardless
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
@@ -262,6 +268,7 @@ hi TreesitterContext        ctermbg=Black ctermfg=none
 " ^ Used for janet.vim
 " autocmd FileType janet highlight link @punctuation.bracket Comment
 autocmd FileType janet highlight link @symbol Keyword
+autocmd FileType janet highlight link @string.special Keyword
 autocmd FileType janet highlight Identifier ctermfg=15
 " ^ Janet with treesitter
 
@@ -321,7 +328,7 @@ highlight GitGutterDelete guifg=#ff2222 ctermfg=1
 
 highlight DiffRemoved    ctermfg=1 ctermbg=none cterm=italic
 highlight DiffDelete     ctermfg=1 ctermbg=none cterm=italic
-highlight DiffAdd        ctermfg=none ctermbg=23
+highlight DiffAdd        ctermfg=none ctermbg=Black cterm=none
 highlight DiffText       ctermfg=none ctermbg=8 cterm=italic
 highlight clear DiffChange
 
