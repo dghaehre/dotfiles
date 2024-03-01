@@ -40,9 +40,9 @@ context.hero.read=pro:vipps.hero
 context.hero.write=pro:vipps.hero
 
 # Notes
-uda.note.type=string
-uda.note.label=Note
-uda.note.values=,s,l
+# uda.note.type=string
+# uda.note.label=Note
+# uda.note.values=,s,l
 
 # Score / effort
 uda.score.label=score
@@ -63,8 +63,8 @@ report.simple.sort=urgency-
 # tasks that I want to work on someday, but have no plan on how or when
 # (wait:later)
 report.maybe.description=List of tasks to MAYBE do
-report.maybe.columns=id,project,description.count,tags,entry.age,note
-report.maybe.labels=ID,Project,Description,Tags,Age,Note
+report.maybe.columns=id,project,description.count,tags,entry.age
+report.maybe.labels=ID,Project,Description,Tags,Age
 report.maybe.filter=status:pending +maybe
 report.maybe.dateformat=a, d b
 
@@ -72,8 +72,8 @@ report.maybe.dateformat=a, d b
 # Tasks that needs to be done later, but I have not scheduled a specific date for them yet
 # (sch:later)
 report.later.description=List of tasks to do later
-report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency.integer
-report.later.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
+report.later.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,urgency.integer
+report.later.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Urg
 report.later.filter=status.not:completed status.not:deleted +later
 report.later.dateformat=a, d b
 report.later.sort=urgency-
@@ -81,8 +81,8 @@ report.later.sort=urgency-
 # Todo
 # All tasks that is not completed
 report.todo.description=List of all tasks that is not completed
-report.todo.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,note,urgency.integer
-report.todo.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Note,Urg
+report.todo.columns=id,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due.countdown,until.remaining,description,urgency.integer
+report.todo.labels=ID,Age,D,P,Project,Tags,R,S,Due,Until,Description,Urg
 report.todo.filter=status.not:completed status.not:deleted
 report.todo.dateformat=a, d b
 report.todo.sort=urgency-
@@ -98,33 +98,33 @@ report.inbox.filter=status:pending (project: )
 report.inbox.dateformat=a, d b
 
 
-# Plan
-# Tasks that have a plan
-# (sch<later)
+# Report: plan
+#
+# Tasks that have a plan (due or scheduled) within the next 4 weeks
 report.plan.description=List of planned tasks
 report.plan.columns=id,project,description.count,recur,scheduled,scheduled.remaining,due.remaining,urgency.integer
 report.plan.labels=Id,Project,Description,Recur,Scheduled,In,Due,Urg
 report.plan.sort=due+,scheduled+
 # report.plan.sort=urgency-
-report.plan.filter=status:pending (scheduled.before=now+4w or due.before=now+4w) -CHILD
+report.plan.filter=(status:pending or status:waiting) (scheduled.before=now+4w or due.before=now+4w) -CHILD
 report.plan.dateformat=a, d b
 
 # Modify Ready report
-report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Score,Urg,Note
-report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,score,urgency.integer,note
+report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Urg
+report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,urgency.integer
 report.ready.filter=+READY -maybe -later -milestone 
 report.ready.dateformat=a, d
 
 
 # Modify next report
-report.next.columns=id,start.age,priority,project,description.count,tags,recur,scheduled.formatted,due.relative,until.remaining,depends,note,urgency.integer
-report.next.labels=ID,Active,P,Project,Description,Tag,Recur,S,Due,Until,Deps,Note,Urg
+report.next.columns=id,start.age,priority,project,description.count,tags,recur,scheduled.formatted,due.relative,until.remaining,depends,urgency.integer
+report.next.labels=ID,Active,P,Project,Description,Tag,Recur,S,Due,Until,Deps,Urg
 report.next.filter=status:pending
 report.next.dateformat=d b
 
 # Modify all report (project column)
-report.all.columns=id,status.short,uuid.short,start.active,entry.age,score,end.age,depends.indicator,priority,project,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
-report.all.labels=ID,St,UUID,A,Age,Score,Done,D,P,Project,Tags,R,Wait,Sch,Due,Until,Description
+report.all.columns=id,status.short,uuid.short,start.active,entry.age,end.age,depends.indicator,priority,project,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
+report.all.labels=ID,St,UUID,A,Age,Done,D,P,Project,Tags,R,Wait,Sch,Due,Until,Description
 
 # Urgency
 urgency.user.tag.maybe.coefficient=-10.0
