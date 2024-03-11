@@ -35,6 +35,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'jbyuki/venn.nvim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
