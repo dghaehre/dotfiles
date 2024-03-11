@@ -38,5 +38,5 @@ hide_when_typing = false
 decorations = "none"
 
 [window.padding]
-x = 5
-y = 5
+x = 2
+y = 2
