@@ -140,7 +140,7 @@ urgency.user.tag.focus.coefficient=4.0
 urgency.user.project.vipps.hero.coefficient=4.0
 
 urgency.blocking.coefficient=1.0
-urgency.user.tag.CHILD.coefficient=-10.0 # Recurring task
+urgency.user.tag.CHILD.coefficient=-3.0 # Recurring task
 urgency.annotations.coefficient=0
 
 calendar.details=full
