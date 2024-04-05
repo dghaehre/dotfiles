@@ -102,7 +102,6 @@ set smartindent
 set lcs=tab:›\ ,trail:·
 set ignorecase
 set smartcase
-set updatetime=500
 
 " NOTE: Needed once to fix bug in fish
 " set shell=/usr/bin/bash
@@ -184,6 +183,7 @@ let g:test#basic#start_normal = 1
 let g:test#neovim#term_position = "bel 20"
 nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
 nmap <silent> <leader>gT :TestLast -strategy=neovim<cr>
+nmap <silent> <leader>gS :TestSuite -strategy=neovim<cr>
 
 
 
