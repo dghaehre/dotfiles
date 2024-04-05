@@ -6,6 +6,7 @@ Plug 'ap/vim-css-color'
 Plug 'hrsh7th/cmp-cmdline' " TODO(useful?)
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-neotest/nvim-nio'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-ui-select.nvim'
@@ -65,6 +66,8 @@ Plug 'rafamadriz/friendly-snippets' " Optional
 Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v1.x'}
 
 Plug 'github/copilot.vim'
+" Plug 'zbirenbaum/copilot.lua'
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 
 """""""""""""""""""""""""""""""""""""""""""""
 " Debugging                                 "
@@ -518,8 +521,11 @@ let g:go_highlight_types = 1
 
 " ############# Copilot ################
 """"""""""""""""""""""""""""""""""""""""
-nnoremap <Leader>coe :Copilot enable<CR>
-nnoremap <Leader>cod :Copilot disable<CR>
+" nnoremap <Leader>coe :Copilot enable<CR>
+" nnoremap <Leader>cod :Copilot disable<CR>
+vnoremap <Leader>coe :CopilotChatExplain<CR>
+nnoremap <Leader>coc :CopilotChatToggle<CR>
+nnoremap <Leader>cor :CopilotChatReset<CR>
 
 
 " ################ Vimwiki/markdown #################

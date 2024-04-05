@@ -242,6 +242,20 @@ require('Comment').setup({
   }
 })
 
+
+---------------------------------------------------------------------
+-- copliot                                                         --
+---------------------------------------------------------------------
+
+require("CopilotChat").setup({})
+function AskCopilotChat()
+	local input = vim.fn.input("Quick Chat: ")
+	if input ~= "" then
+		require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+	end
+end
+vim.api.nvim_set_keymap('n', '<leader>coq', ":lua AskCopilotChat()<CR>", { noremap = true})
+
 ---------------------------------------------------------------------
 -- venn.nvim                                                    --
 ---------------------------------------------------------------------
