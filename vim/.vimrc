@@ -522,7 +522,7 @@ let g:go_highlight_types = 1
 " ############# Copilot ################
 """"""""""""""""""""""""""""""""""""""""
 " nnoremap <Leader>coe :Copilot enable<CR>
-" nnoremap <Leader>cod :Copilot disable<CR>
+nnoremap <Leader>cod :Copilot disable<CR>
 vnoremap <Leader>coe :CopilotChatExplain<CR>
 nnoremap <Leader>coc :CopilotChatToggle<CR>
 nnoremap <Leader>cor :CopilotChatReset<CR>
