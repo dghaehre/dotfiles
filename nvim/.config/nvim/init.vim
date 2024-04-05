@@ -116,6 +116,18 @@ if not lsp_configurations.janet_lsp then
 end
 require('lspconfig').janet_lsp.setup({})
 
+if not lsp_configurations.gleam_lsp then
+  lsp_configurations.gleam_lsp = {
+    default_config = {
+      name = 'gleam-lsp',
+      cmd = {'gleam', 'lsp'},
+      filetypes = {'gleam'},
+      root_dir = require('lspconfig.util').root_pattern('gleam.toml')
+    }
+  }
+end
+require('lspconfig').gleam_lsp.setup({})
+
 local cmp = require('cmp')
 local cmp_action = lsp.cmp_action()
 lsp.setup_nvim_cmp({
