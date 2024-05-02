@@ -254,3 +254,4 @@ color.undo.after=color2
 color.undo.before=color1
 news.version=2.6.0
 context=notarch
+recurrence=off
