@@ -31,7 +31,7 @@
         vipps-today-completed    (-> ($< task rc.context=vipps status:completed end.after:today count) (to-number))
         home-today-completed (-> ($< task rc.context=home status:completed end.after:today count) (to-number))
         arch-today-completed (-> ($< task rc.context=arch status:completed end.after:today count) (to-number))
-        vipps-ready     (-> ($< task rc.context=vipps "+READY (scheduled.before=eod or due.before=+48h)" count) (to-number) (min 20))
+        vipps-ready     (-> ($< task rc.context=vipps "+READY (scheduled.before=eod or due.before=tom+48h)" count) (to-number) (min 20))
         home-ready (-> ($< task rc.context=home  "+READY (scheduled.before=eod or due.before=+48h)" count) (to-number) (min 20))
         arch-ready (-> ($< task rc.context=arch  "+READY (scheduled.before=eod or due.before=+48h)" count) (to-number) (min 20))
 

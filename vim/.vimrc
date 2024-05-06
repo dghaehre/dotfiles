@@ -38,6 +38,7 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'jbyuki/venn.nvim'
+Plug 'ChrisWellsWood/roc.vim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
@@ -95,6 +96,7 @@ set noexpandtab
 " Use spaces for specific file types
 autocmd FileType sql setlocal expandtab
 autocmd FileType janet setlocal expandtab
+autocmd FileType roc setlocal expandtab
 
 " Use 2 spaces for tabs/spaces regardless
 set shiftwidth=2

@@ -116,7 +116,7 @@ report.plan.dateformat=a, d b
 # Modify Ready report
 report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Notify,Urg
 report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,notify,urgency.integer
-report.ready.filter=+READY -maybe -later -milestone 
+report.ready.filter=+READY -maybe -later -milestone -waiting
 report.ready.dateformat=a, d
 
 
