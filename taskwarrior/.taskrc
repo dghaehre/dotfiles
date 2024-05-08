@@ -63,6 +63,12 @@ report.simple.labels=Id,project,Description
 report.simple.filter=+READY -later -maybe
 report.simple.sort=urgency-
 
+report.events.description=List of events to depend on
+report.events.columns=id,description.count
+report.events.labels=Id,Description
+report.events.filter=rc.context=events proj:events
+report.events.sort=urgency-
+
 # Maybe
 # tasks that I want to work on someday, but have no plan on how or when
 # (wait:later)
@@ -92,13 +98,14 @@ report.todo.dateformat=a, d b
 report.todo.sort=urgency-
 
 
-# Inbox
-# tasks that need to be handled
+# Inbox: tasks that need to be handled
 # no project
+#
+# Only dispalys one task at a time, for focus
 report.inbox.description=Inbox
 report.inbox.columns=id,entry.age,project,tags,description
 report.inbox.labels=ID,Age,Project,Tags,Description
-report.inbox.filter=status:pending (project: )
+report.inbox.filter=status:pending (project: ) limit:1
 report.inbox.dateformat=a, d b
 
 
@@ -116,14 +123,14 @@ report.plan.dateformat=a, d b
 # Modify Ready report
 report.ready.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Notify,Urg
 report.ready.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,notify,urgency.integer
-report.ready.filter=+READY -maybe -later -milestone -waiting
+report.ready.filter=+READY -maybe -later -milestone -waiting proj.not:events
 report.ready.dateformat=a, d
 
 
 # Modify next report
 report.next.labels=ID,Active,P,Project,Description,Tag,Recur,S,Due,Until,Deps,Notify,Urg
 report.next.columns=id,start.age,priority,project,description.count,tags,recur,scheduled.formatted,due.relative,until.remaining,depends,notify,urgency.integer
-report.next.filter=status:pending
+report.next.filter=status:pending proj.not:events
 report.next.dateformat=d b
 
 # Modify all report (project column)
@@ -133,8 +140,9 @@ report.all.labels=ID,St,UUID,A,Age,Done,D,P,Project,Tags,R,Wait,Sch,Due,Until,De
 # Urgency
 urgency.user.tag.maybe.coefficient=-10.0
 urgency.user.tag.later.coefficient=-6.0
-urgency.user.tag.waiting.coefficient=-8.0
+urgency.user.tag.waiting.coefficient=-5.0
 urgency.user.tag.next.coefficient=5.0
+urgency.user.tag.progress.coefficient=2.0
 
 urgency.user.tag.focus.coefficient=4.0
 urgency.user.project.vipps.hero.coefficient=4.0
