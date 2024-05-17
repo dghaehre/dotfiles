@@ -156,11 +156,16 @@ calendar.details=full
 calendar.holidays=full
 
 # Priorities
-uda.priority.values=H,M,,L
-urgency.uda.priority.L.coefficient=6
-urgency.uda.priority.M.coefficient=3
-urgency.uda.priority..coefficient=0
-urgency.uda.priority.L.coefficient=-6
+uda.priority.label=priority
+uda.priority.type=string
+uda.priority.values=must,should,want,maybe
+uda.priority.default=want
+
+urgency.uda.priority.must.coefficient=7
+urgency.uda.priority.should.coefficient=3
+urgency.uda.priority.want.coefficient=0
+urgency.uda.priority.maybe.coefficient=-6
+
 
 # Color Theme
 rule.precedence.color=deleted,completed,due.today,due,active,uda.priority,tag.next,keyword.,overdue,blocked,blocking,scheduled.today,scheduled,recurring,tag.,project.,tagged,uda.
