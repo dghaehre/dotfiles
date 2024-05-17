@@ -116,17 +116,33 @@ if not lsp_configurations.janet_lsp then
 end
 require('lspconfig').janet_lsp.setup({})
 
-if not lsp_configurations.gleam_lsp then
-  lsp_configurations.gleam_lsp = {
+-- roc-lang
+if not lsp_configurations.roc_lsp then
+  lsp_configurations.roc_lsp = {
     default_config = {
-      name = 'gleam-lsp',
-      cmd = {'gleam', 'lsp'},
-      filetypes = {'gleam'},
-      root_dir = require('lspconfig.util').root_pattern('gleam.toml')
+      name = 'roc-lsp',
+      cmd = {'roc_language_server'},
+      filetypes = {'roc'},
+      root_dir = require('lspconfig.util').root_pattern('main.roc')
     }
   }
 end
-require('lspconfig').gleam_lsp.setup({})
+require('lspconfig').roc_lsp.setup({})
+
+
+require('lspconfig').gleam.setup({})
+
+-- if not lsp_configurations.gleam_lsp then
+--   lsp_configurations.gleam_lsp = {
+--     default_config = {
+--       name = 'gleam-lsp',
+--       cmd = {'gleam', 'lsp'},
+--       filetypes = {'gleam'},
+--       root_dir = require('lspconfig.util').root_pattern('gleam.toml')
+--     }
+--   }
+-- end
+-- require('lspconfig').gleam_lsp.setup({})
 
 local cmp = require('cmp')
 local cmp_action = lsp.cmp_action()
@@ -160,6 +176,11 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "[e", function() vim.diagnostic.goto_prev() end, opts)
   vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("n", "<leader>ga", function() vim.lsp.buf.code_action() end, opts)
+
+	-- Enable inlay hints for the current buffer
+	if client.server_capabilities.inlayHintProvider then
+		vim.lsp.buf.inlay_hint(bufnr, true)
+	end
 end)
 
 lsp.setup()

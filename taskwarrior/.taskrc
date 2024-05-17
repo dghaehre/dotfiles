@@ -128,9 +128,10 @@ report.ready.dateformat=a, d
 
 
 # Modify next report
-report.next.labels=ID,Active,P,Project,Description,Tag,Recur,S,Due,Until,Deps,Notify,Urg
-report.next.columns=id,start.age,priority,project,description.count,tags,recur,scheduled.formatted,due.relative,until.remaining,depends,notify,urgency.integer
+report.next.labels=ID,D,P,Project,Description,Sch,Tags,R,Until,Due,Notify,Urg
+report.next.columns=id,depends.indicator,priority,project,description.count,scheduled,tags,recur.indicator,until.remaining,due.relative,notify,urgency.integer
 report.next.filter=status:pending proj.not:events
+report.next.sort=start-,urgency-
 report.next.dateformat=d b
 
 # Modify all report (project column)
