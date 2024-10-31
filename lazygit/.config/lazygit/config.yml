@@ -35,18 +35,30 @@ gui:
     showListFooter: true # for seeing the '5 of 20' message in list panels
     showRandomTip: true
     showBottomLine: true # for hiding the bottom information line (unless it has important information to tell you)
-    showCommandLog: true
+    showCommandLog: false
     showIcons: true
     commandLogSize: 8
     splitDiff: 'auto' # one of 'auto' | 'always'
+    authorColors:
+      'Daniel': '#0000ff' # use red for John Smith
+      'Daniel Haehre': '#0000ff' # use green for Alan Smithee
+      # use blue for other authors
+      '*': '#3B4252'
 customCommands:
-    - key: 'v'
+    - key: 'E'
       command: "floaterm {{.SelectedFile.Name | quote}}"
       context: 'files'
       subprocess: true
       description: "edit in vim (floaterm)"
-    - key: '<c-r>'
-      command: 'REVIEW_BASE={{.SelectedLocalCommit.Sha}} git review'
-      context: 'commits'
+
+    # Git review
+    - key: '<c-l>' # Floaterm
+      command: 'EDITOR=floaterm REVIEW_BASE={{.SelectedLocalBranch.Name}} git review'
+      context: 'localBranches'
+      subprocess: true
+      description: "review from vim"
+    - key: '<c-r>' # Floaterm
+      command: 'REVIEW_BASE={{.SelectedLocalBranch.Name}} git review'
+      context: 'localBranches'
       subprocess: true
       description: "review from vim"

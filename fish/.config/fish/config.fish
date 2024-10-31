@@ -34,6 +34,7 @@ abbr -a ss sudo systemctl
 abbr -a untar tar -xvzf
 abbr -a dotar tar -czvf
 abbr -a sudov sudo -E nvim
+abbr -a vim nvim
 
 abbr -a rss newsboat --url-file ~/wikis/vimwiki/rss-urls --cache-file ~/wikis/vimwiki/rss.db
 abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | zathura - "
@@ -41,10 +42,8 @@ abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md 
 abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 abbr -a lg lazygit
-abbr -a todo rg -N -A 2 -e \"- \\[ \\]\"
+abbr -a todo rg -e \"- \\[ \\]\" ~/wikis/work/todo.md
 abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
-# abbr -a th todoist-history
-
 # abbr -a ts trans -shell
 
 # Screen cast laptop size from the left (without audio)

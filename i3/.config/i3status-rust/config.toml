@@ -52,31 +52,31 @@ interval = 40
 hide_when_empty = true
 
 # Taskwarrior
-[[block]]
-block = "custom"
-command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-active"
-interval = "once"
-watch_files = ["~/.task/undo.data", "~/.taskrc"]
-hide_when_empty = true
-json = true
-[block.theme_overrides]
-info_bg = "#8FBCBB"
-
-# Taskwarrior inbox
-[[block]]
-block = "custom"
-command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-inbox"
-interval = "once"
-watch_files = ["~/.task/undo.data", "~/.taskrc"]
-hide_when_empty = true
-
-# Taskwarrior counter
-[[block]]
-block = "custom"
-command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-counter"
-interval = "once"
-hide_when_empty = true
-watch_files = ["~/.task/undo.data", "~/.taskrc"]
+#  [[block]]
+#  block = "custom"
+#  command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-active"
+#  interval = "once"
+#  watch_files = ["~/.task/undo.data", "~/.taskrc"]
+#  hide_when_empty = true
+#  json = true
+#  [block.theme_overrides]
+#  info_bg = "#8FBCBB"
+#  
+#  # Taskwarrior inbox
+#  [[block]]
+#  block = "custom"
+#  command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-inbox"
+#  interval = "once"
+#  watch_files = ["~/.task/undo.data", "~/.taskrc"]
+#  hide_when_empty = true
+#  
+#  # Taskwarrior counter
+#  [[block]]
+#  block = "custom"
+#  command = "~/.config/i3status-rust/scripts/taskwarrior/taskwarrior-counter"
+#  interval = "once"
+#  hide_when_empty = true
+#  watch_files = ["~/.task/undo.data", "~/.taskrc"]
 
 # Todoist overdue
 # [[block]]

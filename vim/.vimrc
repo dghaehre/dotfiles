@@ -25,7 +25,7 @@ Plug 'janet-lang/janet.vim'
 Plug 'gleam-lang/gleam.vim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'wlangstroth/vim-racket'
-Plug 'tools-life/taskwiki'
+" Plug 'tools-life/taskwiki'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
@@ -38,6 +38,7 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'jbyuki/venn.nvim'
+Plug 'tjdevries/templ.nvim'
 Plug 'ChrisWellsWood/roc.vim'
 
 """"""""""""""""""""""""""""""""""""""""""
@@ -97,6 +98,8 @@ set noexpandtab
 autocmd FileType sql setlocal expandtab
 autocmd FileType janet setlocal expandtab
 autocmd FileType roc setlocal expandtab
+autocmd FileType typescript setlocal expandtab
+autocmd FileType typescriptreact setlocal expandtab
 
 " Use 2 spaces for tabs/spaces regardless
 set shiftwidth=2
@@ -197,7 +200,7 @@ nmap <silent> <leader>gS :TestSuite -strategy=neovim<cr>
 " TODO: move this to luasnips
 abbr newp new Promise((resolve, reject) => {<CR><CR><esc>0i})<esc>0k
 abbr iferr if err != nil {<CR><CR>}<esc>kddko
-:iab <expr> dts strftime("%d/%m/%y %H:%M:%S")
+:iab <expr> dts strftime("%a %d/%m/%Y")
 " :iab <expr> plantoday printf("## TODO(s) today \| status:pending sch:%s \n\n\n## DONE today \| status:completed end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
 :iab <expr> planhome printf("## TODO (today) \| status:pending pro.not:vipps sch.before:%sT23:59:59 \n\n\n## DONE (today) \| status:completed pro.not:vipps end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
 :iab <expr> planwork printf("## TODO (today) \| status:pending pro:vipps sch.before:%sT23:59:59 \n\n\n## DONE (today) \| status:completed pro:vipps end:%s", strftime("%Y-%m-%d"), strftime("%Y-%m-%d"))
@@ -219,7 +222,9 @@ nnoremap <leader>tg :Neotree toggle focus git_status<CR>
 " ######### DISPLAY #############
 """"""""""""""""""""""""""""""""""
 " TODO: make it compatible with termguicolors
-" set termguicolors
+:colorscheme vim
+set notermguicolors
+
 set background=dark
 set t_Co=256
 set fillchars=""
@@ -267,6 +272,7 @@ highlight Statement         ctermfg=12
 highlight Keyword           ctermfg=11
 highlight Special           ctermfg=13
 highlight Delimiter         ctermfg=224
+highlight link @keyword.type Keyword
 
 hi TreesitterContext        ctermbg=Black ctermfg=none
 
@@ -313,6 +319,10 @@ highlight LspDiagnosticsErrorHint ctermfg=1 cterm=italic
 highlight LspDiagnosticsFloatingWarning ctermfg=9 cterm=none
 highlight LspDiagnosticsFloatingHint ctermfg=243 cterm=none
 highlight LspDiagnosticsFloatingError ctermfg=9 cterm=none
+
+" Clojure specific
+" highlight link @lsp.type.macro Keyword
+highlight link @string.special Keyword
 
 " MISC
 highlight VertSplit cterm=NONE guibg=NONE
@@ -525,9 +535,12 @@ let g:go_highlight_types = 1
 """"""""""""""""""""""""""""""""""""""""
 " nnoremap <Leader>coe :Copilot enable<CR>
 nnoremap <Leader>cod :Copilot disable<CR>
+nnoremap <Leader>coe :Copilot enable<CR>
 vnoremap <Leader>coe :CopilotChatExplain<CR>
 nnoremap <Leader>coc :CopilotChatToggle<CR>
 nnoremap <Leader>cor :CopilotChatReset<CR>
+vnoremap <Leader>cor :CopilotChatReview<CR>
+vnoremap <Leader>cof :CopilotChatFix<CR>
 
 
 " ################ Vimwiki/markdown #################
@@ -540,7 +553,6 @@ let g:vimwiki_key_mappings =
   \ {
   \ 'table_mappings': 0,
   \ }
-
 " Create link
 :vmap <Leader>l di[](<Esc>pa)<Esc>f[,a
 " Handle lists

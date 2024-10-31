@@ -1,7 +1,6 @@
 set rtp^=/usr/share/vim/vimfiles/
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
-" set termguicolors
 source ~/.vimrc
 
 lua << EOF
@@ -85,11 +84,6 @@ local lsp = require("lsp-zero")
 lsp.preset({
   name = "minimal",
   manage_nvim_cmp = true,
-})
-
-lsp.ensure_installed({
-  'tsserver',
-  'rust_analyzer',
 })
 
 lsp.set_preferences({
@@ -457,6 +451,32 @@ function generate_github_link()
   print("copied: " .. link)
 end
 vim.keymap.set('n', '<Leader>gy', generate_github_link)
+
+------------------------------------------------------------------
+-- Open up last downloaded file
+------------------------------------------------------------------
+
+function open_last_downloaded_file()
+	local last_downloaded = vim.fn.system("ls -t ~/Downloads | head -n 1 | tr -d '\n'")
+	vim.api.nvim_command('e ~/Downloads/' .. last_downloaded)
+end
+vim.keymap.set('n', '<Leader>od', open_last_downloaded_file)
+
+
+------------------------------------------------------------------
+-- Open up todo file
+------------------------------------------------------------------
+
+function open_todo_file()
+  local line = vim.api.nvim_get_current_line()
+  local last_word = line:match(".*%s(%S+)$"):gsub(":", "")
+	if not last_word:match("^:.*:$") then
+		print("Did not find a trailing keyword")
+	end
+	last_word = last_word:gsub(":", "")
+	vim.api.nvim_command('e ~/wikis/work/todos/' .. last_word .. ".md")
+end
+vim.keymap.set('n', '<Leader>ot', open_todo_file)
 
 
 ------------------------------------------------------------------
