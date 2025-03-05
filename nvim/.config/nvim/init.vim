@@ -428,9 +428,9 @@ function capture_wiki(is_work)
   local header = vim.fn.input("Header: ", "")
   local filename = string.gsub(header, "%s+", "-") .. ".md"
   if is_work then
-    filename = "/home/dghaehre/wikis/work/Inbox/" .. filename
+    filename = "/Users/dghaehre/wikis/work/Inbox/" .. filename
   else
-    filename = "/home/dghaehre/wikis/vimwiki/Inbox/" .. filename
+    filename = "/Users/dghaehre/wikis/vimwiki/Inbox/" .. filename
   end
   local out = io.open(filename, "w+")
   local t = vim.api.nvim_call_function('strftime', {'%d/%m/%y %H:%M'})

@@ -1,5 +1,7 @@
 ##################### DEFAULTS ####################
 #-------------------------------------------------#
+# Mac specofic
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # set -x SHELL /bin/bash in case of errors
 setenv EDITOR 'nvim'
 setenv BROWSER 'firefox'
@@ -15,6 +17,9 @@ set -ag FZF_DEFAULT_OPTS '--color=bg+:24,gutter:-1'
 # Flyctl
 setenv FLYCTL_INSTALL '~/.fly'
 fish_add_path ~/.fly/bin
+
+# Ruby on macos
+fish_add_path /opt/homebrew/opt/ruby/bin
 
 
 ##################### Vim Keys  ########################
@@ -343,6 +348,15 @@ end
 
 ##################### NVM ####################
 #-----------------------------------------------------#
-if type -q nvm
-  nvm use lts/gallium > /dev/null
+# function nvm
+#     bash -c "source ~/.nvm/nvm.sh; nvm $argv"
+# end
+function nvm
+	set -x current_path $(mktemp)
+	bash -c "source ~/.nvm/nvm.sh --no-use; nvm $argv; dirname \$(nvm which current) >$current_path"
+	fish_add_path -m $(cat $current_path)
+	rm $current_path
 end
+# if type -q nvm
+#   nvm use lts/gallium > /dev/null
+# end
