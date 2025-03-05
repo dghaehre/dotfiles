@@ -1,0 +1,6 @@
+# theme = xcodedark
+# theme = Subliminal
+theme = SpaceGray Bright
+
+# Empty values reset the configuration to the default value
+font-family = Source Code Pro SemiBold
