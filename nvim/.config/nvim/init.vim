@@ -58,7 +58,7 @@ telescope.load_extension('dap')
 
 local treesitter = require('nvim-treesitter.configs')
 treesitter.setup({
-  ensure_installed = "all",
+  -- ensure_installed = "all",
   highlight = {
     enable = true,    -- false will disable the whole extension
   },
@@ -275,7 +275,9 @@ require('Comment').setup({
 -- copliot                                                         --
 ---------------------------------------------------------------------
 
-require("CopilotChat").setup({})
+require("CopilotChat").setup({
+	model = 'gpt-4',
+})
 function AskCopilotChat()
 	local input = vim.fn.input("Quick Chat: ")
 	if input ~= "" then

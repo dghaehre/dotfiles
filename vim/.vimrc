@@ -7,7 +7,7 @@ Plug 'hrsh7th/cmp-cmdline' " TODO(useful?)
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-neotest/nvim-nio'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -69,7 +69,7 @@ Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v1.x'}
 
 Plug 'github/copilot.vim'
 " Plug 'zbirenbaum/copilot.lua'
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'main' }
 
 " IOS develpment
 Plug 'wojciech-kulik/xcodebuild.nvim'
@@ -332,7 +332,7 @@ highlight VertSplit cterm=NONE guibg=NONE
 highlight clear SignColumn
 highlight LineNr cterm=none ctermfg=DarkGrey ctermbg=none guibg=none guifg=DarkGrey
 highlight CursorLineNr cterm=none ctermfg=249 guifg=Grey
-highlight CursorLine cterm=none ctermbg=Black ctermfg=none
+highlight CursorLine cterm=none ctermbg=235 ctermfg=none
 highlight SpellBad ctermfg=none ctermbg=none cterm=underline
 highlight clear SpellCap
 highlight clear TabLineFill
