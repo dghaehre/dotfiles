@@ -138,6 +138,19 @@ require('lspconfig').gleam.setup({})
 -- end
 -- require('lspconfig').gleam_lsp.setup({})
 
+if not lsp_configurations.swift_lsp then
+  lsp_configurations.swift_lsp = {
+    default_config = {
+      name = 'swift-lsp',
+			cmd = { vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")) },
+      filetypes = {'swift'},
+      root_dir = require('lspconfig.util').root_pattern('buildServer.json')
+    }
+  }
+end
+require('lspconfig').swift_lsp.setup({})
+require("xcodebuild").setup({})
+
 local cmp = require('cmp')
 local cmp_action = lsp.cmp_action()
 lsp.setup_nvim_cmp({
@@ -172,9 +185,9 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>ga", function() vim.lsp.buf.code_action() end, opts)
 
 	-- Enable inlay hints for the current buffer
-	if client.server_capabilities.inlayHintProvider then
-		vim.lsp.buf.inlay_hint(bufnr, true)
-	end
+	-- if client.server_capabilities.inlayHintProvider then
+	-- 	vim.lsp.buf.inlay_hint(bufnr, true)
+	-- end
 end)
 
 lsp.setup()

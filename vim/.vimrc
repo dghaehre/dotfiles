@@ -71,6 +71,9 @@ Plug 'github/copilot.vim'
 " Plug 'zbirenbaum/copilot.lua'
 Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 
+" IOS develpment
+Plug 'wojciech-kulik/xcodebuild.nvim'
+
 """""""""""""""""""""""""""""""""""""""""""""
 " Debugging                                 "
 """""""""""""""""""""""""""""""""""""""""""""
@@ -445,14 +448,16 @@ nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_di
 nnoremap <Leader>sjtf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }, no_ignore = true })<cr>
 nnoremap <Leader>sjtg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/taskwarrior-notes/" }})<cr>
 " dotfiles
-nnoremap <Leader>sdf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>
-nnoremap <Leader>sdg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/dotfiles" }, hidden = true, no_ignore = true })<cr>
+nnoremap <Leader>sdf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/projects/personal/dotfiles" }, hidden = true, no_ignore = true })<cr>
+nnoremap <Leader>sdg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/projects/personal/dotfiles" }, hidden = true, no_ignore = true })<cr>
 " Go to a zoxide dir
 nnoremap <leader>scd :Telescope zoxide list<cr>
 
 
 " LSP
-nnoremap <Leader>D   <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
+nnoremap <Leader>ld   <cmd>lua vim.diagnostic.open_float()<cr>
+nnoremap ]e						<cmd>lua vim.diagnostic.goto_next()<cr>
+nnoremap [e						<cmd>lua vim.diagnostic.goto_prev()<cr>
 nnoremap         gd  <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 nnoremap         ged  <cmd>lua require('telescope.builtin').lsp_definitions({jump_type="vsplit"})<cr>
 nnoremap         gtd  <cmd>lua require('telescope.builtin').lsp_definitions({jump_type="tab"})<cr>
@@ -460,7 +465,9 @@ nnoremap         gi  <cmd>lua require('telescope.builtin').lsp_implementations()
 nnoremap         gI  <cmd>lua require('telescope.builtin').lsp_implementations({jump_type="tab"})<cr>
 nnoremap         gr  <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap         gR  <cmd>lua require('telescope.builtin').lsp_references({jump_type="tab"})<cr>
+" vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
 nnoremap <Leader>ga  <cmd>lua vim.lsp.buf.code_action()<cr>
+nnoremap <Leader>lr  :LspRestart<Enter>
 
 
 " ############# NAVIGATION ##########
