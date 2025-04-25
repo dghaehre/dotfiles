@@ -299,6 +299,8 @@ highlight StatusBarRight    ctermfg=12 ctermbg=none cterm=italic
 highlight StatusBarGit      ctermfg=14 ctermbg=none cterm=none
 highlight StatusBarWarning  ctermfg=11 ctermbg=none cterm=none
 highlight StatusBarError    ctermfg=9 ctermbg=none cterm=none
+highlight StatusLine        ctermfg=White ctermbg=none cterm=bold guibg=none
+highlight StatusLineNC      ctermfg=White ctermbg=none cterm=bold guibg=none
 highlight PMenu ctermfg=none ctermbg=none
 highlight PMenuSel ctermfg=224 ctermbg=Black
 
