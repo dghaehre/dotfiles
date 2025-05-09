@@ -11,6 +11,11 @@
   ss = stash show -p
   sl = stash list
 
+	# Difftastic aliases, so `git dlog` is `git log` with difftastic and so on.
+  dlog = -c diff.external=difft log --ext-diff -p # log out every commit with difftastic
+  dshow = -c diff.external=difft show --ext-diff
+  ddiff = -c diff.external=difft diff
+
   ## Review
   # NOTE: remember to set REVIEW_BASE
   #
