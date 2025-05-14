@@ -79,49 +79,60 @@ require('treesitter-context').setup({
 ------------------------------------------------------------
 -- LSP                                                    --
 ------------------------------------------------------------
-local lsp = require("lsp-zero")
-
-lsp.preset({
-  name = "minimal",
-  manage_nvim_cmp = true,
-})
-
-lsp.set_preferences({
-  suggest_lsp_servers = true,
-  sign_icons = {
-    error = 'E',
-    warn = 'W',
-    hint = 'H',
-    info = 'I'
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {},
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup({})
+    end,
   }
 })
+
+local lsp = require("lsp-zero")
+
+-- deprecated after new version... probably just delete this..
+-- lsp.preset({
+--   name = "minimal",
+--   manage_nvim_cmp = true,
+-- })
+-- 
+-- lsp.set_preferences({
+--   suggest_lsp_servers = true,
+--   sign_icons = {
+--     error = 'E',
+--     warn = 'W',
+--     hint = 'H',
+--     info = 'I'
+--   }
+-- })
 
 -- sudo jpm install https://github.com/CFiggers/janet-lsp
 local lsp_configurations = require('lspconfig.configs')
-if not lsp_configurations.janet_lsp then
-  lsp_configurations.janet_lsp = {
-    default_config = {
-      name = 'janet-lsp',
-      cmd = {'janet-lsp'},
-      filetypes = {'janet'},
-      root_dir = require('lspconfig.util').root_pattern('project.janet')
-    }
-  }
-end
-require('lspconfig').janet_lsp.setup({})
-
--- roc-lang
-if not lsp_configurations.roc_lsp then
-  lsp_configurations.roc_lsp = {
-    default_config = {
-      name = 'roc-lsp',
-      cmd = {'roc_language_server'},
-      filetypes = {'roc'},
-      root_dir = require('lspconfig.util').root_pattern('main.roc')
-    }
-  }
-end
-require('lspconfig').roc_lsp.setup({})
+-- if not lsp_configurations.janet_lsp then
+--   lsp_configurations.janet_lsp = {
+--     default_config = {
+--       name = 'janet-lsp',
+--       cmd = {'janet-lsp'},
+--       filetypes = {'janet'},
+--       root_dir = require('lspconfig.util').root_pattern('project.janet')
+--     }
+--   }
+-- end
+-- require('lspconfig').janet_lsp.setup({})
+-- 
+-- -- roc-lang
+-- if not lsp_configurations.roc_lsp then
+--   lsp_configurations.roc_lsp = {
+--     default_config = {
+--       name = 'roc-lsp',
+--       cmd = {'roc_language_server'},
+--       filetypes = {'roc'},
+--       root_dir = require('lspconfig.util').root_pattern('main.roc')
+--     }
+--   }
+-- end
+-- require('lspconfig').roc_lsp.setup({})
 
 
 require('lspconfig').gleam.setup({})
@@ -152,21 +163,44 @@ require('lspconfig').swift_lsp.setup({})
 require("xcodebuild").setup({})
 
 local cmp = require('cmp')
-local cmp_action = lsp.cmp_action()
-lsp.setup_nvim_cmp({
+
+-- wow, its this one that takes a long time!!
+cmp.setup({
+  sources = {
+    {name = 'nvim_lsp'}, -- lazy load this one? Pretty sure this is slow
+		{name = 'buffer'},
+  },
   mapping = cmp.mapping.preset.insert({
+    ['<CR>'] = cmp.mapping.confirm({
+      -- documentation says this is important.
+      -- I don't know why.
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = false,
+    }),
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item()),
     ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
     ['<C-l>'] = cmp.mapping.confirm({ select = true }),
-  }),
-  -- documentation = {
-  --   side_padding = 10,
-  --   border = false,
-  --   zindex = 1001,
-  -- },
+  })
 })
+
+-- local cmp = require('cmp')
+-- local cmp_action = lsp.cmp_action()
+-- lsp.setup_nvim_cmp({
+--   mapping = cmp.mapping.preset.insert({
+--     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-d>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item()),
+--     ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
+--     ['<C-l>'] = cmp.mapping.confirm({ select = true }),
+--   }),
+--   -- documentation = {
+--   --   side_padding = 10,
+--   --   border = false,
+--   --   zindex = 1001,
+--   -- },
+-- })
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
@@ -275,9 +309,7 @@ require('Comment').setup({
 -- copliot                                                         --
 ---------------------------------------------------------------------
 
-require("CopilotChat").setup({
-	model = 'gpt-4',
-})
+require("CopilotChat").setup({})
 function AskCopilotChat()
 	local input = vim.fn.input("Quick Chat: ")
 	if input ~= "" then
@@ -466,6 +498,19 @@ function generate_github_link()
   print("copied: " .. link)
 end
 vim.keymap.set('n', '<Leader>gy', generate_github_link)
+
+------------------------------------------------------------------
+-- Open PR from branch
+------------------------------------------------------------------
+
+function open_pr()
+  vim.fn.system("gh pr view --web")
+end
+vim.keymap.set('n', '<Leader>Po', open_pr)
+function create_pr()
+  vim.fn.system("gh pr create --web")
+end
+vim.keymap.set('n', '<Leader>Pc', create_pr)
 
 ------------------------------------------------------------------
 -- Open up last downloaded file

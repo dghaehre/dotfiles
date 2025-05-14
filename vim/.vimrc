@@ -58,14 +58,14 @@ Plug 'williamboman/mason-lspconfig.nvim' " Optional
 Plug 'hrsh7th/nvim-cmp'         " Required
 Plug 'hrsh7th/cmp-nvim-lsp'     " Required
 Plug 'hrsh7th/cmp-buffer'       " Optional
-Plug 'hrsh7th/cmp-path'         " Optional
-Plug 'saadparwaiz1/cmp_luasnip' " Optional
-Plug 'hrsh7th/cmp-nvim-lua'     " Optional
+" Plug 'hrsh7th/cmp-path'         " Optional
+" Plug 'saadparwaiz1/cmp_luasnip' " Optional
+" Plug 'hrsh7th/cmp-nvim-lua'     " Optional
 "  Snippets
-Plug 'L3MON4D3/LuaSnip'             " Required
-Plug 'rafamadriz/friendly-snippets' " Optional
+" Plug 'L3MON4D3/LuaSnip'             " Required
+" Plug 'rafamadriz/friendly-snippets' " Optional
 
-Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v1.x'}
+Plug 'VonHeikemen/lsp-zero.nvim'
 
 Plug 'github/copilot.vim'
 " Plug 'zbirenbaum/copilot.lua'
@@ -393,7 +393,7 @@ nnoremap <C-t> :b term:<cr>
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 let g:floaterm_opener = 'vsplit'
-let g:floaterm_keymap_new = '<C-t>'
+" let g:floaterm_keymap_new = '<C-t>'
 let g:floaterm_keymap_next = '<C-n>'
 " let g:floaterm_keymap_prev = '<C-p>'
 " ^ taskwarrior projects instead
@@ -550,6 +550,7 @@ nnoremap <Leader>coc :CopilotChatToggle<CR>
 nnoremap <Leader>cor :CopilotChatReset<CR>
 vnoremap <Leader>cor :CopilotChatReview<CR>
 vnoremap <Leader>cof :CopilotChatFix<CR>
+set completeopt=noselect,popup
 
 
 " ################ Vimwiki/markdown #################
