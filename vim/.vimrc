@@ -25,21 +25,16 @@ Plug 'janet-lang/janet.vim'
 Plug 'gleam-lang/gleam.vim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'wlangstroth/vim-racket'
-" Plug 'tools-life/taskwiki'
 Plug 'vim-test/vim-test'
 Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
 Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-unimpaired'
-Plug 'aklt/plantuml-syntax'
-Plug 'weirongxu/plantuml-previewer.vim' " Run :PlantumlOpen
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'jbyuki/venn.nvim'
 Plug 'tjdevries/templ.nvim'
-Plug 'ChrisWellsWood/roc.vim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
@@ -58,17 +53,10 @@ Plug 'williamboman/mason-lspconfig.nvim' " Optional
 Plug 'hrsh7th/nvim-cmp'         " Required
 Plug 'hrsh7th/cmp-nvim-lsp'     " Required
 Plug 'hrsh7th/cmp-buffer'       " Optional
-" Plug 'hrsh7th/cmp-path'         " Optional
-" Plug 'saadparwaiz1/cmp_luasnip' " Optional
-" Plug 'hrsh7th/cmp-nvim-lua'     " Optional
-"  Snippets
-" Plug 'L3MON4D3/LuaSnip'             " Required
-" Plug 'rafamadriz/friendly-snippets' " Optional
 
 Plug 'VonHeikemen/lsp-zero.nvim'
 
 Plug 'github/copilot.vim'
-" Plug 'zbirenbaum/copilot.lua'
 Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'main' }
 
 " IOS develpment
@@ -327,7 +315,7 @@ highlight LspDiagnosticsFloatingError ctermfg=9 cterm=none
 
 " Clojure specific
 " highlight link @lsp.type.macro Keyword
-highlight link @string.special Keyword
+" highlight link @string.special Keyword
 
 " MISC
 highlight VertSplit cterm=NONE guibg=NONE
