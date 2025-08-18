@@ -184,6 +184,8 @@ nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
 nmap <silent> <leader>gT :TestLast -strategy=neovim<cr>
 nmap <silent> <leader>gS :TestSuite -strategy=neovim<cr>
 
+" Automatically reload file if changed outside of Vim
+autocmd FocusGained,BufEnter * checktime
 
 
 " ################ Snippets #################
