@@ -183,6 +183,7 @@ let g:test#neovim#term_position = "bel 20"
 nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
 nmap <silent> <leader>gT :TestLast -strategy=neovim<cr>
 nmap <silent> <leader>gS :TestSuite -strategy=neovim<cr>
+nmap <silent> <leader>ht :TestVisit<cr>
 
 " Automatically reload file if changed outside of Vim
 autocmd FocusGained,BufEnter * checktime
@@ -371,6 +372,7 @@ nnoremap <leader>gl :0Gclog<cr>
 
 " Diffview
 nnoremap <leader>gdo :DiffviewOpen 
+nnoremap <leader>gdc :DiffviewClose<cr>
 nnoremap <leader>gdt :DiffviewToggleFiles<CR>
 
 
