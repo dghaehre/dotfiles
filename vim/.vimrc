@@ -180,6 +180,7 @@ nnoremap <Leader>wp :let @" = expand("%")<CR>
 let g:test#neovim#start_normal = 1
 let g:test#basic#start_normal = 1
 let g:test#neovim#term_position = "bel 20"
+let g:test#preserve_screen = 0
 nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
 nmap <silent> <leader>gT :TestLast -strategy=neovim<cr>
 nmap <silent> <leader>gS :TestSuite -strategy=neovim<cr>
@@ -367,6 +368,7 @@ nnoremap <leader>gs :0G<cr>
 nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gp :! git push -u origin (git rev-parse --abbrev-ref HEAD)<cr>
+nnoremap <leader>gP :! git push -u origin (git rev-parse --abbrev-ref HEAD) && gh pr create --web<cr>
 " Open up git log for current file
 nnoremap <leader>gl :0Gclog<cr>
 
@@ -429,12 +431,12 @@ nnoremap <leader>= <cmd>lua require('telescope.builtin').spell_suggest()<cr>
 nnoremap <leader>cb <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>cl <cmd>lua require('telescope.builtin').git_commits()<cr>
 " vimwiki
-nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/" }, no_ignore = true })<cr>
+nnoremap <Leader>swf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/Library/Mobile Documents/com~apple~CloudDocs/vimwiki/" }, no_ignore = true })<cr>
 " taskwiki
 nnoremap <Leader>swtf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/vimwiki/taskwarrior-notes/" }, no_ignore = true })<cr>
 nnoremap <Leader>swtg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/taskwarrior-notes/" }})<cr>
 " The no_ignore doesnt work with live_grep
-nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/vimwiki/" }})<cr>
+nnoremap <Leader>swg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/Library/Mobile Documents/com~apple~CloudDocs/vimwiki/" }})<cr>
 " vimwiki work (jobb)
 nnoremap <Leader>sjf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/wikis/work/" }, no_ignore = true })<cr>
 nnoremap <Leader>sjg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/wikis/work/" }})<cr>
@@ -549,7 +551,7 @@ set completeopt=noselect,popup
 """"""""""""""""""""""""""""""""""""""""""""
 " let g:vimwiki_global_ext = 1 " Dont use vimviki syntax for non wiki files
 " ^ cant have this with taskwiki
-let g:vimwiki_list = [{'path': '~/wikis/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/Library/Mobile Documents/com~apple~CloudDocs/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/wikis/work/', 'syntax': 'markdown', 'ext': '.md'}]
 " Disable vimwiki key mappings (to not fuck with copilot)
 let g:vimwiki_key_mappings =
   \ {
