@@ -56,7 +56,7 @@ Plug 'hrsh7th/cmp-buffer'       " Optional
 
 Plug 'VonHeikemen/lsp-zero.nvim'
 
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'main' }
 
 " IOS develpment
