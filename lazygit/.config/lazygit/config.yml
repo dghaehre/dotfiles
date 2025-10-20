@@ -50,7 +50,7 @@ gui:
     '*': '#3B4252'
 customCommands:
   - key: 'E'
-    command: "floaterm {{.SelectedFile.Name | quote}}"
+    command: "floaterm {{.SelectedFile.Name | quote}}; kill -TERM (ps -o ppid= -p $fish_pid)"
     context: 'files'
     description: "open in vim from vim (floaterm)"
     output: terminal

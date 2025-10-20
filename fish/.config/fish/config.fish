@@ -48,7 +48,7 @@ abbr -a view_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md | 
 abbr -a create_pdf "pandoc -f markdown -t pdf --pdf-engine wkhtmltopdf input.md --output test.pdf"
 abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
-abbr -a lg lazygit
+# abbr -a lg lazygit
 abbr -a todo rg -e \"- \\[ \\]\" ~/wikis/work/todo.md
 abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
 # abbr -a ts trans -shell
@@ -138,8 +138,28 @@ function tprn -d "A task template for pr reviews to be review now"
 end
 
 
+# LazyGit
 
+function lg
+	echo "Starting LazyGit..."
+	set -gx LAZYGIT_NEW_DIR_FILE "$HOME/.lazygit/newdir"
+	lazygit $argv
+	if test -f "$LAZYGIT_NEW_DIR_FILE"
+			cd (cat "$LAZYGIT_NEW_DIR_FILE")
+			rm -f "$LAZYGIT_NEW_DIR_FILE" > /dev/null
+	end
+end
 
+function w
+	set -l WK_NEW_DIR_FILE "$HOME/.wk-new-dir"
+	wk
+	if test -f "$WK_NEW_DIR_FILE"
+			cd (cat "$WK_NEW_DIR_FILE")
+			rm -f "$WK_NEW_DIR_FILE" > /dev/null
+	else
+		echo "no file"
+	end
+end
 
 
 # Usage:
@@ -332,6 +352,16 @@ function lfcd
     end
 end
 abbr -a n lfcd
+
+
+# Stop and remove all running containers
+function rad
+	# Stop all containers
+	docker stop (docker ps -aq) 2>/dev/null
+	# Remove all containers
+	docker rm (docker ps -aq) 2>/dev/null
+	echo "All containers removed."
+end
 
 
 ##################### Zoxide ####################
