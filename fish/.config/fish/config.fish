@@ -63,6 +63,9 @@ alias hd="hledger -f ~/projects/personal/ledger/2022/daniel.journal"
 # Open remote note
 abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
 
+# If I wanna stop using jj
+abbr -a remove-jj git clean -xdf
+
 # Edit commandline in editor
 bind \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
