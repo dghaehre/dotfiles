@@ -260,7 +260,11 @@ function fish_prompt
     echo -n '~'
   end
   set_color green
-  printf '%s ' (__fish_git_prompt)
+  if test -d ./.jj
+		echo -n ' (jj) '
+	else
+		printf '%s ' (__fish_git_prompt)
+	end
   set_color brblack
   echo -n '| '
   set_color normal
