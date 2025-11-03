@@ -210,8 +210,14 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "gi", function() builtin.lsp_implementations() end, opts)
-  vim.keymap.set("n", "gr", function() builtin.lsp_references() end, opts)
-  vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end, opts)
+	vim.keymap.set("n", "gr", function() builtin.lsp_references() end, opts)
+  vim.keymap.set("n", "<leader>f", function()
+    if vim.bo.filetype == "swift" then
+      vim.cmd("silent !swiftformat %")
+    else
+      vim.lsp.buf.format()
+    end
+  end, opts)
   vim.keymap.set("n", "ge", function() vim.diagnostic.show_line_diagnostics() end, opts)
   vim.keymap.set("n", "]e", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "[e", function() vim.diagnostic.goto_prev() end, opts)
