@@ -3,7 +3,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
-Plug 'hrsh7th/cmp-cmdline' " TODO(useful?)
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-neotest/nvim-nio'
@@ -185,6 +184,7 @@ nmap <silent> <leader>gt :TestNearest -strategy=neovim<cr>
 nmap <silent> <leader>gT :TestLast -strategy=neovim<cr>
 nmap <silent> <leader>gS :TestSuite -strategy=neovim<cr>
 nmap <silent> <leader>ht :TestVisit<cr>
+nmap <silent> <leader>gE :TestNearest -strategy=neovim EXPECT_OVERRIDE=true<cr>
 
 " Automatically reload file if changed outside of Vim
 autocmd FocusGained,BufEnter * checktime
