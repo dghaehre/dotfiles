@@ -296,6 +296,13 @@ highlight StatusLineNC      ctermfg=White ctermbg=none cterm=bold guibg=none
 highlight PMenu ctermfg=none ctermbg=none
 highlight PMenuSel ctermfg=224 ctermbg=Black
 
+" hunk (jujutsu)
+highlight Red ctermfg=9
+highlight Green ctermfg=151
+highlight HunkDiffDeleteDim guifg=Grey ctermfg=9
+highlight HunkSignSelected ctermbg=151
+highlight HunkSignDeselected ctermbg=9
+
 " Markdown
 highlight Title ctermfg=223 ctermbg=none
 highlight Folded ctermfg=243 ctermbg=none
@@ -402,13 +409,13 @@ tnoremap <C-o> <C-\><C-n>
 
 " ########## Harpoon ###########
 """"""""""""""""""""""""""""""""
-nnoremap <leader>hh :lua require("harpoon.mark").add_file()<CR>
-nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap <leader>ha :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap <leader>hs :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap <leader>hd :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap <leader>hf :lua require("harpoon.ui").nav_file(4)<CR>
-nnoremap <leader>hg :lua require("harpoon.ui").nav_file(5)<CR>
+" nnoremap <leader>hh :lua require("harpoon.mark").add_file()<CR>
+" nnoremap <leader>ho :lua require("harpoon.ui").toggle_quick_menu()<CR>
+" nnoremap <leader>ha :lua require("harpoon.ui").nav_file(1)<CR>
+" nnoremap <leader>hs :lua require("harpoon.ui").nav_file(2)<CR>
+" nnoremap <leader>hd :lua require("harpoon.ui").nav_file(3)<CR>
+" nnoremap <leader>hf :lua require("harpoon.ui").nav_file(4)<CR>
+" nnoremap <leader>hg :lua require("harpoon.ui").nav_file(5)<CR>
 
 
 " ########## Telescope ###########

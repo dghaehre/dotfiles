@@ -5,6 +5,34 @@ source ~/.vimrc
 
 lua << EOF
 
+
+----------------------------------------------------------------
+-- HARPOON
+----------------------------------------------------------------
+
+-- If you want git branch detection, use this
+-- local function git_branch()
+--   local pipe = io.popen("git branch --show-current")
+--   if pipe then
+--     local c = pipe:read("*l"):match("^%s*(.-)%s*$")
+--     pipe:close()
+--     return c
+--   end
+--   return "default list"
+-- end
+
+local harpoon = require("harpoon")
+vim.keymap.set("n", "<leader>hh", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>ho", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<leader>ha", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<leader>hs", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<leader>hd", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<leader>hf", function() harpoon:list():select(4) end)
+-- -- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<leader>hk", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<leader>hj", function() harpoon:list():next() end)
+
+
 ----------------------------------------------------------------
 -- TELESCOPE                                                  --
 ----------------------------------------------------------------
