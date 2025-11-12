@@ -22,6 +22,11 @@ lua << EOF
 -- end
 
 local harpoon = require("harpoon")
+harpoon.setup({
+		settings = {
+				save_on_toggle = true,
+		},
+})
 vim.keymap.set("n", "<leader>hh", function() harpoon:list():add() end)
 vim.keymap.set("n", "<leader>ho", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 vim.keymap.set("n", "<leader>ha", function() harpoon:list():select(1) end)
@@ -76,9 +81,12 @@ telescope.setup({
   }
 })
 
+telescope.load_extension('git_worktree')
 telescope.load_extension('fzf')
 telescope.load_extension('dap')
 
+-- :lua require('telescope').extensions.git_worktree.git_worktrees()
+vim.keymap.set("n", "<Leader>gw", function() telescope.extensions.git_worktree.git_worktrees() end, opts)
 
 --------------------------------------------------------------------------
 -- Treesitter                                                           --
@@ -196,7 +204,8 @@ local cmp = require('cmp')
 cmp.setup({
   sources = {
     {name = 'nvim_lsp'}, -- lazy load this one? Pretty sure this is slow
-		{name = 'buffer'},
+		{name = 'buffer' },
+		-- {name = 'files' }, -- might be slow
   },
   mapping = cmp.mapping.preset.insert({
     ['<CR>'] = cmp.mapping.confirm({
@@ -212,23 +221,6 @@ cmp.setup({
     ['<C-l>'] = cmp.mapping.confirm({ select = true }),
   })
 })
-
--- local cmp = require('cmp')
--- local cmp_action = lsp.cmp_action()
--- lsp.setup_nvim_cmp({
---   mapping = cmp.mapping.preset.insert({
---     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
---     ['<C-d>'] = cmp.mapping.scroll_docs(4),
---     ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item()),
---     ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
---     ['<C-l>'] = cmp.mapping.confirm({ select = true }),
---   }),
---   -- documentation = {
---   --   side_padding = 10,
---   --   border = false,
---   --   zindex = 1001,
---   -- },
--- })
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
@@ -375,114 +367,6 @@ function _G.Toggle_venn()
 end
 -- toggle keymappings for venn using <leader>v
 vim.api.nvim_set_keymap('n', '<leader>V', ":lua Toggle_venn()<CR>", { noremap = true})
-
-
-------------------------------------------------------------------
--- TASKWIKI                                                     --
-------------------------------------------------------------------
-
-local job = require('plenary.job')
-
-function get_uuid(taskid, callback)
-  job:new({
-    command = 'task',
-    args = { '_get', taskid .. '.uuid' },
-    cwd = '/usr/bin',
-    on_stderr = function(j, return_val)
-      print("Error: " .. return_val)
-    end,
-    on_stdout = vim.schedule_wrap(function(j, uuid)
-      callback(uuid)
-    end),
-  }):start()
-end
-
-function get_description(taskid, callback)
-  job:new({
-    command = 'task',
-    args = { '_get', taskid .. '.description' },
-    cwd = '/usr/bin',
-    on_stderr = function(j, return_val)
-      print("Error: " .. return_val)
-    end,
-    on_stdout = vim.schedule_wrap(function(j, desc)
-      callback(desc)
-    end),
-  }):start()
-end
-
-
-function get_project_name(taskid, callback)
-  job:new({
-    command = 'task',
-    args = { '_get', taskid .. '.project' },
-    cwd = '/usr/bin',
-    on_stderr = function(j, return_val)
-      print("Error: " .. return_val)
-    end,
-    on_stdout = vim.schedule_wrap(function(j, project_name)
-      callback(project_name)
-    end),
-  }):start()
-end
-
-function file_not_exist(dir, filename)
-  local res = vim.fs.find(filename, { path = dir})
-  return res[1] == nil
-end
-
-function create_taskwiki_file(full_path, uuid, callback)
-  local create = vim.fn.input("File missing. Create file [y/N]: ", "")
-  if not (create == "y") then
-    print("File not created")
-    return
-  end
-  print("Creating file")
-  get_description(uuid, function(desc)
-    local out = io.open(full_path, "w+")
-    out:write("# " .. desc)
-    out:close()
-    callback()
-  end)
-end
-
-function open_taskwiki_file(uuid) 
-  get_project_name(uuid, function(project_name)
-    local filename = uuid .. ".md"
-    local dir = "/home/dghaehre/wikis/vimwiki/taskwarrior-notes/"
-    if string.match(project_name, "%a+") == "vipps" then
-      dir = "/home/dghaehre/wikis/work/taskwarrior-notes/"
-    end
-    local full_path = dir .. filename
-    local res = vim.fs.find(filename, {
-      path = dir,
-    })
-    if file_not_exist(dir, filename) then
-      create_taskwiki_file(full_path, uuid, function()
-        vim.api.nvim_command('e ' .. full_path)
-      end)
-      return
-    end
-    vim.api.nvim_command('e ' .. full_path)
-  end)
-end
-
-function tnote()
-  local linenr = vim.api.nvim_win_get_cursor(0)[1]
-  local curline = vim.api.nvim_buf_get_lines(0, linenr - 1, linenr, false)[1]
-  local taskid = string.match(curline, "#%w+", -10)
-  if taskid == nil then
-    print("Could not find taskwiki task")
-    return nil
-    else
-      taskid = string.sub(taskid, 2)
-  end
-  get_uuid(taskid, function(uuid)
-    open_taskwiki_file(uuid)
-  end)
-end
-
-vim.keymap.set('n', '<Leader>tn', tnote)
 
 
 ------------------------------------------------------------------

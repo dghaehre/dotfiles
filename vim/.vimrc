@@ -34,6 +34,7 @@ Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'jbyuki/venn.nvim'
 Plug 'tjdevries/templ.nvim'
+Plug 'ThePrimeagen/git-worktree.nvim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
@@ -391,11 +392,11 @@ nnoremap <C-t> :b term:<cr>
 
 " #################### Floatterm ########################
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
+let g:floaterm_width = 0.9
+let g:floaterm_height = 0.9
 let g:floaterm_opener = 'vsplit'
 " let g:floaterm_keymap_new = '<C-t>'
-let g:floaterm_keymap_next = '<C-n>'
+" let g:floaterm_keymap_next = '<C-n>'
 " let g:floaterm_keymap_prev = '<C-p>'
 " ^ taskwarrior projects instead
 let g:floaterm_keymap_kill = '<C-x>'
@@ -454,6 +455,7 @@ nnoremap <Leader>sjtg <cmd>lua require('telescope.builtin').live_grep({ search_d
 nnoremap <Leader>sdf <cmd>lua require('telescope.builtin').find_files({ search_dirs = { "~/projects/personal/dotfiles" }, hidden = true, no_ignore = true })<cr>
 nnoremap <Leader>sdg <cmd>lua require('telescope.builtin').live_grep({ search_dirs = { "~/projects/personal/dotfiles" }, hidden = true, no_ignore = true })<cr>
 " Go to a zoxide dir
+nnoremap <Leader>se  :Telescope diagnostics<cr>
 nnoremap <leader>scd :Telescope zoxide list<cr>
 
 
