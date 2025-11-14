@@ -5,6 +5,19 @@ source ~/.vimrc
 
 lua << EOF
 
+local function log_time(msg)
+  local now = os.date("%H:%M:%S")
+  local ms = math.floor((os.clock() % 1) * 1000)
+  local timestamp = string.format("%s.%03d", now, ms)
+  local f = io.open("/tmp/nvim_startup.log", "a")
+  if f then
+    f:write(timestamp .. " " .. msg .. "\n")
+    f:close()
+  end
+end
+
+log_time("---startup-----")
+
 
 ----------------------------------------------------------------
 -- HARPOON
@@ -21,6 +34,7 @@ lua << EOF
 --   return "default list"
 -- end
 
+log_time("before harpoon")
 local harpoon = require("harpoon")
 harpoon.setup({
 		settings = {
@@ -42,6 +56,7 @@ vim.keymap.set("n", "<leader>hj", function() harpoon:list():next() end)
 -- TELESCOPE                                                  --
 ----------------------------------------------------------------
 
+log_time("before telescope")
 local telescope = require('telescope')
 local actions = require('telescope.actions')
 local builtin = require('telescope.builtin')
@@ -92,6 +107,7 @@ vim.keymap.set("n", "<Leader>gw", function() telescope.extensions.git_worktree.g
 -- Treesitter                                                           --
 --------------------------------------------------------------------------
 
+log_time("before treesitter")
 local treesitter = require('nvim-treesitter.configs')
 treesitter.setup({
   -- ensure_installed = "all",
@@ -115,6 +131,7 @@ require('treesitter-context').setup({
 ------------------------------------------------------------
 -- LSP                                                    --
 ------------------------------------------------------------
+log_time("before mason")
 require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = {},
@@ -125,6 +142,7 @@ require('mason-lspconfig').setup({
   }
 })
 
+log_time("before lsp-zero")
 local lsp = require("lsp-zero")
 
 -- deprecated after new version... probably just delete this..
@@ -195,12 +213,14 @@ if not lsp_configurations.swift_lsp then
     }
   }
 end
+log_time("before swift_lsp.setup")
 require('lspconfig').swift_lsp.setup({})
 require("xcodebuild").setup({})
 
 local cmp = require('cmp')
 
 -- wow, its this one that takes a long time!!
+log_time("Before cmp.setup")
 cmp.setup({
   sources = {
     {name = 'nvim_lsp'}, -- lazy load this one? Pretty sure this is slow
@@ -221,6 +241,7 @@ cmp.setup({
     ['<C-l>'] = cmp.mapping.confirm({ select = true }),
   })
 })
+log_time("After cmp.setup and before lsp.on_attach")
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
@@ -252,6 +273,7 @@ end)
 
 lsp.setup()
 
+log_time("After lsp.setup()")
 
 --------------------------------------------------------
 -- Debugging setup (dap)                              --
