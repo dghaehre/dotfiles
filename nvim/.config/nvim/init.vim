@@ -215,8 +215,17 @@ if not lsp_configurations.swift_lsp then
 end
 log_time("before swift_lsp.setup")
 require('lspconfig').swift_lsp.setup({})
-require("xcodebuild").setup({})
 
+-- Because Xcode takes a very long time to load, we only do it when we have to!
+function XcodeSetup()
+	require("xcodebuild").setup({})
+end
+vim.keymap.set('n', '<leader>Xs', function()
+  XcodeSetup()
+end, { desc = 'Run XcodeSetup' })
+
+
+log_time("Before cmp.require")
 local cmp = require('cmp')
 
 -- wow, its this one that takes a long time!!
