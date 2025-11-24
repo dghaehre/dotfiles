@@ -7,7 +7,7 @@
 theme = SpaceGray Bright
 
 # Empty values reset the configuration to the default value
-font-family = Source Code Pro SemiBold
+font-family = Source Code Pro Normal
 
 # Disable ligatures, I dont like them
 font-feature = -liga
@@ -16,3 +16,6 @@ font-feature = -dlig
 
 # Needed to make åøæ work on macOS
 macos-option-as-alt = false
+
+mouse-hide-while-typing = true
+

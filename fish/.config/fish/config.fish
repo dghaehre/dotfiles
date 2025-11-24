@@ -238,7 +238,7 @@ function add-project-fzf
     commandline -i -- " project:$selected"
   end
 end
-bind -M insert \cp 'add-project-fzf'
+# bind -M insert \cp 'add-project-fzf'
 
 function add-tags-fzf
   set -l selected (task _unique tags | fzf -m --prompt="tags> ")
@@ -247,7 +247,7 @@ function add-tags-fzf
     commandline -i -- " $tags"
   end
 end
-bind -M insert \ct 'add-tags-fzf'
+# bind -M insert \ct 'add-tags-fzf'
 
 ############## Fish Prompt and Colors ####################
 #--------------------------------------------------------#
