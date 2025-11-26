@@ -137,8 +137,8 @@ keymap("n", "<leader>tk", "<Plug>VimwikiDecrementListItem", {})
 keymap("v", "<leader>tk", "<Plug>VimwikiDecrementListItem", {})
 keymap("n", "<leader>ta", ":VimwikiTable<CR>", opts)
 keymap("n", "<leader>wb", ":VWB<CR>", opts)
-keymap("n", "<leader>wa", ":call VimwikiFindAllIncompleteTasks()<CR>", opts)
-keymap("n", "<leader>wx", ":call VimwikiFindIncompleteTasks()<CR>", opts)
+-- Note: VimwikiFindAllIncompleteTasks and VimwikiFindIncompleteTasks functions were removed
+-- Use telescope search for vimwiki todos instead (<leader>swt)
 
 -- LSP (additional mappings not in lsp on_attach)
 keymap("n", "<leader>ld", function() vim.diagnostic.open_float() end, opts)

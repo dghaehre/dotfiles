@@ -46,7 +46,7 @@ local function generate_github_link()
     "com/"
   )
   local link = github .. "/blob/" .. commit .. "/" .. filename .. "#L" .. linenr
-  vim.fn.setreg("+y", link)
+  vim.fn.setreg("+", link)
   print("copied: " .. link)
 end
 
@@ -78,10 +78,12 @@ local function open_todo_file()
   local line = vim.api.nvim_get_current_line()
   local last_word = line:match(".*%s(%S+)$")
   if last_word then
-    last_word = last_word:gsub(":", "")
+    -- Check if it looks like a keyword surrounded by colons (e.g., :keyword:)
     if not last_word:match("^:.*:$") then
       print("Did not find a trailing keyword")
+      return
     end
+    -- Remove the surrounding colons
     last_word = last_word:gsub(":", "")
     vim.api.nvim_command("e ~/wikis/work/todos/" .. last_word .. ".md")
   end
