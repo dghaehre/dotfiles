@@ -77,8 +77,21 @@ customCommands:
     command: "git worktree remove -f {{ .SelectedWorktree.Path | quote }}"
     loadingText: "Removing worktree..."
     output: log
-
+  - key: "T"
+    context: "files"
+    description: "Transfer staged changes to main worktree"
+    command: |
+      set MAIN_DIR (git worktree list | head -n 1 | awk '{print $1}')
+      and git stash push --keep-index -m "xfer-from-{{.CheckedOutBranch.Name}}"
+      and cd "$MAIN_DIR"
+      and git stash pop
+    loadingText: "Transferring staged changes..."
+    output: popup
   # Create a detached worktree from selected branch (when in branches view)
+  - key: "F"
+    context: "files"
+    description: "Make AI fix your staged changes in another worktree"
+    command: "git-fix"
   - key: "N"
     context: "localBranches"
     description: "Review selected branch with worktree"

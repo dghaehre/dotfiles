@@ -29,7 +29,7 @@ last_stash_ref=$(git stash list -n 1 --format='%gd')
 
 tmp_root=${TMPDIR:-/tmp}
 dir_prefix="git-fix-${branch_slug:-detached}-${timestamp}"
-worktree_path=$(mktemp -d "${tmp_root%/}/${dir_prefix}.XXXXXX")
+worktree_path=$(mktemp -d "${tmp_root%/}/${dir_prefix}")
 
 echo "Creating detached worktree at ${worktree_path}..."
 git worktree add --detach "${worktree_path}" HEAD >/dev/null
