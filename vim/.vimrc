@@ -406,6 +406,9 @@ highlight TermCursor ctermfg=2 guifg=#009900
 noremap  <C-f>  :FloatermToggle<CR>
 tnoremap <C-f> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <C-o> <C-\><C-n>
+tnoremap <C-l> <C-\><C-n>:FloatermNext<CR>
+tnoremap <C-h> <C-\><C-n>:FloatermPrev<CR>
+tnoremap <C-u> <C-\><C-n>:FloatermNew<CR>
 
 
 " ########## Harpoon ###########
