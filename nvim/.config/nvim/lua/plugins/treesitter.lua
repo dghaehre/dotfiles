@@ -1,12 +1,14 @@
 -- Treesitter configuration
 
 require("nvim-treesitter.configs").setup({
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = { "ipkg" }, -- parsers to not install
   highlight = {
     enable = true,
   },
   indentation = {
-    enable = true,
-  },
+    enable = false,
+	},
   folding = {
     enable = true,
   },

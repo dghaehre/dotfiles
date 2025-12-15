@@ -10,10 +10,6 @@ opt.tabstop = 2
 opt.autoindent = true
 opt.smartindent = true
 
--- Display whitespace
-opt.list = true
-opt.listchars = { tab = "› ", trail = "·" }
-
 -- Search
 opt.ignorecase = true
 opt.smartcase = true
