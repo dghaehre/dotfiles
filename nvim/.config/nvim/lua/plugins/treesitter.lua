@@ -6,9 +6,11 @@
 --   install_dir = vim.fn.stdpath("data") .. "/site",
 -- })
 
--- Helper function to install parsers
--- Usage: :lua InstallTreesitterParsers()
-function InstallTreesitterParsers()
+-- Helper function to install commonly used parsers
+-- Usage: :lua require('plugins.treesitter').install_parsers()
+local M = {}
+
+function M.install_parsers()
   require("nvim-treesitter").install({
     "lua", "vim", "vimdoc", "query", -- nvim essentials
     "javascript", "typescript", "tsx",
@@ -31,7 +33,7 @@ vim.api.nvim_create_autocmd("FileType", {
     local ok, _ = pcall(vim.treesitter.start, buf)
     if not ok then
       -- Silently fail - not all filetypes have treesitter parsers
-      -- Use :TSInstall <language> or :lua InstallTreesitterParsers() to install parsers
+      -- Use :TSInstall <language> or :lua require('plugins.treesitter').install_parsers()
     end
   end,
 })
@@ -41,3 +43,5 @@ require("treesitter-context").setup({
   max_lines = 1,
   trim_scope = "inner",
 })
+
+return M
