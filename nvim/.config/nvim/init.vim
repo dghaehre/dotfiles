@@ -163,17 +163,17 @@ local lsp = require("lsp-zero")
 
 -- sudo jpm install https://github.com/CFiggers/janet-lsp
 local lsp_configurations = require('lspconfig.configs')
--- if not lsp_configurations.janet_lsp then
---   lsp_configurations.janet_lsp = {
---     default_config = {
---       name = 'janet-lsp',
---       cmd = {'janet-lsp'},
---       filetypes = {'janet'},
---       root_dir = require('lspconfig.util').root_pattern('project.janet')
---     }
---   }
--- end
--- require('lspconfig').janet_lsp.setup({})
+if not lsp_configurations.janet_lsp then
+  lsp_configurations.janet_lsp = {
+    default_config = {
+      name = 'janet-lsp',
+      cmd = {'janet-lsp'},
+      filetypes = {'janet'},
+      root_dir = require('lspconfig.util').root_pattern('project.janet')
+    }
+  }
+end
+require('lspconfig').janet_lsp.setup({})
 -- 
 -- -- roc-lang
 -- if not lsp_configurations.roc_lsp then
@@ -189,7 +189,7 @@ local lsp_configurations = require('lspconfig.configs')
 -- require('lspconfig').roc_lsp.setup({})
 
 
-require('lspconfig').gleam.setup({})
+-- require('lspconfig').gleam.setup({})
 
 -- if not lsp_configurations.gleam_lsp then
 --   lsp_configurations.gleam_lsp = {
@@ -366,7 +366,9 @@ require('Comment').setup({
 -- copliot                                                         --
 ---------------------------------------------------------------------
 
-require("CopilotChat").setup({})
+require("CopilotChat").setup({
+  model = 'claude-sonnet-4.5',           -- AI model to use
+})
 function AskCopilotChat()
 	local input = vim.fn.input("Quick Chat: ")
 	if input ~= "" then
