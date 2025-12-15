@@ -22,10 +22,10 @@ Plug 'voldikss/vim-floaterm'
 Plug 'wellle/targets.vim'
 Plug 'janet-lang/janet.vim'
 Plug 'gleam-lang/gleam.vim'
-Plug 'ThePrimeagen/harpoon'
+Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 Plug 'wlangstroth/vim-racket'
 Plug 'vim-test/vim-test'
-Plug 'Olical/conjure'
+" Plug 'Olical/conjure'
 Plug 'gpanders/nvim-parinfer'
 Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-unimpaired'
@@ -35,6 +35,7 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'jbyuki/venn.nvim'
 Plug 'tjdevries/templ.nvim'
 Plug 'ThePrimeagen/git-worktree.nvim'
+" Plug 'TheNoeTrevino/no-go.nvim'
 
 """"""""""""""""""""""""""""""""""""""""""
 " neo-tree
@@ -395,10 +396,6 @@ nnoremap <C-t> :b term:<cr>
 let g:floaterm_width = 0.9
 let g:floaterm_height = 0.9
 let g:floaterm_opener = 'vsplit'
-" let g:floaterm_keymap_new = '<C-t>'
-" let g:floaterm_keymap_next = '<C-n>'
-" let g:floaterm_keymap_prev = '<C-p>'
-" ^ taskwarrior projects instead
 let g:floaterm_keymap_kill = '<C-x>'
 hi Floaterm guibg=black
 hi FloatermBorder guibg=black guifg=black
