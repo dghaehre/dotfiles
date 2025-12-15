@@ -16,7 +16,7 @@ require("lazy").setup({
   { "nvim-neotest/nvim-nio" },
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
+    tag = "v0.2.0",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("plugins.telescope")
@@ -60,7 +60,7 @@ require("lazy").setup({
   { "gleam-lang/gleam.vim" },
   { "wlangstroth/vim-racket" },
   -- { "Olical/conjure" },
-  { "tjdevries/templ.nvim" },
+  -- { "tjdevries/templ.nvim" },
   -- { "TheNoeTrevino/no-go.nvim" },
 
   -- Testing

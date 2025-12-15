@@ -18,7 +18,7 @@ function M.install_parsers()
     "python", "bash",
     "json", "yaml", "toml",
     "markdown", "markdown_inline",
-    "sql", "html", "css",
+    "sql", "html", "css", "templ",
   })
 end
 
