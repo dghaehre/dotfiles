@@ -27,7 +27,12 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     local buf = vim.api.nvim_get_current_buf()
     -- Enable syntax highlighting (provided by Neovim)
-    pcall(vim.treesitter.start, buf)
+    -- Only attempt if treesitter has a parser for this filetype
+    local ok, _ = pcall(vim.treesitter.start, buf)
+    if not ok then
+      -- Silently fail - not all filetypes have treesitter parsers
+      -- Use :TSInstall <language> or :lua InstallTreesitterParsers() to install parsers
+    end
   end,
 })
 
