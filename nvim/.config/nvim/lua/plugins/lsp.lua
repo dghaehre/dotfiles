@@ -14,8 +14,22 @@ require("mason-lspconfig").setup({
 
 local lsp = require("lsp-zero")
 
+-- Janet LSP
+-- sudo jpm install https://github.com/CFiggers/janet-lsp
+if not lsp_configurations.janet_lsp then
+  lsp_configurations.janet_lsp = {
+    default_config = {
+      name = "janet-lsp",
+      cmd = { "janet-lsp" },
+      filetypes = { "janet" },
+      root_dir = lspconfig.util.root_pattern("project.janet"),
+    },
+  }
+end
+lspconfig.janet_lsp.setup({})
+
 -- Gleam LSP
-lspconfig.gleam.setup({})
+-- lspconfig.gleam.setup({})
 
 -- Swift LSP
 if not lsp_configurations.swift_lsp then

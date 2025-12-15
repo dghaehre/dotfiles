@@ -91,6 +91,9 @@ keymap("n", "<C-t>", ":b term:<CR>", opts)
 keymap("n", "<C-f>", ":FloatermToggle<CR>", opts)
 keymap("t", "<C-f>", [[<C-\><C-n>:FloatermToggle<CR>]], opts)
 keymap("t", "<C-o>", [[<C-\><C-n>]], opts)
+keymap("t", "<C-l>", [[<C-\><C-n>:FloatermNext<CR>]], opts)
+keymap("t", "<C-h>", [[<C-\><C-n>:FloatermPrev<CR>]], opts)
+keymap("t", "<C-u>", [[<C-\><C-n>:FloatermNew<CR>]], opts)
 
 -- Navigation - toggle between buffers
 keymap("n", "<leader><leader>", "<C-^>", opts)

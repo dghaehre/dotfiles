@@ -1,6 +1,8 @@
 -- Copilot Chat configuration
 
-require("CopilotChat").setup({})
+require("CopilotChat").setup({
+  model = "claude-sonnet-4.5", -- AI model to use
+})
 
 function AskCopilotChat()
   local input = vim.fn.input("Quick Chat: ")

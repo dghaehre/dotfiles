@@ -58,8 +58,9 @@ require("lazy").setup({
   { "janet-lang/janet.vim" },
   { "gleam-lang/gleam.vim" },
   { "wlangstroth/vim-racket" },
-  { "Olical/conjure" },
+  -- { "Olical/conjure" },
   { "tjdevries/templ.nvim" },
+  -- { "TheNoeTrevino/no-go.nvim" },
 
   -- Testing
   { "vim-test/vim-test" },
