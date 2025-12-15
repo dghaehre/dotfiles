@@ -1,7 +1,7 @@
 -- Treesitter configuration
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = { "janet" }, -- explicitly ensure Janet parser is installed
+  ensure_installed = { "janet", "lua", "vim", "vimdoc", "query" }, -- core parsers and Janet
   auto_install = true, -- automatically install other parsers when entering buffer
   highlight = {
     enable = true,
