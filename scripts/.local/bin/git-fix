@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+die() {
+    echo "git-fix: $*" >&2
+    exit 1
+}
+
+command -v git >/dev/null 2>&1 || die "git is required"
+
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 || die "run inside a git repository"
+
+if git diff --cached --quiet; then
+    die "no staged changes to stash"
+fi
+
+command -v codex >/dev/null 2>&1 || die "codex CLI not found in PATH"
+
+branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
+branch_slug=${branch//[^A-Za-z0-9._-]/-}
+timestamp=$(date +%Y%m%d%H%M%S)
+stash_message="git-fix:${branch}:${timestamp}"
+
+echo "Stashing staged changes as \"${stash_message}\"..."
+git stash push --staged -m "${stash_message}" >/dev/null
+
+last_stash_ref=$(git stash list -n 1 --format='%gd')
+[[ -n "${last_stash_ref}" ]] || die "unable to determine last stash reference"
+
+tmp_root=${TMPDIR:-/tmp}
+dir_prefix="git-fix-${branch_slug:-detached}-${timestamp}"
+worktree_path=$(mktemp -d "${tmp_root%/}/${dir_prefix}")
+
+echo "Creating detached worktree at ${worktree_path}..."
+git worktree add --detach "${worktree_path}" HEAD >/dev/null
+
+task="Read ${last_stash_ref} (created from staged changes on branch ${branch}) and implement the instructions described there inside ${worktree_path}. Apply the required changes. Be short and concise. Only do what is asked, simple and short is better."
+escaped_task=$(printf '%q' "${task}")
+
+if command -v tmux >/dev/null 2>&1 && [[ -n ${TMUX:-} ]]; then
+    window_name="git-fix-${branch_slug:-detached}"
+    target=$(tmux new-window -d -P -F '#{session_name}:#{window_id}' -c "${worktree_path}" -n "${window_name}")
+    tmux send-keys -t "${target}" "printf \"%s\n\" \"git-fix: working on ${last_stash_ref}\" \"Worktree: ${worktree_path}\" \"\" \"Launching codex...\"" C-m
+    tmux send-keys -t "${target}" "codex ${escaped_task}" C-m
+    echo "Opened tmux window ${target} and launched codex."
+else
+    echo "tmux session not detected; running codex in the current shell..."
+    (
+        cd "${worktree_path}"
+        codex "${task}"
+    )
+fi

@@ -24,6 +24,7 @@ hi("Keyword", { ctermfg = "11" })
 hi("Special", { ctermfg = "13" })
 hi("Delimiter", { ctermfg = "224" })
 vim.cmd("highlight link @keyword.type Keyword")
+-- vim.cmd("highlight link @lsp.type.identifier.swift Identifier")
 
 hi("TreesitterContext", { ctermbg = "Black", ctermfg = "none" })
 
