@@ -1,8 +1,8 @@
 -- Treesitter configuration
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = { "ipkg" }, -- parsers to not install
+  ensure_installed = { "janet" }, -- explicitly ensure Janet parser is installed
+  auto_install = true, -- automatically install other parsers when entering buffer
   highlight = {
     enable = true,
   },
