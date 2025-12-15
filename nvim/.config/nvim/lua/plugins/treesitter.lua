@@ -1,17 +1,41 @@
--- Treesitter configuration
+-- Treesitter configuration for main branch
+-- The main branch uses a completely different API than master
 
-require("nvim-treesitter.configs").setup({
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = { "ipkg" }, -- parsers to not install
-  highlight = {
-    enable = true,
-  },
-  indentation = {
-    enable = false,
-	},
-  folding = {
-    enable = true,
-  },
+-- Setup is optional and only needed for custom install directory
+-- require("nvim-treesitter").setup({
+--   install_dir = vim.fn.stdpath("data") .. "/site",
+-- })
+
+-- Helper function to install commonly used parsers
+-- Usage: :lua require('plugins.treesitter').install_parsers()
+local M = {}
+
+function M.install_parsers()
+  require("nvim-treesitter").install({
+    "lua", "vim", "vimdoc", "query", -- nvim essentials
+    "javascript", "typescript", "tsx",
+    "go", "rust", "zig", "c",
+    "python", "bash",
+    "json", "yaml", "toml",
+    "markdown", "markdown_inline",
+    "sql", "html", "css", "templ",
+  })
+end
+
+-- Enable treesitter features for all filetypes
+-- In the main branch, features are enabled via autocommands, not in setup()
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    -- Enable syntax highlighting (provided by Neovim)
+    -- Only attempt if treesitter has a parser for this filetype
+    local ok, _ = pcall(vim.treesitter.start, buf)
+    if not ok then
+      -- Silently fail - not all filetypes have treesitter parsers
+      -- Use :TSInstall <language> or :lua require('plugins.treesitter').install_parsers()
+    end
+  end,
 })
 
 require("treesitter-context").setup({
@@ -19,3 +43,5 @@ require("treesitter-context").setup({
   max_lines = 1,
   trim_scope = "inner",
 })
+
+return M
