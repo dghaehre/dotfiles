@@ -5,6 +5,7 @@
 # theme = Gitlab-Dark-Grey
 
 theme = SpaceGray Bright
+# theme = CLRS
 
 # Empty values reset the configuration to the default value
 font-family = Source Code Pro Normal
@@ -19,3 +20,11 @@ macos-option-as-alt = false
 
 mouse-hide-while-typing = true
 
+# # font-family = JetBrains Mono
+# font-style = Medium
+# font-thicken = true
+# window-colorspace = srgb
+# alpha-blending = linear-corrected
+# minimum-contrast = 1.0
+# background-opacity = 1.0
+# window-decoration = none

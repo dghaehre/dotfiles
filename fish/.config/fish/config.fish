@@ -4,7 +4,8 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # set -x SHELL /bin/bash in case of errors
 setenv EDITOR 'nvim'
-setenv BROWSER 'firefox'
+# setenv BROWSER 'Firefox'
+set -e BROWSER
 export KEYTIMEOUT 1
 setenv PAGER 'bat --style=plain'
 setenv REVIEW_BASE 'main'
@@ -22,6 +23,8 @@ fish_add_path ~/.fly/bin
 
 # Ruby on macos
 fish_add_path /opt/homebrew/opt/ruby/bin
+
+abbr -a clean-derived-data "rm -rf ~/Library/Developer/Xcode/DerivedData"
 
 
 ##################### Vim Keys  ########################
@@ -53,6 +56,8 @@ abbr -a todo rg -e \"- \\[ \\]\" ~/wikis/work/todo.md
 abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
 # abbr -a ts trans -shell
 
+abbr -a fix-todo cursor-agent "Please look in the staged changes for any TODO comment. Please implement fix for the TODO comment. Be very short and concise. Dont make any other changes than what the TODO comment suggest. Be very sure your implementation is correct, if you need to research the project to be sure please do so."
+
 # Screen cast laptop size from the left (without audio)
 # https://wiki.archlinux.org/title/FFmpeg#Screen_capture
 abbr -a screencast ffmpeg -f x11grab -video_size 1920x1200 -framerate 30 -i $DISPLAY -c:v libx264 -preset ultrafast -c:a aac screencast.mp4
@@ -63,10 +68,37 @@ alias hd="hledger -f ~/projects/personal/ledger/2022/daniel.journal"
 # Open remote note
 abbr -a rnote nvim scp://pi@home.pi//home/pi/note.md
 
+abbr -a jme "jira issue list -a(jira me) -s~Done -s~\"Won't Do\""
+abbr -a jc jira issue create
+
 # If I wanna stop using jj
 abbr -a remove-jj git clean -xdf
 
-# Edit commandline in editor
+function jj-branch
+	set result (jj b list -r @ 2>/dev/null | string split -m1 ":" | head -n1)
+	if test -z "$result"
+			jj b list -r @- 2>/dev/null | string split -m1 ":" | head -n1 
+	else
+		echo $result
+	end
+end
+
+function jj-review
+	set -l path "$(pwd)-review"
+	set -l name (basename $path)
+	jj workspace add --name $name $path
+	cd $path
+	codex -a on-failure
+end
+
+# TODO
+function jj-review-cleanup
+
+end
+
+abbr -a jjpr "gh pr create --web --fill --head (jj-branch)"
+
+# Edit comlandline in editor
 bind \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
 bind -M insert \cl accept-autosuggestion
