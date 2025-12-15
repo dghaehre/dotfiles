@@ -5,6 +5,7 @@ git:
       # externalDiffCommand: difft --color=always
       diffArgs: --color-words
 gui:
+  localBranchSortOrder: date
   # stuff relating to the UI
   scrollHeight: 2 # how many lines you scroll by
   scrollPastBottom: true # enable scrolling past the bottom
@@ -56,7 +57,6 @@ customCommands:
     context: 'files'
     description: "open in vim from vim (floaterm)"
     output: terminal
-
   - key: "N"
     context: "worktrees"
     description: "Create new worktree from current branch"
@@ -66,7 +66,6 @@ customCommands:
         key: "Name"
         initialValue: ""
     command: "git worktree add /tmp/{{ .Form.Name }} {{ .CheckedOutBranch.Name }} -b {{ .Form.Name }}"
-
   - key: "D"
     context: "worktrees"
     description: "Force remove selected worktree"
@@ -77,8 +76,21 @@ customCommands:
     command: "git worktree remove -f {{ .SelectedWorktree.Path | quote }}"
     loadingText: "Removing worktree..."
     output: log
-
+  - key: "T"
+    context: "files"
+    description: "Transfer staged changes to main worktree"
+    command: |
+      set MAIN_DIR (git worktree list | head -n 1 | awk '{print $1}')
+      and git stash push --staged --keep-index -m "from-{{.CheckedOutBranch.Name}}"
+      and cd "$MAIN_DIR"
+      and git stash pop
+    loadingText: "Transferring staged changes..."
+    output: popup
   # Create a detached worktree from selected branch (when in branches view)
+  - key: "F"
+    context: "files"
+    description: "Make AI fix your staged changes in another worktree"
+    command: "git-fix"
   - key: "N"
     context: "localBranches"
     description: "Review selected branch with worktree"
@@ -88,7 +100,6 @@ customCommands:
         key: "Name"
         initialValue: ""
     command: "git worktree add /tmp/{{ .Form.Name }} {{ .SelectedLocalBranch.Name }} -b {{ .Form.Name }} && tmux neww -c /tmp/{{ .Form.Name }}"
-
   # Create a detached worktree from selected branch (when in branches view)
   - key: "<c-r>"
     context: "localBranches"
