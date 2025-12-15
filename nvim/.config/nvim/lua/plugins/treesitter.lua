@@ -1,16 +1,15 @@
 -- Treesitter configuration
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- Note: "all" and "maintained" are no longer supported in main branch
+  -- Install parsers as needed, or specify a list of languages
+  auto_install = true, -- Automatically install parsers when entering a buffer
   ignore_install = { "ipkg" }, -- parsers to not install
   highlight = {
     enable = true,
   },
-  indentation = {
+  indent = {
     enable = false,
-	},
-  folding = {
-    enable = true,
   },
 })
 
