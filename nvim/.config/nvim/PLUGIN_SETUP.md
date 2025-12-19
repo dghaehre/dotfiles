@@ -84,19 +84,24 @@ Alternatively, you can install [pack-manager.nvim](https://github.com/mplusp/pac
 
 To add a new plugin:
 
-1. Add the plugin URL to `vim.pack.add({})` in `lua/plugins.lua`:
+1. Add the plugin to `vim.pack.add({})` in `lua/plugins.lua` using the GitHub repository path:
    ```lua
    vim.pack.add({
      -- existing plugins...
-     "https://github.com/author/plugin-name",
+     "author/plugin-name",  -- Simple string syntax for GitHub repos
    })
    ```
 
 2. If the plugin requires configuration, add it at the bottom of `plugins.lua` or create a new file in `lua/plugins/`:
    ```lua
-   require("plugin-name").setup({
-     -- your config here
-   })
+   pcall(require, "plugin-name")
+   -- or with setup:
+   local ok, plugin = pcall(require, "plugin-name")
+   if ok then
+     plugin.setup({
+       -- your config here
+     })
+   end
    ```
 
 3. Restart Neovim - the plugin will be automatically cloned
