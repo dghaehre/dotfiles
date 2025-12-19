@@ -22,7 +22,7 @@ if not lsp_configurations.janet_lsp then
       name = "janet-lsp",
       cmd = { "janet-lsp" },
       filetypes = { "janet" },
-      root_dir = lspconfig.util.root_pattern("project.janet"),
+      root_dir = lspconfig.util.root_pattern("*.janet"),
     },
   }
 end
