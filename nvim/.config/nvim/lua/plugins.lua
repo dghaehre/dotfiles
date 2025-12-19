@@ -1,158 +1,105 @@
--- Plugin configuration using lazy.nvim
+-- Plugin configuration using Neovim's built-in plugin manager (vim.pack)
 
-require("lazy").setup({
+vim.pack.add({
   -- Git
-  { "airblade/vim-gitgutter" },
-  { "tpope/vim-fugitive" },
-  { "sindrets/diffview.nvim" },
+  "https://github.com/airblade/vim-gitgutter",
+  "https://github.com/tpope/vim-fugitive",
+  "https://github.com/sindrets/diffview.nvim",
 
   -- UI/Display
-  { "ap/vim-css-color" },
-  { "nvim-tree/nvim-web-devicons" },
+  "https://github.com/ap/vim-css-color",
+  "https://github.com/nvim-tree/nvim-web-devicons",
 
   -- Telescope and dependencies
-  { "nvim-lua/popup.nvim" },
-  { "nvim-lua/plenary.nvim" },
-  { "nvim-neotest/nvim-nio" },
-  {
-    "nvim-telescope/telescope.nvim",
-    tag = "v0.2.0",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("plugins.telescope")
-    end,
-  },
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-  { "nvim-telescope/telescope-ui-select.nvim" },
+  "https://github.com/nvim-lua/popup.nvim",
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/nvim-neotest/nvim-nio",
+  { src = "https://github.com/nvim-telescope/telescope.nvim", version = "v0.2.0" },
+  "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
+  "https://github.com/nvim-telescope/telescope-ui-select.nvim",
 
   -- Treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    branch = "master",
-    config = function()
-      require("plugins.treesitter")
-    end,
-  },
-  { "nvim-treesitter/nvim-treesitter-context" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
+  "https://github.com/nvim-treesitter/nvim-treesitter-context",
 
   -- Editing
-  { "tpope/vim-surround" },
-  {
-    "numToStr/Comment.nvim",
-    config = function()
-      require("plugins.comment")
-    end,
-  },
-  { "tpope/vim-commentary" },
-  { "tpope/vim-unimpaired" },
-  { "wellle/targets.vim" },
-  { "gpanders/nvim-parinfer" },
+  "https://github.com/tpope/vim-surround",
+  "https://github.com/numToStr/Comment.nvim",
+  "https://github.com/tpope/vim-commentary",
+  "https://github.com/tpope/vim-unimpaired",
+  "https://github.com/wellle/targets.vim",
+  "https://github.com/gpanders/nvim-parinfer",
 
   -- File browsers
-  { "tyru/open-browser.vim" },
-  { "vimwiki/vimwiki" },
-  { "ptzz/lf.vim" },
-  { "voldikss/vim-floaterm" },
+  "https://github.com/tyru/open-browser.vim",
+  "https://github.com/vimwiki/vimwiki",
+  "https://github.com/ptzz/lf.vim",
+  "https://github.com/voldikss/vim-floaterm",
 
   -- Language specific
-  { "janet-lang/janet.vim" },
-  { "gleam-lang/gleam.vim" },
-  { "wlangstroth/vim-racket" },
-  -- { "Olical/conjure" },
+  "https://github.com/janet-lang/janet.vim",
+  "https://github.com/gleam-lang/gleam.vim",
+  "https://github.com/wlangstroth/vim-racket",
+  -- "https://github.com/Olical/conjure",
 
   -- Testing
-  { "vim-test/vim-test" },
+  "https://github.com/vim-test/vim-test",
 
   -- Navigation
-  {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("plugins.harpoon")
-    end,
-  },
-  { "ThePrimeagen/git-worktree.nvim" },
+  { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
+  "https://github.com/ThePrimeagen/git-worktree.nvim",
 
   -- Neo-tree
-  { "MunifTanjim/nui.nvim" },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
-  },
+  "https://github.com/MunifTanjim/nui.nvim",
+  { src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = "v3.x" },
 
   -- LSP
-  { "neovim/nvim-lspconfig" },
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup({})
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("plugins.lsp")
-    end,
-  },
-  { "VonHeikemen/lsp-zero.nvim" },
+  "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/williamboman/mason.nvim",
+  "https://github.com/williamboman/mason-lspconfig.nvim",
+  "https://github.com/VonHeikemen/lsp-zero.nvim",
 
   -- Completion
-  {
-    "hrsh7th/nvim-cmp",
-    config = function()
-      require("plugins.cmp")
-    end,
-  },
-  { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-buffer" },
+  "https://github.com/hrsh7th/nvim-cmp",
+  "https://github.com/hrsh7th/cmp-nvim-lsp",
+  "https://github.com/hrsh7th/cmp-buffer",
 
   -- Copilot
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "main",
-    config = function()
-      require("plugins.copilot")
-    end,
-  },
+  { src = "https://github.com/CopilotC-Nvim/CopilotChat.nvim", version = "main" },
 
   -- iOS development
-  { "wojciech-kulik/xcodebuild.nvim" },
+  "https://github.com/wojciech-kulik/xcodebuild.nvim",
 
   -- Debugging
-  {
-    "mfussenegger/nvim-dap",
-    config = function()
-      require("plugins.dap")
-    end,
-  },
-  { "leoluz/nvim-dap-go" },
-  { "rcarriga/nvim-dap-ui" },
-  { "nvim-telescope/telescope-dap.nvim" },
+  "https://github.com/mfussenegger/nvim-dap",
+  "https://github.com/leoluz/nvim-dap-go",
+  "https://github.com/rcarriga/nvim-dap-ui",
+  "https://github.com/nvim-telescope/telescope-dap.nvim",
 
   -- Database
-  { "tpope/vim-dadbod" },
-  { "kristijanhusak/vim-dadbod-ui" },
+  "https://github.com/tpope/vim-dadbod",
+  "https://github.com/kristijanhusak/vim-dadbod-ui",
 
   -- Drawing
-  {
-    "jbyuki/venn.nvim",
-    config = function()
-      require("plugins.venn")
-    end,
-  },
+  "https://github.com/jbyuki/venn.nvim",
 
   -- Custom plugins
-  { "dghaehre/raja.vim" },
-}, {
-  -- Lazy.nvim options
-  install = {
-    colorscheme = { "vim" },
-  },
+  "https://github.com/dghaehre/raja.vim",
 })
+
+-- Plugin configurations that require setup
+-- These need to be called after plugins are loaded
+
+-- Mason setup
+require("mason").setup({})
+
+-- Plugin-specific configurations
+require("plugins.telescope")
+require("plugins.treesitter")
+require("plugins.comment")
+require("plugins.harpoon")
+require("plugins.lsp")
+require("plugins.cmp")
+require("plugins.copilot")
+require("plugins.dap")
+require("plugins.venn")
