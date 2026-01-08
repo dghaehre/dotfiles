@@ -140,14 +140,6 @@ require("lazy").setup({
   { "tpope/vim-dadbod" },
   { "kristijanhusak/vim-dadbod-ui" },
 
-  -- Drawing
-  {
-    "jbyuki/venn.nvim",
-    config = function()
-      require("plugins.venn")
-    end,
-  },
-
   -- Custom plugins
   { "dghaehre/raja.vim" },
 }, {
