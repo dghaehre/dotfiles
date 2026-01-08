@@ -76,6 +76,16 @@ customCommands:
     command: "git worktree remove -f {{ .SelectedWorktree.Path | quote }}"
     loadingText: "Removing worktree..."
     output: log
+  - key: "P"
+    context: "worktrees"
+    description: "Prune worktrees"
+    prompts:
+      - type: "confirm"
+        title: "Prune Worktrees"
+        body: "Are you sure you want to prune worktrees?"
+    command: "git worktree prune"
+    loadingText: "Pruning worktree..."
+    output: log
   - key: "T"
     context: "files"
     description: "Transfer staged changes to main worktree"
