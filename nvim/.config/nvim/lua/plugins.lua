@@ -7,7 +7,6 @@ require("lazy").setup({
   { "sindrets/diffview.nvim" },
 
   -- UI/Display
-  { "ap/vim-css-color" },
   { "nvim-tree/nvim-web-devicons" },
 
   -- Telescope and dependencies
