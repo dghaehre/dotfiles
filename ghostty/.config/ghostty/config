@@ -8,7 +8,10 @@ theme = SpaceGray Bright
 # theme = CLRS
 
 # Empty values reset the configuration to the default value
-font-family = Source Code Pro Normal
+# font-family = Source Code Pro Normal
+
+# brew install --cask font-maple-mono-nf
+font-family = Maple Mono NF
 
 # Disable ligatures, I dont like them
 font-feature = -liga
