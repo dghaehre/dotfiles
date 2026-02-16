@@ -33,6 +33,12 @@ fish_vi_key_bindings
 set -U fish_cursor_insert block
 set -U fish_cursor_default block
 
+##################### WorkTrunk  ########################
+#------------------------------------------------------#
+abbr -a wl wt list --full --progressive
+abbr -a ws wt switch
+abbr -a wc wt switch --create
+
 
 ##################### Abbr and aliases ####################
 #------------------------------------------------#

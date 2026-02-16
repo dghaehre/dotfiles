@@ -1,4 +1,4 @@
-function coffee --description "Print ASCII coffee and keep the system awake for 2 hours"
+function coffee --description "Print ASCII coffee and prevent sleep for 2 hours"
     printf '%s\n' \
         '   ( (' \
         '    ) )' \
@@ -16,7 +16,7 @@ function coffee --description "Print ASCII coffee and keep the system awake for 
     for pid in (pgrep -x caffeinate)
         set -l cmd (ps -o command= -p $pid)
         if string match -rq '(^|/)caffeinate( |$)' -- $cmd; and \
-           string match -rq '(^| )-i( |$)' -- $cmd; and \
+           string match -rq '(^| )-dimsu( |$)' -- $cmd; and \
            string match -rq '(^| )-t( |$)7200( |$)' -- $cmd
             set running_pids $running_pids $pid
         end
@@ -32,5 +32,5 @@ function coffee --description "Print ASCII coffee and keep the system awake for 
         return 0
     end
 
-    caffeinate -i -t 7200 $argv
+    caffeinate -dimsu -t 7200 $argv
 end
