@@ -120,6 +120,11 @@ require("lazy").setup({
 			require("plugins.copilot")
 		end,
 	},
+	{ "ThePrimeagen/99",
+		config = function()
+			require("plugins._99")
+		end,
+	},
 
 	-- iOS development
 	{ "wojciech-kulik/xcodebuild.nvim" },
