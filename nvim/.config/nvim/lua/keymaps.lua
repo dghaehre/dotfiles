@@ -5,6 +5,17 @@ local keymap = vim.keymap.set
 -- Helper function for options
 local opts = { noremap = true, silent = true }
 
+local function restart_lsp_and_keep_current_buffer()
+  local current_buf = vim.api.nvim_get_current_buf()
+  vim.cmd("LspRestart")
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current_buf and vim.bo[buf].buflisted then
+      vim.api.nvim_buf_delete(buf, {})
+    end
+  end
+  vim.notify("LSP has been restarted")
+end
+
 -- Paste in visual mode without yanking
 keymap("v", "P", '"_dP', opts)
 -- Delete in visual mode without yanking
@@ -147,4 +158,4 @@ keymap("n", "<leader>wb", ":VWB<CR>", opts)
 keymap("n", "<leader>ld", function() vim.diagnostic.open_float() end, opts)
 keymap("n", "]e", function() vim.diagnostic.goto_next() end, opts)
 keymap("n", "[e", function() vim.diagnostic.goto_prev() end, opts)
-keymap("n", "<leader>lr", ":LspRestart<CR>", opts)
+keymap("n", "<leader>lr", restart_lsp_and_keep_current_buffer, opts)
