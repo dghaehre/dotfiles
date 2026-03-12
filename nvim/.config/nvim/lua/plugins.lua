@@ -16,13 +16,19 @@ require("lazy").setup({
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "v0.2.0",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope-fzf-native.nvim",
+			"nvim-telescope/telescope-ui-select.nvim",
+			"nvim-telescope/telescope-dap.nvim",
+		},
 		config = function()
 			require("plugins.telescope")
 		end,
 	},
-	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-	{ "nvim-telescope/telescope-ui-select.nvim" },
+	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true },
+	{ "nvim-telescope/telescope-ui-select.nvim", lazy = true },
 
 	-- Treesitter
 	{
@@ -86,20 +92,18 @@ require("lazy").setup({
 	},
 
 	-- LSP
-	{ "neovim/nvim-lspconfig" },
-	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup({})
-		end,
-	},
 	{
 		"williamboman/mason-lspconfig.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"williamboman/mason.nvim",
+			"neovim/nvim-lspconfig",
+			"VonHeikemen/lsp-zero.nvim",
+		},
 		config = function()
 			require("plugins.lsp")
 		end,
 	},
-	{ "VonHeikemen/lsp-zero.nvim" },
 
 	-- Completion
 	{
@@ -137,7 +141,7 @@ require("lazy").setup({
 	},
 	{ "leoluz/nvim-dap-go" },
 	{ "rcarriga/nvim-dap-ui" },
-	{ "nvim-telescope/telescope-dap.nvim" },
+	{ "nvim-telescope/telescope-dap.nvim", lazy = true },
 
 	-- Database
 	{ "tpope/vim-dadbod" },

@@ -3,6 +3,8 @@
 local lsp_configurations = require("lspconfig.configs")
 local lspconfig = require("lspconfig")
 
+require("mason").setup({})
+
 require("mason-lspconfig").setup({
   ensure_installed = {},
   handlers = {
@@ -53,29 +55,25 @@ vim.keymap.set("n", "<leader>Xs", function()
 end, { desc = "Run XcodeSetup" })
 
 -- LSP on_attach keymaps
-local builtin = require("telescope.builtin")
+local function telescope_builtin(name)
+  return function()
+    require("telescope.builtin")[name]()
+  end
+end
 
 lsp.on_attach(function(client, bufnr)
   local opts = { buffer = bufnr, remap = false }
 
-  vim.keymap.set("n", "gd", function()
-    builtin.lsp_definitions()
-  end, opts)
-  vim.keymap.set("n", "gt", function()
-    builtin.lsp_type_definitions()
-  end, opts)
+  vim.keymap.set("n", "gd", telescope_builtin("lsp_definitions"), opts)
+  vim.keymap.set("n", "gt", telescope_builtin("lsp_type_definitions"), opts)
   vim.keymap.set("n", "gD", function()
     vim.lsp.buf.declaration()
   end, opts)
   vim.keymap.set("n", "K", function()
     vim.lsp.buf.hover()
   end, opts)
-  vim.keymap.set("n", "gi", function()
-    builtin.lsp_implementations()
-  end, opts)
-  vim.keymap.set("n", "gr", function()
-    builtin.lsp_references()
-  end, opts)
+  vim.keymap.set("n", "gi", telescope_builtin("lsp_implementations"), opts)
+  vim.keymap.set("n", "gr", telescope_builtin("lsp_references"), opts)
   vim.keymap.set("n", "<leader>f", function()
     if vim.bo.filetype == "swift" then
       vim.cmd("silent !swiftformat %")
