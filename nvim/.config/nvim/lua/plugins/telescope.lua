@@ -40,17 +40,11 @@ telescope.setup({
 })
 
 -- Load extensions
-telescope.load_extension("git_worktree")
 telescope.load_extension("fzf")
 telescope.load_extension("dap")
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
-
--- Git worktree
-keymap("n", "<leader>gw", function()
-  telescope.extensions.git_worktree.git_worktrees()
-end, opts)
 
 -- Find files
 keymap("n", "<leader>sf", function()

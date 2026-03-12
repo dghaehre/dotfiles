@@ -72,7 +72,6 @@ require("lazy").setup({
 			require("plugins.harpoon")
 		end,
 	},
-	{ "ThePrimeagen/git-worktree.nvim" },
 
 	-- Neo-tree
 	{ "MunifTanjim/nui.nvim" },
