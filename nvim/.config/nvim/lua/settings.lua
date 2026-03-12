@@ -1,5 +1,6 @@
 -- Editor settings (converted from vimrc)
 
+local vim = vim
 local opt = vim.opt
 
 -- Indentation
@@ -77,7 +78,8 @@ vim.g.go_highlight_types = 1
 
 -- Vimwiki settings
 vim.g.vimwiki_list = {
-  { path = "~/Library/Mobile Documents/com~apple~CloudDocs/vimwiki/", syntax = "markdown", ext = ".md" },
+  -- { path = "~/Library/Mobile Documents/com~apple~CloudDocs/vimwiki/", syntax = "markdown", ext = ".md" },
+  { path = "~/wikis/vimwiki/", syntax = "markdown", ext = ".md" },
   { path = "~/wikis/work/", syntax = "markdown", ext = ".md" },
 }
 vim.g.vimwiki_key_mappings = {
