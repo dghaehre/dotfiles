@@ -1,50 +1,31 @@
--- LSP configuration
+-- LSP configuration (Neovim 0.12+)
 
-local lsp_configurations = require("lspconfig.configs")
-local lspconfig = require("lspconfig")
-
+-- Mason for LSP server binary management
 require("mason").setup({})
 
-require("mason-lspconfig").setup({
-  ensure_installed = {},
-  handlers = {
-    function(server_name)
-      lspconfig[server_name].setup({})
-    end,
-  },
-})
-
-local lsp = require("lsp-zero")
+-- Custom LSP server configurations
 
 -- Janet LSP
 -- sudo jpm install https://github.com/CFiggers/janet-lsp
-if not lsp_configurations.janet_lsp then
-  lsp_configurations.janet_lsp = {
-    default_config = {
-      name = "janet-lsp",
-      cmd = { "janet-lsp" },
-      filetypes = { "janet" },
-      root_dir = lspconfig.util.root_pattern("*.janet"),
-    },
-  }
-end
-lspconfig.janet_lsp.setup({})
-
--- Gleam LSP
--- lspconfig.gleam.setup({})
+vim.lsp.config("janet_lsp", {
+  cmd = { "janet-lsp" },
+  filetypes = { "janet" },
+  root_markers = { "project.janet", ".git" },
+})
 
 -- Swift LSP
-if not lsp_configurations.swift_lsp then
-  lsp_configurations.swift_lsp = {
-    default_config = {
-      name = "swift-lsp",
-      cmd = { vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")) },
-      filetypes = { "swift" },
-      root_dir = lspconfig.util.root_pattern("buildServer.json"),
-    },
-  }
-end
-lspconfig.swift_lsp.setup({})
+vim.lsp.config("sourcekit", {
+  cmd = { vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")) },
+  filetypes = { "swift" },
+  root_markers = { "buildServer.json", "Package.swift", ".git" },
+})
+
+-- Enable LSP servers
+-- Add mason-installed servers here (e.g. "lua_ls", "gopls", "ts_ls")
+vim.lsp.enable({
+  "janet_lsp",
+  "sourcekit",
+})
 
 -- Xcode setup function (lazy loaded because it's slow)
 function XcodeSetup()
@@ -54,48 +35,48 @@ vim.keymap.set("n", "<leader>Xs", function()
   XcodeSetup()
 end, { desc = "Run XcodeSetup" })
 
--- LSP on_attach keymaps
+-- LSP keymaps via LspAttach autocmd
 local function telescope_builtin(name)
   return function()
     require("telescope.builtin")[name]()
   end
 end
 
-lsp.on_attach(function(client, bufnr)
-  local opts = { buffer = bufnr, remap = false }
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local opts = { buffer = args.buf, remap = false }
 
-  vim.keymap.set("n", "gd", telescope_builtin("lsp_definitions"), opts)
-  vim.keymap.set("n", "gt", telescope_builtin("lsp_type_definitions"), opts)
-  vim.keymap.set("n", "gD", function()
-    vim.lsp.buf.declaration()
-  end, opts)
-  vim.keymap.set("n", "K", function()
-    vim.lsp.buf.hover()
-  end, opts)
-  vim.keymap.set("n", "gi", telescope_builtin("lsp_implementations"), opts)
-  vim.keymap.set("n", "gr", telescope_builtin("lsp_references"), opts)
-  vim.keymap.set("n", "<leader>f", function()
-    if vim.bo.filetype == "swift" then
-      vim.cmd("silent !swiftformat %")
-    else
-      vim.lsp.buf.format()
-    end
-  end, opts)
-  vim.keymap.set("n", "ge", function()
-    vim.diagnostic.show_line_diagnostics()
-  end, opts)
-  vim.keymap.set("n", "]e", function()
-    vim.diagnostic.goto_next()
-  end, opts)
-  vim.keymap.set("n", "[e", function()
-    vim.diagnostic.goto_prev()
-  end, opts)
-  vim.keymap.set("n", "<leader>rn", function()
-    vim.lsp.buf.rename()
-  end, opts)
-  vim.keymap.set("n", "<leader>ga", function()
-    vim.lsp.buf.code_action()
-  end, opts)
-end)
-
-lsp.setup()
+    vim.keymap.set("n", "gd", telescope_builtin("lsp_definitions"), opts)
+    vim.keymap.set("n", "gt", telescope_builtin("lsp_type_definitions"), opts)
+    vim.keymap.set("n", "gD", function()
+      vim.lsp.buf.declaration()
+    end, opts)
+    vim.keymap.set("n", "K", function()
+      vim.lsp.buf.hover()
+    end, opts)
+    vim.keymap.set("n", "gi", telescope_builtin("lsp_implementations"), opts)
+    vim.keymap.set("n", "gr", telescope_builtin("lsp_references"), opts)
+    vim.keymap.set("n", "<leader>f", function()
+      if vim.bo.filetype == "swift" then
+        vim.cmd("silent !swiftformat %")
+      else
+        vim.lsp.buf.format()
+      end
+    end, opts)
+    vim.keymap.set("n", "ge", function()
+      vim.diagnostic.open_float()
+    end, opts)
+    vim.keymap.set("n", "]e", function()
+      vim.diagnostic.goto_next()
+    end, opts)
+    vim.keymap.set("n", "[e", function()
+      vim.diagnostic.goto_prev()
+    end, opts)
+    vim.keymap.set("n", "<leader>rn", function()
+      vim.lsp.buf.rename()
+    end, opts)
+    vim.keymap.set("n", "<leader>ga", function()
+      vim.lsp.buf.code_action()
+    end, opts)
+  end,
+})

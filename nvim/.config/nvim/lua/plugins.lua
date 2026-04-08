@@ -1,157 +1,92 @@
--- Plugin configuration using lazy.nvim
+-- Plugin management using vim.pack (Neovim 0.12+)
 
-require("lazy").setup({
+vim.pack.add({
 	-- Git
-	{ "airblade/vim-gitgutter" },
-	{ "tpope/vim-fugitive" },
-	{ "sindrets/diffview.nvim" },
+	{ src = "airblade/vim-gitgutter" },
+	{ src = "tpope/vim-fugitive" },
+	{ src = "sindrets/diffview.nvim" },
 
 	-- UI/Display
-	{ "nvim-tree/nvim-web-devicons" },
+	{ src = "nvim-tree/nvim-web-devicons" },
 
 	-- Telescope and dependencies
-	{ "nvim-lua/popup.nvim" },
-	{ "nvim-lua/plenary.nvim" },
-	{ "nvim-neotest/nvim-nio" },
-	{
-		"nvim-telescope/telescope.nvim",
-		tag = "v0.2.0",
-		event = "VeryLazy",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope-fzf-native.nvim",
-			"nvim-telescope/telescope-ui-select.nvim",
-			"nvim-telescope/telescope-dap.nvim",
-		},
-		config = function()
-			require("plugins.telescope")
-		end,
-	},
-	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true },
-	{ "nvim-telescope/telescope-ui-select.nvim", lazy = true },
+	{ src = "nvim-lua/popup.nvim" },
+	{ src = "nvim-lua/plenary.nvim" },
+	{ src = "nvim-neotest/nvim-nio" },
+	{ src = "nvim-telescope/telescope.nvim" },
+	{ src = "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+	{ src = "nvim-telescope/telescope-ui-select.nvim" },
+	{ src = "nvim-telescope/telescope-dap.nvim" },
 
 	-- Treesitter
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		branch = "master",
-		config = function()
-			require("plugins.treesitter")
-		end,
-	},
-	{ "nvim-treesitter/nvim-treesitter-context" },
+	{ src = "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	{ src = "nvim-treesitter/nvim-treesitter-context" },
 
 	-- Editing
-	{ "tpope/vim-surround" },
-	{
-		"numToStr/Comment.nvim",
-		config = function()
-			require("plugins.comment")
-		end,
-	},
-	{ "tpope/vim-commentary" },
-	{ "tpope/vim-unimpaired" },
-	{ "wellle/targets.vim" },
-	{ "gpanders/nvim-parinfer" },
+	{ src = "tpope/vim-surround" },
+	{ src = "numToStr/Comment.nvim" },
+	{ src = "tpope/vim-commentary" },
+	{ src = "tpope/vim-unimpaired" },
+	{ src = "wellle/targets.vim" },
+	{ src = "gpanders/nvim-parinfer" },
 
 	-- File browsers
-	{ "tyru/open-browser.vim" },
-	{ "vimwiki/vimwiki" },
-	{ "ptzz/lf.vim" },
-	{ "voldikss/vim-floaterm" },
+	{ src = "tyru/open-browser.vim" },
+	{ src = "vimwiki/vimwiki" },
+	{ src = "ptzz/lf.vim" },
+	{ src = "voldikss/vim-floaterm" },
 
 	-- Language specific
-	{ "janet-lang/janet.vim" },
-	{ "gleam-lang/gleam.vim" },
-	{ "wlangstroth/vim-racket" },
-	-- { "Olical/conjure" },
+	{ src = "janet-lang/janet.vim" },
+	{ src = "gleam-lang/gleam.vim" },
+	{ src = "wlangstroth/vim-racket" },
 
 	-- Testing
-	{ "vim-test/vim-test" },
+	{ src = "vim-test/vim-test" },
 
 	-- Navigation
-	{
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("plugins.harpoon")
-		end,
-	},
+	{ src = "ThePrimeagen/harpoon", version = "harpoon2" },
 
 	-- Neo-tree
-	{ "MunifTanjim/nui.nvim" },
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-		},
-	},
+	{ src = "MunifTanjim/nui.nvim" },
+	{ src = "nvim-neo-tree/neo-tree.nvim", version = "v3.x" },
 
 	-- LSP
-	{
-		"williamboman/mason-lspconfig.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"williamboman/mason.nvim",
-			"neovim/nvim-lspconfig",
-			"VonHeikemen/lsp-zero.nvim",
-		},
-		config = function()
-			require("plugins.lsp")
-		end,
-	},
+	{ src = "williamboman/mason.nvim" },
+	{ src = "neovim/nvim-lspconfig" },
 
 	-- Completion
-	{
-		"hrsh7th/nvim-cmp",
-		config = function()
-			require("plugins.cmp")
-		end,
-	},
-	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "hrsh7th/cmp-buffer" },
+	{ src = "hrsh7th/nvim-cmp" },
+	{ src = "hrsh7th/cmp-nvim-lsp" },
+	{ src = "hrsh7th/cmp-buffer" },
 
 	-- Copilot
-	{
-		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "main",
-		config = function()
-			require("plugins.copilot")
-		end,
-	},
-	{ "ThePrimeagen/99",
-		config = function()
-			require("plugins._99")
-		end,
-	},
+	{ src = "CopilotC-Nvim/CopilotChat.nvim" },
+	{ src = "ThePrimeagen/99" },
 
 	-- iOS development
-	{ "wojciech-kulik/xcodebuild.nvim" },
+	{ src = "wojciech-kulik/xcodebuild.nvim" },
 
 	-- Debugging
-	{
-		"mfussenegger/nvim-dap",
-		config = function()
-			require("plugins.dap")
-		end,
-	},
-	{ "leoluz/nvim-dap-go" },
-	{ "rcarriga/nvim-dap-ui" },
-	{ "nvim-telescope/telescope-dap.nvim", lazy = true },
+	{ src = "mfussenegger/nvim-dap" },
+	{ src = "leoluz/nvim-dap-go" },
+	{ src = "rcarriga/nvim-dap-ui" },
 
 	-- Database
-	{ "tpope/vim-dadbod" },
-	{ "kristijanhusak/vim-dadbod-ui" },
+	{ src = "tpope/vim-dadbod" },
+	{ src = "kristijanhusak/vim-dadbod-ui" },
 
 	-- Custom plugins
-	{ "dghaehre/raja.vim" },
-}, {
-	-- Lazy.nvim options
-	install = {
-		colorscheme = { "vim" },
-	},
+	{ src = "dghaehre/raja.vim" },
 })
+
+-- Plugin configurations
+require("plugins.telescope")
+require("plugins.treesitter")
+require("plugins.comment")
+require("plugins.harpoon")
+require("plugins.lsp")
+require("plugins.cmp")
+require("plugins.copilot")
+require("plugins._99")
+require("plugins.dap")
