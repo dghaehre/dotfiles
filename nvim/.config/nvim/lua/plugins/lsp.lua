@@ -1,7 +1,10 @@
 -- LSP configuration (Neovim 0.12+)
 
 -- Mason for LSP server binary management
-require("mason").setup({})
+local ok, mason = pcall(require, "mason")
+if ok then
+  mason.setup({})
+end
 
 -- Custom LSP server configurations
 

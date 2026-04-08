@@ -1,5 +1,6 @@
 
-local _99 = require("99")
+local ok, _99 = pcall(require, "99")
+if not ok then return end
 _99.setup({
 	provider = _99.Providers.CursorAgentProvider,
 	source = "cmp",
