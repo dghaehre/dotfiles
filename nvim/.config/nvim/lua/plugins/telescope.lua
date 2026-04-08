@@ -2,8 +2,10 @@
 
 local ok, telescope = pcall(require, "telescope")
 if not ok then return end
-local actions = require("telescope.actions")
-local builtin = require("telescope.builtin")
+local ok_actions, actions = pcall(require, "telescope.actions")
+if not ok_actions then return end
+local ok_builtin, builtin = pcall(require, "telescope.builtin")
+if not ok_builtin then return end
 
 telescope.setup({
   pickers = {

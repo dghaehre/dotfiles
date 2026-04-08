@@ -85,7 +85,7 @@ vim.pack.add({
 local function safe_require(mod)
 	local ok, err = pcall(require, mod)
 	if not ok then
-		vim.notify("Plugin config not loaded: " .. mod .. " (run :Pack install)", vim.log.levels.WARN)
+		vim.notify("Plugin config not loaded: " .. mod .. " (restart after plugins install)", vim.log.levels.WARN)
 	end
 end
 
