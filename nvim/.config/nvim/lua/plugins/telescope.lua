@@ -1,12 +1,22 @@
 -- Telescope configuration
 
-local telescope = require("telescope")
-local actions = require("telescope.actions")
-local builtin = require("telescope.builtin")
+local ok, telescope = pcall(require, "telescope")
+if not ok then return end
+local ok_actions, actions = pcall(require, "telescope.actions")
+if not ok_actions then return end
+local ok_builtin, builtin = pcall(require, "telescope.builtin")
+if not ok_builtin then return end
 
 telescope.setup({
   pickers = {
+		live_grep = {
+			theme = "ivy",
+		},
+		find_files = {
+			theme = "ivy",
+		},
     buffers = {
+			theme = "ivy",
       show_all_buffers = true,
       sort_lastused = true,
       mappings = {
@@ -40,8 +50,8 @@ telescope.setup({
 })
 
 -- Load extensions
-telescope.load_extension("fzf")
-telescope.load_extension("dap")
+-- telescope.load_extension("fzf")
+-- telescope.load_extension("dap")
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }

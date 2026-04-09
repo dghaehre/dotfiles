@@ -35,9 +35,15 @@ keymap("n", "<leader>dt", function()
   require("dap-go").debug_test()
 end)
 
-require("dap-go").setup()
+local ok_dapgo, dap_go = pcall(require, "dap-go")
+if ok_dapgo then
+  dap_go.setup()
+end
 
-require("dapui").setup({
+local ok2, dapui = pcall(require, "dapui")
+if not ok2 then return end
+
+dapui.setup({
   mappings = {
     expand = { "<CR>", "<2-LeftMouse>" },
     open = "o",
@@ -63,7 +69,6 @@ require("dapui").setup({
 })
 
 -- Open dap-ui when dap starts
-local dapui = require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
 end

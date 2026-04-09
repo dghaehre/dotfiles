@@ -112,7 +112,10 @@ hi("TermCursor", { ctermfg = "2", guifg = "#009900" })
 -- Statusline setup
 vim.cmd([[
 function! GitStatusLine()
-  return '[' . FugitiveStatusline()[5:-3] . ']'
+  if exists('*FugitiveStatusline')
+    return '[' . FugitiveStatusline()[5:-3] . ']'
+  endif
+  return ''
 endfunction
 ]])
 

@@ -31,7 +31,6 @@ opt.foldlevel = 0
 opt.foldlevelstart = 50
 
 -- General
-opt.compatible = false
 opt.splitbelow = true
 opt.splitright = true
 
@@ -66,16 +65,6 @@ vim.g.floaterm_height = 0.9
 vim.g.floaterm_opener = "vsplit"
 vim.g.floaterm_keymap_kill = "<C-x>"
 
--- Go syntax highlighting
-vim.g.go_highlight_build_constraints = 1
-vim.g.go_highlight_extra_types = 1
-vim.g.go_highlight_fields = 1
-vim.g.go_highlight_functions = 1
-vim.g.go_highlight_methods = 1
-vim.g.go_highlight_operators = 1
-vim.g.go_highlight_structs = 1
-vim.g.go_highlight_types = 1
-
 -- Vimwiki settings
 vim.g.vimwiki_list = {
   -- { path = "~/Library/Mobile Documents/com~apple~CloudDocs/vimwiki/", syntax = "markdown", ext = ".md" },
@@ -86,7 +75,3 @@ vim.g.vimwiki_key_mappings = {
   table_mappings = 0,
 }
 vim.g.vimwiki_folding = "custom"
-
--- Enable filetype plugins and syntax
-vim.cmd("filetype plugin on")
-vim.cmd("syntax on")
