@@ -16,18 +16,10 @@ vim.lsp.config("janet_lsp", {
   root_markers = { "project.janet", ".git" },
 })
 
--- Swift LSP
-vim.lsp.config("sourcekit", {
-  cmd = { vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")) },
-  filetypes = { "swift" },
-  root_markers = { "buildServer.json", "Package.swift", ".git" },
-})
-
 -- Enable LSP servers
 -- Add mason-installed servers here (e.g. "lua_ls", "gopls", "ts_ls")
 vim.lsp.enable({
   "janet_lsp",
-  "sourcekit",
 	"gopls",
 	"lua_ls",
 })
@@ -39,6 +31,19 @@ end
 vim.keymap.set("n", "<leader>Xs", function()
   XcodeSetup()
 end, { desc = "Run XcodeSetup" })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "swift",
+  once = true,
+  callback = function()
+    vim.lsp.config("sourcekit", {
+      cmd = { vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")) },
+      filetypes = { "swift" },
+      root_markers = { ".swiftformat", ".git" },
+    })
+    vim.lsp.enable("sourcekit")
+  end,
+})
 
 -- LSP keymaps via LspAttach autocmd
 local function telescope_builtin(name)

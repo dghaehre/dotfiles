@@ -1,10 +1,11 @@
 -- Copilot Chat configuration
+local vim = vim
 
 local ok, copilot_chat = pcall(require, "CopilotChat")
 if not ok then return end
 
 copilot_chat.setup({
-  model = "claude-sonnet-4.5", -- AI model to use
+  model = "claude-sonnet-4.6", -- AI model to use
 })
 
 function AskCopilotChat()

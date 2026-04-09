@@ -10,13 +10,12 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 
 	-- Telescope and dependencies
-	{ src = "https://github.com/nvim-lua/popup.nvim" },
+	-- { src = "https://github.com/nvim-lua/popup.nvim" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/nvim-neotest/nvim-nio" },
+	-- { src = "https://github.com/nvim-neotest/nvim-nio" },
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
-	-- { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- currently not in use..
-	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
-	{ src = "https://github.com/nvim-telescope/telescope-dap.nvim" },
+	-- { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- should try to make this work..
+	-- { src = "https://github.com/nvim-telescope/telescope-dap.nvim" },
 
 	-- Treesitter
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -25,7 +24,7 @@ vim.pack.add({
 	-- Editing
 	{ src = "https://github.com/tpope/vim-surround" },
 	{ src = "https://github.com/numToStr/Comment.nvim" },
-	{ src = "https://github.com/tpope/vim-commentary" },
+	-- { src = "https://github.com/tpope/vim-commentary" },
 	{ src = "https://github.com/tpope/vim-unimpaired" },
 	{ src = "https://github.com/wellle/targets.vim" },
 	{ src = "https://github.com/gpanders/nvim-parinfer" },
@@ -62,19 +61,19 @@ vim.pack.add({
 
 	-- Copilot
 	{ src = "https://github.com/CopilotC-Nvim/CopilotChat.nvim" },
-	{ src = "https://github.com/ThePrimeagen/99" },
+	-- { src = "https://github.com/ThePrimeagen/99" },
 
 	-- iOS development
 	{ src = "https://github.com/wojciech-kulik/xcodebuild.nvim" },
 
-	-- Debugging
-	{ src = "https://github.com/mfussenegger/nvim-dap" },
-	{ src = "https://github.com/leoluz/nvim-dap-go" },
-	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
+	-- Debugging, Dont use this enough..
+	-- { src = "https://github.com/mfussenegger/nvim-dap" },
+	-- { src = "https://github.com/leoluz/nvim-dap-go" },
+	-- { src = "https://github.com/rcarriga/nvim-dap-ui" },
 
 	-- Database
-	{ src = "https://github.com/tpope/vim-dadbod" },
-	{ src = "https://github.com/kristijanhusak/vim-dadbod-ui" },
+	-- { src = "https://github.com/tpope/vim-dadbod" }, -- dont use this anymore..
+	-- { src = "https://github.com/kristijanhusak/vim-dadbod-ui" }, -- dont use this anymore..
 
 	-- Custom plugins
 	{ src = "https://github.com/dghaehre/raja.vim" },
@@ -87,5 +86,5 @@ require("plugins.harpoon")
 require("plugins.lsp")
 require("plugins.cmp")
 require("plugins.copilot")
-require("plugins._99")
-require("plugins.dap")
+-- require("plugins._99")
+-- require("plugins.dap")

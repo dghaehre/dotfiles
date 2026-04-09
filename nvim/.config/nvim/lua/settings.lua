@@ -31,7 +31,6 @@ opt.foldlevel = 0
 opt.foldlevelstart = 50
 
 -- General
-opt.compatible = false
 opt.splitbelow = true
 opt.splitright = true
 
@@ -76,7 +75,3 @@ vim.g.vimwiki_key_mappings = {
   table_mappings = 0,
 }
 vim.g.vimwiki_folding = "custom"
-
--- Enable filetype plugins and syntax
-vim.cmd("filetype plugin on")
-vim.cmd("syntax on")

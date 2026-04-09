@@ -9,7 +9,14 @@ if not ok_builtin then return end
 
 telescope.setup({
   pickers = {
+		live_grep = {
+			theme = "ivy",
+		},
+		find_files = {
+			theme = "ivy",
+		},
     buffers = {
+			theme = "ivy",
       show_all_buffers = true,
       sort_lastused = true,
       mappings = {
@@ -44,7 +51,7 @@ telescope.setup({
 
 -- Load extensions
 -- telescope.load_extension("fzf")
-telescope.load_extension("dap")
+-- telescope.load_extension("dap")
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
