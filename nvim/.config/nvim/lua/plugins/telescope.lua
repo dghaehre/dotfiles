@@ -43,7 +43,7 @@ telescope.setup({
 })
 
 -- Load extensions
-telescope.load_extension("fzf")
+-- telescope.load_extension("fzf")
 telescope.load_extension("dap")
 
 local keymap = vim.keymap.set

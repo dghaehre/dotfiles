@@ -28,6 +28,8 @@ vim.lsp.config("sourcekit", {
 vim.lsp.enable({
   "janet_lsp",
   "sourcekit",
+	"gopls",
+	"lua_ls",
 })
 
 -- Xcode setup function (lazy loaded because it's slow)

@@ -1,100 +1,91 @@
 -- Plugin management using vim.pack (Neovim 0.12+)
--- confirm = false: auto-install plugins without prompting on first startup
 
 vim.pack.add({
 	-- Git
-	{ src = "airblade/vim-gitgutter", confirm = false },
-	{ src = "tpope/vim-fugitive", confirm = false },
-	{ src = "sindrets/diffview.nvim", confirm = false },
+	{ src = "https://github.com/airblade/vim-gitgutter" },
+	{ src = "https://github.com/tpope/vim-fugitive" },
+	{ src = "https://github.com/sindrets/diffview.nvim" },
 
 	-- UI/Display
-	{ src = "nvim-tree/nvim-web-devicons", confirm = false },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 
 	-- Telescope and dependencies
-	{ src = "nvim-lua/popup.nvim", confirm = false },
-	{ src = "nvim-lua/plenary.nvim", confirm = false },
-	{ src = "nvim-neotest/nvim-nio", confirm = false },
-	{ src = "nvim-telescope/telescope.nvim", confirm = false },
-	{ src = "nvim-telescope/telescope-fzf-native.nvim", build = "make", confirm = false },
-	{ src = "nvim-telescope/telescope-ui-select.nvim", confirm = false },
-	{ src = "nvim-telescope/telescope-dap.nvim", confirm = false },
+	{ src = "https://github.com/nvim-lua/popup.nvim" },
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/nvim-neotest/nvim-nio" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+	{ src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- currently not in use..
+	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
+	{ src = "https://github.com/nvim-telescope/telescope-dap.nvim" },
 
 	-- Treesitter
-	{ src = "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", confirm = false },
-	{ src = "nvim-treesitter/nvim-treesitter-context", confirm = false },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-context" },
 
 	-- Editing
-	{ src = "tpope/vim-surround", confirm = false },
-	{ src = "numToStr/Comment.nvim", confirm = false },
-	{ src = "tpope/vim-commentary", confirm = false },
-	{ src = "tpope/vim-unimpaired", confirm = false },
-	{ src = "wellle/targets.vim", confirm = false },
-	{ src = "gpanders/nvim-parinfer", confirm = false },
+	{ src = "https://github.com/tpope/vim-surround" },
+	{ src = "https://github.com/numToStr/Comment.nvim" },
+	{ src = "https://github.com/tpope/vim-commentary" },
+	{ src = "https://github.com/tpope/vim-unimpaired" },
+	{ src = "https://github.com/wellle/targets.vim" },
+	{ src = "https://github.com/gpanders/nvim-parinfer" },
 
 	-- File browsers
-	{ src = "tyru/open-browser.vim", confirm = false },
-	{ src = "vimwiki/vimwiki", confirm = false },
-	{ src = "ptzz/lf.vim", confirm = false },
-	{ src = "voldikss/vim-floaterm", confirm = false },
+	{ src = "https://github.com/tyru/open-browser.vim" },
+	{ src = "https://github.com/vimwiki/vimwiki" },
+	{ src = "https://github.com/ptzz/lf.vim" },
+	{ src = "https://github.com/voldikss/vim-floaterm" },
 
 	-- Language specific
-	{ src = "janet-lang/janet.vim", confirm = false },
-	{ src = "gleam-lang/gleam.vim", confirm = false },
-	{ src = "wlangstroth/vim-racket", confirm = false },
+	{ src = "https://github.com/janet-lang/janet.vim" },
+	{ src = "https://github.com/gleam-lang/gleam.vim" },
+	{ src = "https://github.com/wlangstroth/vim-racket" },
 
 	-- Testing
-	{ src = "vim-test/vim-test", confirm = false },
+	{ src = "https://github.com/vim-test/vim-test" },
 
 	-- Navigation
-	{ src = "ThePrimeagen/harpoon", version = "harpoon2", confirm = false },
+	{ src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
 
 	-- Neo-tree
-	{ src = "MunifTanjim/nui.nvim", confirm = false },
-	{ src = "nvim-neo-tree/neo-tree.nvim", version = "v3.x", confirm = false },
+	{ src = "https://github.com/MunifTanjim/nui.nvim" },
+	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = "v3.x" },
 
 	-- LSP
-	{ src = "williamboman/mason.nvim", confirm = false },
-	{ src = "neovim/nvim-lspconfig", confirm = false },
+	{ src = "https://github.com/williamboman/mason.nvim" },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
 
 	-- Completion
-	{ src = "hrsh7th/nvim-cmp", confirm = false },
-	{ src = "hrsh7th/cmp-nvim-lsp", confirm = false },
-	{ src = "hrsh7th/cmp-buffer", confirm = false },
+	{ src = "https://github.com/hrsh7th/nvim-cmp" },
+	{ src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
+	{ src = "https://github.com/hrsh7th/cmp-buffer" },
 
 	-- Copilot
-	{ src = "CopilotC-Nvim/CopilotChat.nvim", confirm = false },
-	{ src = "ThePrimeagen/99", confirm = false },
+	{ src = "https://github.com/CopilotC-Nvim/CopilotChat.nvim" },
+	{ src = "https://github.com/ThePrimeagen/99" },
 
 	-- iOS development
-	{ src = "wojciech-kulik/xcodebuild.nvim", confirm = false },
+	{ src = "https://github.com/wojciech-kulik/xcodebuild.nvim" },
 
 	-- Debugging
-	{ src = "mfussenegger/nvim-dap", confirm = false },
-	{ src = "leoluz/nvim-dap-go", confirm = false },
-	{ src = "rcarriga/nvim-dap-ui", confirm = false },
+	{ src = "https://github.com/mfussenegger/nvim-dap" },
+	{ src = "https://github.com/leoluz/nvim-dap-go" },
+	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
 
 	-- Database
-	{ src = "tpope/vim-dadbod", confirm = false },
-	{ src = "kristijanhusak/vim-dadbod-ui", confirm = false },
+	{ src = "https://github.com/tpope/vim-dadbod" },
+	{ src = "https://github.com/kristijanhusak/vim-dadbod-ui" },
 
 	-- Custom plugins
-	{ src = "dghaehre/raja.vim", confirm = false },
+	{ src = "https://github.com/dghaehre/raja.vim" },
 })
 
--- Plugin configurations (pcall to handle first install when plugins are not yet available)
-local function safe_require(mod)
-	local ok, err = pcall(require, mod)
-	if not ok then
-		vim.notify("Plugin config not loaded: " .. mod .. " (restart after plugins install)", vim.log.levels.WARN)
-	end
-end
-
-safe_require("plugins.telescope")
-safe_require("plugins.treesitter")
-safe_require("plugins.comment")
-safe_require("plugins.harpoon")
-safe_require("plugins.lsp")
-safe_require("plugins.cmp")
-safe_require("plugins.copilot")
-safe_require("plugins._99")
-safe_require("plugins.dap")
+require("plugins.telescope")
+require("plugins.treesitter")
+require("plugins.comment")
+require("plugins.harpoon")
+require("plugins.lsp")
+require("plugins.cmp")
+require("plugins.copilot")
+require("plugins._99")
+require("plugins.dap")
