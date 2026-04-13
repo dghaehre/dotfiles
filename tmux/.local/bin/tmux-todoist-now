@@ -18,6 +18,9 @@
         (if (= "" token) nil token))
       ([err] nil))))
 
+(defn most-likely-failure [out]
+  (string/has-prefix? "curl:" (string/trim out)))
+
 (defn fetch-now-task [token]
   (let [[stdout-r stdout-w] (os/pipe)]
     (defer
@@ -33,7 +36,9 @@
             _ (:close stdout-w)
             out (:read stdout-r math/int32-max)]
         (when (zero? status)
-          (-> out string string/trim))))))
+          (when (not (most-likely-failure out))
+            (let [result (-> out string string/trim)]
+              (when (not= "" result) result))))))))
 
 (defn normalize-text [text]
   (->> text
