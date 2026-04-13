@@ -64,4 +64,4 @@
 (defn main [& args]
   (let [task (read-started-todo)]
     (when task
-      (prin (-> task normalize-text truncate-text)))))
+      (prin (string "#[fg=colour0,bg=colour14] " (-> task normalize-text truncate-text) " #[fg=default,bg=default]")))))
