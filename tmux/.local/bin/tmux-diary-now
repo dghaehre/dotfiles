@@ -15,13 +15,11 @@
 (defn with-zero [d]
   (if (< d 10)
     (string "0" d)
-    d))
+    (string d)))
 
 (defn today-date []
   (let [{:month-day day :month month :year year} (os/date)]
     (string year "-" (with-zero (+ 1 month)) "-" (with-zero (+ 1 day)))))
-
-(test (today-date) "2026-04-13")
 
 (defn today-diary-path [&opt date]
   (default date (today-date))
