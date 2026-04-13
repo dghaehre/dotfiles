@@ -1,0 +1,70 @@
+#!/usr/bin/env janet
+
+(use judge)
+
+(def max-length 48)
+(def ellipsis "...")
+(def started-prefix "- [.] ")
+
+(defn read-from-file [file-path]
+  (let [f (file/open file-path :r)
+        content (file/read f :all)]
+    (file/close f)
+    content))
+
+(defn today-date []
+  (string/trim
+    (with [proc (os/spawn ["/bin/date" "+%F"] :p {:out :pipe :err :out})]
+      (-> (ev/read (proc :out) :all)
+          string))))
+
+(defn today-diary-path [&opt date]
+  (default date (today-date))
+  (string (os/getenv "HOME") "/wikis/work/diary/" date ".md"))
+
+(defn top-level-started-todo [content]
+  (when content
+    (def lines (string/split "\n" content))
+    (var match nil)
+    (for i 0 (length lines)
+      (let [line (in lines i)]
+        (when (and (nil? match)
+                   (string/has-prefix? started-prefix line))
+          (set match (string/slice line (length started-prefix))))))
+    match))
+
+(defn read-started-todo [&opt path]
+  (default path (today-diary-path))
+  (try
+    (-> path
+        read-from-file
+        top-level-started-todo)
+    ([err] nil)))
+
+(defn normalize-text [text]
+  (->> text
+      (string/replace-all "\r" " ")
+      (string/replace-all "\n" " ")
+      string/trim))
+
+(defn truncate-text [text]
+  (if (<= (length text) max-length)
+    text
+    (string (string/slice text 0 (- max-length (length ellipsis))) ellipsis)))
+
+(test (today-diary-path "2026-04-13") "/Users/dghaehre/wikis/work/diary/2026-04-13.md")
+
+(test (top-level-started-todo "- [.] started task") "started task")
+
+(test (top-level-started-todo "- [ ] not started\n- [.] started task") "started task")
+
+(test (top-level-started-todo "\t- [.] nested task\n- [ ] root task") nil)
+
+(test (top-level-started-todo "- [.] root task\n\t- [.] nested task") "root task")
+
+(test (truncate-text (normalize-text "line 1\nline 2")) "line 1 line 2")
+
+(defn main [& args]
+  (let [task (read-started-todo)]
+    (when task
+      (prin (-> task normalize-text truncate-text)))))
