@@ -1,0 +1,63 @@
+#!/usr/bin/env janet
+
+(use judge)
+
+(def max-length 48)
+(def ellipsis "...")
+
+(defn read-from-file [file-path]
+  (let [f (file/open file-path :r)
+        content (file/read f :all)]
+    (file/close f)
+    content))
+
+(defn read-token []
+  (let [path (string (os/getenv "HOME") "/.todoist.token")]
+    (try
+      (let [token (-> (read-from-file path) string/trim)]
+        (if (= "" token) nil token))
+      ([err] nil))))
+
+(defn fetch-now-task [token]
+  (let [[stdout-r stdout-w] (os/pipe)]
+    (defer
+      (do
+        (:close stdout-r)
+        (:close stdout-w))
+      (let [status (os/execute
+                     ["/bin/sh"
+                      "-c"
+                      "/usr/bin/curl -sSf -X GET \"https://api.todoist.com/api/v1/tasks?label=now\" -H \"Authorization: Bearer $TODOIST_TOKEN\" | /opt/homebrew/bin/jq -r '.results[0].content // empty'"]
+                     :ep
+                     {"TODOIST_TOKEN" token :out stdout-w :err :out})
+            _ (:close stdout-w)
+            out (:read stdout-r math/int32-max)]
+        (when (zero? status)
+          (-> out string string/trim))))))
+
+(defn normalize-text [text]
+  (->> text
+      (string/replace-all "\r" " ")
+      (string/replace-all "\n" " ")
+      string/trim))
+
+(defn truncate-text [text]
+  (if (<= (length text) max-length)
+    text
+    (string (string/slice text 0 (- max-length (length ellipsis))) ellipsis)))
+
+(test (truncate-text ( normalize-text "sdfsdf sdfsdf ")) "sdfsdf sdfsdf")
+
+# (test (let [token (read-token)
+#             task (fetch-now-task token)
+#           (-> task normalize-text truncate-text)
+#   "")
+
+(defn main [& args]
+  (let [token (read-token)]
+    (when token
+      (try
+        (let [task (fetch-now-task token)]
+          (when task
+            (prin (-> task normalize-text truncate-text))))
+        ([err] nil)))))
