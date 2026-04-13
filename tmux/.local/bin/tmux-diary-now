@@ -12,11 +12,16 @@
     (file/close f)
     content))
 
+(defn with-zero [d]
+  (if (< d 10)
+    (string "0" d)
+    d))
+
 (defn today-date []
-  (string/trim
-    (with [proc (os/spawn ["/bin/date" "+%F"] :p {:out :pipe :err :out})]
-      (-> (ev/read (proc :out) :all)
-          string))))
+  (let [{:month-day day :month month :year year} (os/date)]
+    (string year "-" (with-zero (+ 1 month)) "-" (with-zero (+ 1 day)))))
+
+(test (today-date) "2026-04-13")
 
 (defn today-diary-path [&opt date]
   (default date (today-date))
