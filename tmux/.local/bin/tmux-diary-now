@@ -4,7 +4,7 @@
 
 (def max-length 48)
 (def ellipsis "...")
-(def started-prefix "- [.] ")
+(def started-prefix "- [o] ")
 
 (defn read-from-file [file-path]
   (let [f (file/open file-path :r)
@@ -27,14 +27,8 @@
 
 (defn top-level-started-todo [content]
   (when content
-    (def lines (string/split "\n" content))
-    (var match nil)
-    (for i 0 (length lines)
-      (let [line (in lines i)]
-        (when (and (nil? match)
-                   (string/has-prefix? started-prefix line))
-          (set match (string/slice line (length started-prefix))))))
-    match))
+    (when-let [line (find |(string/has-prefix? started-prefix $) (string/split "\n" content))]
+      (string/slice line (length started-prefix)))))
 
 (defn read-started-todo [&opt path]
   (default path (today-diary-path))
@@ -57,13 +51,13 @@
 
 (test (today-diary-path "2026-04-13") "/Users/dghaehre/wikis/work/diary/2026-04-13.md")
 
-(test (top-level-started-todo "- [.] started task") "started task")
+(test (top-level-started-todo "- [o] started task") "started task")
 
-(test (top-level-started-todo "- [ ] not started\n- [.] started task") "started task")
+(test (top-level-started-todo "- [ ] not started\n- [o] started task") "started task")
 
-(test (top-level-started-todo "\t- [.] nested task\n- [ ] root task") nil)
+(test (top-level-started-todo "\t- [o] nested task\n- [ ] root task") nil)
 
-(test (top-level-started-todo "- [.] root task\n\t- [.] nested task") "root task")
+(test (top-level-started-todo "- [o] root task\n\t- [o] nested task") "root task")
 
 (test (truncate-text (normalize-text "line 1\nline 2")) "line 1 line 2")
 

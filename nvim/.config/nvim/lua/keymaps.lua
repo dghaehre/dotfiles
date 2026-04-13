@@ -149,6 +149,16 @@ keymap("n", "<leader>tj", "<Plug>VimwikiIncrementListItem", {})
 keymap("v", "<leader>tj", "<Plug>VimwikiIncrementListItem", {})
 keymap("n", "<leader>tk", "<Plug>VimwikiDecrementListItem", {})
 keymap("v", "<leader>tk", "<Plug>VimwikiDecrementListItem", {})
+keymap("n", "<leader>ts", function() -- Mark a todo as started
+  local line = vim.api.nvim_get_current_line()
+  local new_line
+  if line:match("^%s*%- %[o%]") then
+    new_line = line:gsub("^(%s*%- %[)o(%])", "%1 %2")
+  else
+    new_line = line:gsub("^(%s*%- %[)[^%]](%])", "%1o%2")
+  end
+  vim.api.nvim_set_current_line(new_line)
+end, opts)
 keymap("n", "<leader>ta", ":VimwikiTable<CR>", opts)
 keymap("n", "<leader>wb", ":VWB<CR>", opts)
 -- Note: VimwikiFindAllIncompleteTasks and VimwikiFindIncompleteTasks functions were removed
