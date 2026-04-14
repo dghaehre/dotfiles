@@ -4,6 +4,8 @@
 
 (def max-length 48)
 (def ellipsis "...")
+(def cache-ttl 60)
+(def cache-path (string (os/getenv "HOME") "/.cache/todoist-now"))
 
 (defn read-from-file [file-path]
   (let [f (file/open file-path :r)
@@ -51,18 +53,46 @@
     text
     (string (string/slice text 0 (- max-length (length ellipsis))) ellipsis)))
 
-(test (truncate-text ( normalize-text "sdfsdf sdfsdf ")) "sdfsdf sdfsdf")
+(test (most-likely-failure "curl: (6) Could not resolve host") true)
+(test (most-likely-failure "Buy milk") false)
+(test (most-likely-failure "") false)
 
-# (test (let [token (read-token)
-#             task (fetch-now-task token)
-#           (-> task normalize-text truncate-text)
-#   "")
+(test (normalize-text "line 1\nline 2") "line 1 line 2")
+(test (normalize-text "  trimmed  ") "trimmed")
+(test (normalize-text "carriage\rreturn") "carriage return")
+
+(test (truncate-text "short") "short")
+(test (truncate-text (normalize-text "sdfsdf sdfsdf ")) "sdfsdf sdfsdf")
+(test (truncate-text (string/repeat "a" 50)) (string (string/repeat "a" 45) "..."))
+
+(defn get-cached-task []
+  (try
+    (when-let [stat (os/stat cache-path)]
+      (when (< (- (os/time) (stat :modified)) cache-ttl)
+        (string/trim (read-from-file cache-path))))
+    ([err] nil)))
+
+(defn write-cache [content]
+  (try
+    (let [f (file/open cache-path :w)]
+      (file/write f (or content ""))
+      (file/close f))
+    ([err] nil)))
+
+(defn format-output [task]
+  (string "#[fg=colour0,bg=colour14] " task " #[fg=default,bg=default]"))
+
+(defn fetch-and-cache [token]
+  (try
+    (let [result (fetch-now-task token)
+          task (when result (-> result normalize-text truncate-text))]
+      (write-cache task)
+      task)
+    ([err] nil)))
 
 (defn main [& args]
-  (let [token (read-token)]
-    (when token
-      (try
-        (let [task (fetch-now-task token)]
-          (when task
-            (prin (string "#[fg=colour0,bg=colour14] " (-> task normalize-text truncate-text) " #[fg=default,bg=default]"))))
-        ([err] nil)))))
+  (let [task (or (get-cached-task)
+                 (when-let [token (read-token)]
+                   (fetch-and-cache token)))]
+    (when (and task (not= "" task))
+      (prin (format-output task)))))
