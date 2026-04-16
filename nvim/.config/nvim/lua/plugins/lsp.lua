@@ -21,6 +21,7 @@ vim.lsp.config("janet_lsp", {
 vim.lsp.enable({
   "janet_lsp",
 	"gopls",
+	"rust_analyzer",
 	"lua_ls",
 })
 
