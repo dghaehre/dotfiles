@@ -1,0 +1,46 @@
+#!/usr/bin/env janet
+
+(use judge)
+
+(def max-length 48)
+(def ellipsis "...")
+(def todo-path (string (os/getenv "HOME") "/Library/Mobile Documents/com~apple~CloudDocs/todotxt/todo.txt"))
+
+(defn read-from-file [file-path]
+  (let [f (file/open file-path :r)
+        content (file/read f :all)]
+    (file/close f)
+    content))
+
+(defn find-priority-a-task [content]
+  (when content
+    (when-let [line (find |(string/has-prefix? "(A) " $) (string/split "\n" content))]
+      (string/slice line 4))))
+
+(defn normalize-text [text]
+  (->> text
+      (string/replace-all "\r" " ")
+      (string/replace-all "\n" " ")
+      string/trim))
+
+(defn truncate-text [text]
+  (if (<= (length text) max-length)
+    text
+    (string (string/slice text 0 (- max-length (length ellipsis))) ellipsis)))
+
+(test (find-priority-a-task "(A) High priority task") "High priority task")
+
+(test (find-priority-a-task "x done task\n(B) low prio\n(A) first a task\n(A) second a task") "first a task")
+
+(test (find-priority-a-task "(B) not A priority") nil)
+
+(test (find-priority-a-task nil) nil)
+
+(test (truncate-text (normalize-text "line 1\nline 2")) "line 1 line 2")
+
+(defn main [& args]
+  (let [task (try
+               (-> todo-path read-from-file find-priority-a-task)
+               ([err] nil))]
+    (when task
+      (prin (string "#[fg=colour0,bg=colour14] " (-> task normalize-text truncate-text) " #[fg=default,bg=default]")))))
