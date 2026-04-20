@@ -62,7 +62,7 @@ vim.g.lf_replace_netrw = 1
 -- Floaterm settings
 vim.g.floaterm_width = 0.9
 vim.g.floaterm_height = 0.9
-vim.g.floaterm_opener = "vsplit"
+vim.g.floaterm_opener = "edit"
 vim.g.floaterm_keymap_kill = "<C-x>"
 
 -- Vimwiki settings
