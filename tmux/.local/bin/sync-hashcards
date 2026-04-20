@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+src="$HOME/Library/Mobile Documents/com~apple~CloudDocs/hashcards"
+dst="$HOME/projects/personal/my-hashcards"
+
+[[ -d "$src" ]] || { echo "Source not found: $src" >&2; exit 1; }
+[[ -d "$dst/.git" ]] || { echo "Destination is not a git repo: $dst" >&2; exit 1; }
+
+rsync -av --delete --exclude='.git' "$src/" "$dst/"
+
+cd "$dst"
+
+if git diff --quiet && git diff --cached --quiet && [[ -z "$(git ls-files --others --exclude-standard)" ]]; then
+    echo "No changes to commit."
+    exit 0
+fi
+
+git add -A
+git commit -m "sync hashcards $(date +%Y-%m-%d)"
+git push
