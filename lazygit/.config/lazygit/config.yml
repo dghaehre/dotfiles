@@ -52,10 +52,26 @@ gui:
     # use blue for other authors
     '*': '#3B4252'
 customCommands:
+  - key: "D"
+    description: "Run hardcoded GitHub Actions workflow on selected branch"
+    context: "localBranches"
+    command: "gh workflow run dundre-deploy.yml --ref {{.SelectedLocalBranch.Name | quote}}"
+    loadingText: "Dundrer {{.SelectedLocalBranch.Name | quote}}"
+    output: log
   - key: 'E'
     command: "floaterm {{.SelectedFile.Name | quote}}; kill -TERM (ps -o ppid= -p $fish_pid)"
     context: 'files'
     description: "open in vim from vim (floaterm)"
+    output: terminal
+  - key: "A"
+    context: "localBranches"
+    description: "Show GitHub checks for selected branch"
+    command: "gh pr checks {{.SelectedLocalBranch.Name | quote}}"
+    output: terminal
+  - key: "D"
+    context: "files"
+    description: "Show Dundre status"
+    command: "gh run watch $(gh run list --workflow=dundre-deploy.yml --limit=1 --json databaseId --jq '.[0].databaseId') --compact"
     output: terminal
   - key: "N"
     context: "worktrees"
