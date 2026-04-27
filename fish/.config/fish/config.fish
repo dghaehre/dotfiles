@@ -125,28 +125,32 @@ end
 # set webcam to 50hz
 abbr -a camflickering v4l2-ctl --set-ctrl power_line_frequency=1
 
+##################### txtui ####################
+abbr -a t txtui
+abbr -a ta txtui add
+
 
 ##################### Taskwarrior ####################
 #----------------------------------------------------#
-abbr -a t task
-abbr -a tui taskwarrior-tui
-abbr -a ta task add
-abbr -a tr task ready
-abbr -a te task edit
-abbr -a ti task rc.context=none inbox
-abbr -a tm task mod
-abbr -a ts task start
-abbr -a tand task +LATEST mod
-abbr -a td task done
-abbr -a tp task plan
-abbr -a tl task later
-abbr -a tw task waiting
-# task today
-abbr -a tt task \""+READY (scheduled.before=eod or due.before=tom+48h)\""
-# task scheduled none
-abbr -a tsn task ready scheduled.none:
-abbr -a plan task plan
-abbr -a th task all status:completed end.after:
+# abbr -a t task
+# abbr -a tui taskwarrior-tui
+# abbr -a ta task add
+# abbr -a tr task ready
+# abbr -a te task edit
+# abbr -a ti task rc.context=none inbox
+# abbr -a tm task mod
+# abbr -a ts task start
+# abbr -a tand task +LATEST mod
+# abbr -a td task done
+# abbr -a tp task plan
+# abbr -a tl task later
+# abbr -a tw task waiting
+# # task today
+# abbr -a tt task \""+READY (scheduled.before=eod or due.before=tom+48h)\""
+# # task scheduled none
+# abbr -a tsn task ready scheduled.none:
+# abbr -a plan task plan
+# abbr -a th task all status:completed end.after:
 
 function tdd
   task (task ids +ACTIVE) done
