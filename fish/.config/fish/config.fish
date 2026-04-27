@@ -111,10 +111,6 @@ bind -M insert \cl accept-autosuggestion
 bind -M insert \t  complete-and-search
 
 
-if type -q docker
-  abbr -a dockerrm docker rm (docker ps -q)
-end
-
 # Set keyboard layout (is set by i3, but nice to have)
 function my-layout
   setxkbmap -option 'caps:ctrl_modifier' -option 'lv3:ralt_switch' -variant 'mac'
