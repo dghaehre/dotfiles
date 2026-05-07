@@ -79,8 +79,16 @@ keymap("n", "ga", "<Plug>(GitGutterStageHunk)", {})
 keymap("v", "ga", "<Plug>(GitGutterStageHunk)", {})
 keymap("n", "gu", "<Plug>(GitGutterUndoHunk)", {})
 
--- Lazygit
-keymap("n", "<leader>lg", ":FloatermNew lazygit<CR>", opts)
+-- Lazygit: toggle the existing floaterm or create a named one
+local function lazygit_toggle()
+  local bufnr = vim.fn["floaterm#terminal#get_bufnr"]("lazygit")
+  if bufnr == -1 then
+    vim.cmd("FloatermNew --name=lazygit lazygit")
+  else
+    vim.cmd("FloatermToggle lazygit")
+  end
+end
+keymap("n", "<leader>lg", lazygit_toggle, opts)
 
 -- Git (fugitive)
 keymap("n", "<leader>gs", ":0G<CR>", opts)

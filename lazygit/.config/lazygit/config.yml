@@ -59,7 +59,7 @@ customCommands:
     loadingText: "Dundrer {{.SelectedLocalBranch.Name | quote}}"
     output: log
   - key: 'E'
-    command: "floaterm {{.SelectedFile.Name | quote}}; kill -TERM (ps -o ppid= -p $fish_pid)"
+    command: "floaterm {{.SelectedFile.Name | quote}}"
     context: 'files'
     description: "open in vim from vim (floaterm)"
     output: terminal
