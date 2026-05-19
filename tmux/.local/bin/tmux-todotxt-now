@@ -2,7 +2,7 @@
 
 (use judge)
 
-(def max-length 48)
+(def max-length 80)
 (def ellipsis "...")
 (def todo-path (string (os/getenv "HOME") "/Library/Mobile Documents/com~apple~CloudDocs/todotxt/todo.txt"))
 
@@ -12,13 +12,27 @@
     (file/close f)
     content))
 
-(defn find-priority-a-task [content]
+(defn find-priority-a-tasks [content]
   (when content
-    (when-let [line (find |(string/has-prefix? "(A) " $) (string/split "\n" content))]
-      (string/slice line 4))))
+    (->> (string/split "\n" content)
+         (filter |(string/has-prefix? "(A) " $))
+         (map |(string/slice $ 4)))))
+
+(defn find-priority-a-task [content]
+  (first (find-priority-a-tasks content)))
+
+(defn remove-project [text]
+  (->> text
+    (peg/replace ~(sequence " +" (thru :a+)) "")
+    (string)))
+
+(test (remove-project "hey") "hey")
+(test (remove-project "hey +test") "hey")
+(test (remove-project "hey +test sdfsdf") "hey sdfsdf")
 
 (defn normalize-text [text]
   (->> text
+      (remove-project)
       (string/replace-all "\r" " ")
       (string/replace-all "\n" " ")
       string/trim))
@@ -36,11 +50,25 @@
 
 (test (find-priority-a-task nil) nil)
 
+(test (find-priority-a-tasks "(A) one\n(A) two\n(B) three") @["one" "two"])
+
+(test (find-priority-a-tasks "(B) none") @[])
+
+(test (find-priority-a-tasks nil) nil)
+
 (test (truncate-text (normalize-text "line 1\nline 2")) "line 1 line 2")
 
 (defn main [& args]
-  (let [task (try
-               (-> todo-path read-from-file find-priority-a-task)
-               ([err] nil))]
-    (when task
-      (prin (string "#[fg=colour0,bg=colour14] " (-> task normalize-text truncate-text) " #[fg=default,bg=default]")))))
+  (let [tasks (try
+                (-> todo-path read-from-file find-priority-a-tasks)
+                ([err] nil))
+        first-task (first (or tasks []))
+        n (length (or tasks []))]
+    (when first-task
+      (let [body (-> first-task normalize-text truncate-text)
+            badge (if (> n 1)
+                    (string "#[fg=colour15,bg=colour1] [" n "] ")
+                    "")]
+        (prin (string badge
+                      "#[fg=colour0,bg=colour14] " body
+                      " #[fg=default,bg=default]"))))))
