@@ -24,6 +24,7 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"lua_ls",
 	"ts_ls",
+	"csharp_ls",
 })
 
 -- Xcode setup function (lazy loaded because it's slow)
