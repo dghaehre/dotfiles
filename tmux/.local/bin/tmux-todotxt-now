@@ -23,19 +23,32 @@
 
 (defn remove-project [text]
   (->> text
-    (peg/replace ~(sequence " +" (thru :a+)) "")
-    (string)))
+       (peg/replace ~(sequence " +" (thru :a+)) "")
+       (string)))
 
 (test (remove-project "hey") "hey")
 (test (remove-project "hey +test") "hey")
 (test (remove-project "hey +test sdfsdf") "hey sdfsdf")
 
+(defn remove-note [text]
+  (->> text
+       (peg/replace ~(sequence " note:" (thru (* :a+ ".md"))) "")
+       (string)))
+
+(test (remove-note "hey sdfsdf note:sdf.md") "hey sdfsdf")
+(test (remove-note "hey sdfsdf note:not-a-markdown-file") "hey sdfsdf note:not-a-markdown-file")
+(test (-> "todo with note and project note:sdf.md +test"
+          (remove-project)
+          (remove-note))
+  "todo with note and project")
+
 (defn normalize-text [text]
   (->> text
-      (remove-project)
-      (string/replace-all "\r" " ")
-      (string/replace-all "\n" " ")
-      string/trim))
+       (remove-project)
+       (remove-note)
+       (string/replace-all "\r" " ")
+       (string/replace-all "\n" " ")
+       string/trim))
 
 (defn truncate-text [text]
   (if (<= (length text) max-length)
