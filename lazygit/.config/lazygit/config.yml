@@ -52,6 +52,22 @@ gui:
     # use blue for other authors
     '*': '#3B4252'
 customCommands:
+  # Lens
+  - key: "L"
+    context: "files"
+    description: "Open Lens diff"
+    command: "lens diff --focus {{.SelectedPath | quote}}"
+    output: terminal
+  - key: "L"
+    context: "commits"
+    description: "Open commit in Lens"
+    command: "lens diff {{.SelectedLocalCommit.Sha}}"
+    output: terminal
+  - key: "L"
+    context: "global"
+    description: "Open Lens diff"
+    command: "lens diff"
+    output: terminal
   - key: "D"
     description: "Run hardcoded GitHub Actions workflow on selected branch"
     context: "localBranches"
