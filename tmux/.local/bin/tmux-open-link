@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: tmux-open-link --pane pane-id
+
+Open the hyperlink or URL under the copy-mode cursor.
+EOF
+}
+
+pane=""
+
+while (($# > 0)); do
+  case "$1" in
+    --pane)
+      if (($# < 2)); then
+        echo "tmux-open-link: --pane requires an argument" >&2
+        exit 64
+      fi
+      pane="$2"
+      shift 2
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "tmux-open-link: unknown argument: $1" >&2
+      usage >&2
+      exit 64
+      ;;
+  esac
+done
+
+if [[ -z "$pane" ]]; then
+  usage >&2
+  exit 64
+fi
+
+tmux_format() {
+  tmux display-message -p -t "$pane" "$1" 2>/dev/null || true
+}
+
+message() {
+  tmux display-message -t "$pane" "$*" 2>/dev/null || echo "$*" >&2
+}
+
+extract_url() {
+  local cursor_x="$1"
+  shift
+
+  perl -CS - "$cursor_x" "$@" <<'PERL'
+use strict;
+use warnings;
+
+my ($cursor_x, @texts) = @ARGV;
+my $fallback;
+
+for my $text (@texts) {
+    next unless defined $text && length $text;
+
+    while ($text =~ m{(?:https?://|www\.)[^\s<>"']+}g) {
+        my $url = $&;
+        my $start = $-[0];
+
+        $url =~ s/[)\]\}>,.;:!?]+$//;
+        my $end = $start + length($url);
+        $fallback //= $url;
+
+        if ($cursor_x ne "" && $cursor_x >= $start && $cursor_x < $end) {
+            $url =~ s/^www\./https:\/\/www\./;
+            print "$url\n";
+            exit 0;
+        }
+    }
+}
+
+if (defined $fallback) {
+    $fallback =~ s/^www\./https:\/\/www\./;
+    print "$fallback\n";
+}
+PERL
+}
+
+open_url() {
+  local url="$1"
+
+  if command -v open >/dev/null 2>&1; then
+    open "$url"
+  elif command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$url" >/dev/null 2>&1 &
+  else
+    message "No URL opener found"
+    exit 1
+  fi
+}
+
+hyperlink="$(tmux_format '#{copy_cursor_hyperlink}')"
+if [[ -n "$hyperlink" ]]; then
+  open_url "$hyperlink"
+  exit 0
+fi
+
+word="$(tmux_format '#{copy_cursor_word}')"
+url="$(extract_url "" "$word")"
+if [[ -n "$url" ]]; then
+  open_url "$url"
+  exit 0
+fi
+
+line="$(tmux_format '#{copy_cursor_line}')"
+cursor_x="$(tmux_format '#{copy_cursor_x}')"
+url="$(extract_url "$cursor_x" "$line")"
+if [[ -n "$url" ]]; then
+  open_url "$url"
+  exit 0
+fi
+
+message "No link under cursor"
