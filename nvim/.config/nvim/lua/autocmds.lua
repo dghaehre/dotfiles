@@ -74,3 +74,23 @@ autocmd("FileType", {
     vim.opt_local.writebackup = false
   end,
 })
+
+-- Per-tmux-window server socket so external tools (lazygit, etc.) can reach this nvim.
+-- Runs once on VimEnter (startup only, not per buffer): asks tmux for the current
+-- pane's window id, then starts an nvim server at $XDG_RUNTIME_DIR/nvim-tmux-<wid>.sock.
+-- External tools in the same tmux window resolve the same socket path to send commands here.
+autocmd("VimEnter", {
+  group = augroup("TmuxRemoteServer", { clear = true }),
+  callback = function()
+    local pane = vim.env.TMUX_PANE
+    if not pane or pane == "" then return end
+    local handle = io.popen(string.format("tmux display-message -p -t %s '#{window_id}'", pane))
+    if not handle then return end
+    local window_id = (handle:read("*a") or ""):gsub("%s+", "")
+    handle:close()
+    if window_id == "" then return end
+    local runtime = vim.env.XDG_RUNTIME_DIR or "/tmp"
+    local sock = string.format("%s/nvim-tmux-%s.sock", runtime, window_id:gsub("@", ""))
+    pcall(vim.fn.serverstart, sock)
+  end,
+})

@@ -79,6 +79,20 @@ customCommands:
     context: 'files'
     description: "open in vim from vim (floaterm)"
     output: terminal
+  - key: 'O'
+    context: 'files'
+    description: "Open file in running nvim (tmux sibling pane)"
+    command: |
+      set window_id (tmux display-message -p -t "$TMUX_PANE" '#{window_id}')
+      set runtime (set -q XDG_RUNTIME_DIR; and echo $XDG_RUNTIME_DIR; or echo /tmp)
+      set sock "$runtime/nvim-tmux-"(string replace -r '^@' '' $window_id)".sock"
+      if not test -S "$sock"
+        echo "No nvim server at $sock" >&2
+        exit 1
+      end
+      nvim --server "$sock" --remote {{.SelectedFile.Name | quote}}
+      and tmux display-popup -C
+    output: none
   - key: "A"
     context: "localBranches"
     description: "Show GitHub checks for selected branch"
