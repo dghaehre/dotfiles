@@ -32,12 +32,12 @@
 
 (defn remove-note [text]
   (->> text
-       (peg/replace ~(sequence " note:" (thru (* :a+ ".md"))) "")
+       (peg/replace ~(sequence " note:" (thru (* :w+ ".md"))) "")
        (string)))
 
 (test (remove-note "hey sdfsdf note:sdf.md") "hey sdfsdf")
 (test (remove-note "hey sdfsdf note:not-a-markdown-file") "hey sdfsdf note:not-a-markdown-file")
-(test (-> "todo with note and project note:sdf.md +test"
+(test (-> "todo with note and project note:eeb055e1.md +test"
           (remove-project)
           (remove-note))
   "todo with note and project")
