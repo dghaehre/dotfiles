@@ -36,7 +36,9 @@ opt.splitright = true
 
 -- Display
 opt.termguicolors = false
-opt.background = "dark"
+-- Let nvim auto-detect terminal background via OSC 11 (ghostty supports it).
+-- Override with `:set background=light` if detection fails.
+-- opt.background = "dark"
 opt.fillchars = ""
 opt.number = true
 opt.numberwidth = 4
