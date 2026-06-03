@@ -55,6 +55,8 @@ keymap("n", "go", ":silent !firefox <cfile><CR>", opts)
 
 -- Copy file path to register
 keymap("n", "<leader>wp", ':let @" = expand("%")<CR>', opts)
+-- Copy full file path to system clipboard
+keymap("n", "<leader>Y", ':let @+ = expand("%:p")<CR>', opts)
 
 -- Tests
 keymap("n", "<leader>gt", ":TestNearest -strategy=neovim<CR>", { silent = true })
