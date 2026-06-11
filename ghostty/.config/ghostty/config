@@ -30,4 +30,5 @@ mouse-hide-while-typing = true
 # alpha-blending = linear-corrected
 # minimum-contrast = 1.0
 # background-opacity = 1.0
-# window-decoration = none
+macos-titlebar-style = hidden
+window-decoration = none
