@@ -7,7 +7,7 @@ local opts = { noremap = true, silent = true }
 
 local function restart_lsp_and_keep_current_buffer()
   local current_buf = vim.api.nvim_get_current_buf()
-  vim.cmd("LspRestart")
+  vim.cmd("lsp restart")
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if buf ~= current_buf and vim.bo[buf].buflisted then
       vim.api.nvim_buf_delete(buf, {})
