@@ -13,6 +13,7 @@ fish_add_path ~/.local/bin
 setenv GOPATH (go env GOPATH)
 fish_add_path (go env GOPATH)/bin
 source ~/.config/fish/git.fish
+source ~/.config/fish/jj.fish
 set -ag FZF_DEFAULT_OPTS '--color=bg+:24,gutter:-1'
 
 setenv XDG_CONFIG_HOME "$HOME/.config" # Make configs work on macos
@@ -87,19 +88,6 @@ function jj-branch
 	else
 		echo $result
 	end
-end
-
-function jj-review
-	set -l path "$(pwd)-review"
-	set -l name (basename $path)
-	jj workspace add --name $name $path
-	cd $path
-	codex -a on-failure
-end
-
-# TODO
-function jj-review-cleanup
-
 end
 
 abbr -a jjpr "gh pr create --web --fill --head (jj-branch)"
@@ -290,6 +278,17 @@ end
 ############## Fish Prompt and Colors ####################
 #--------------------------------------------------------#
 function fish_prompt
+	set -l in_is_jj false
+	set -l d $PWD
+	while test -n "$d"
+		if test -d "$d/.jj"
+				set in_is_jj true
+				break
+		end
+		set d (string replace -r '/[^/]*$' '' -- $d)
+end
+
+	
   if [ $PWD != $HOME ]
     set_color blue
     echo -n (basename $PWD)
@@ -298,8 +297,8 @@ function fish_prompt
     echo -n '~'
   end
   set_color green
-  if test -d ./.jj
-		echo -n ' (jj) '
+  if test "$in_is_jj" = true
+		printf '%s ' (fish_jj_prompt)
 	else
 		printf '%s ' (__fish_git_prompt)
 	end
