@@ -1,0 +1,142 @@
+# herdr configuration — ported from ~/.tmux.conf
+#
+# Model mapping: tmux session -> herdr workspace, tmux window -> herdr tab.
+
+[theme]
+# tmux used `status-style bg=default` everywhere; "terminal" inherits the
+# terminal palette instead of imposing its own.
+name = "terminal"
+
+auto_switch = false
+[terminal]
+# tmux: `split-window -c "#{pane_current_path}"` / `new-window -c ...`
+new_cwd = "follow"
+
+[keys]
+# set -g prefix C-n / unbind C-b
+prefix = "ctrl+n"
+
+# bind R source-file ~/.tmux.conf
+reload_config = "prefix+shift+r"
+
+# Vim style pane selection (bind h/j/k/l select-pane)
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# resize panes with vim movement keys (bind -r H/J/K/L resize-pane)
+resize_pane_left = "prefix+shift+h"
+resize_pane_down = "prefix+shift+j"
+resize_pane_up = "prefix+shift+k"
+resize_pane_right = "prefix+shift+l"
+
+# Agent panel navigation (vertical mirror of the ctrl+h/ctrl+l tab pair above)
+previous_agent = "prefix+ctrl+k"
+next_agent = "prefix+ctrl+j"
+
+# moving between windows (bind -r C-h/C-l select-window -t :-/:+)
+previous_tab = "prefix+ctrl+h"
+next_tab = "prefix+ctrl+l"
+
+# bind -r A/D swap-window -t -1/+1
+move_tab_previous = "prefix+shift+a"
+move_tab_next = "prefix+shift+d"
+
+# Panes: bind '"' split-window / bind % split-window -h / bind c new-window
+split_horizontal = "prefix+quote"
+split_vertical = "prefix+percent"
+new_tab = "prefix+c"
+
+# bind x kill-pane
+close_pane = "prefix+x"
+
+# bind n switch-client -l  (closest herdr equivalent; see notes)
+previous_workspace = "prefix+n"
+
+# Relocated herdr defaults that collided with tmux bindings above:
+#   prefix+g   -> lazygit popup      (goto moved to prefix+ctrl+g)
+#   prefix+w   -> vimwiki workspace  (workspace_picker moved to prefix+ctrl+w)
+#   prefix+shift+d -> move_tab_next  (close_workspace unbound)
+goto = "prefix+ctrl+g"
+workspace_picker = "prefix+ctrl+w"
+close_workspace = ""
+
+# bind g display-popup -E -w 90% -h 90% -d "#{pane_current_path}" "lazygit"
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
+
+# bind -r u display-popup -E -w 90% -h 90% -d "#{pane_current_path}" "jjui"
+[[keys.command]]
+key = "prefix+u"
+type = "popup"
+command = "jjui"
+width = "90%"
+height = "90%"
+
+# bind -r d display-popup -E -w 90% -h 90% "lazydocker"
+[[keys.command]]
+key = "prefix+d"
+type = "popup"
+command = "lazydocker"
+width = "90%"
+height = "90%"
+
+# bind t display-popup -E "txtui"
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "txtui"
+width = "80%"
+height = "80%"
+
+# bind a display-popup -E 'hashcards drill --tui ... && sync-hashcards'
+[[keys.command]]
+key = "prefix+a"
+type = "popup"
+command = "hashcards drill --tui ~/Library/Mobile\\ Documents/com~apple~CloudDocs/hashcards/ && sync-hashcards"
+width = "80%"
+height = "80%"
+
+# bind S display-popup -E nvim .../hashcards/deck.md
+[[keys.command]]
+key = "prefix+shift+s"
+type = "popup"
+command = "nvim ~/Library/Mobile\\ Documents/com~apple~CloudDocs/hashcards/deck.md"
+width = "80%"
+height = "80%"
+
+# bind -r C-i run-shell "tmux neww tmux-cht.sh"
+[[keys.command]]
+key = "prefix+ctrl+i"
+type = "pane"
+command = "tmux-cht.sh"
+
+[ui]
+# tmux: status-left showed the current (A)-priority todo.txt task,
+# status-right showed a zoom flag. tmux `set -g status-justify right`.
+tab_bar_right = [
+  { type = "command", command = "herdr-todotxt-now" },
+  { type = "zoom" },
+]
+
+# set -g pane-active-border-style fg=blue
+accent = "blue"
+
+# tmux-style internal splitters: borders between panes, no outer frame, no gaps.
+pane_borders = true
+pane_outer_borders = false
+pane_gaps = false
+
+# set -g set-titles on
+window_title = "{hostname}: {workspace}"
+
+[ui.sound]
+enabled = false
+
+[ui.toast]
+delivery = "herdr"
