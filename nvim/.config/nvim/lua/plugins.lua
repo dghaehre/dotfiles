@@ -51,7 +51,7 @@ vim.pack.add({
 	{ src = "https://github.com/williamboman/mason.nvim" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 
-	-- Telescope, harpoon, completion and Copilot are deferred:
+	-- Telescope, harpoon and completion are deferred:
 	-- see the second vim.pack.add() below.
 	-- { src = "https://github.com/ThePrimeagen/99" },
 
@@ -93,8 +93,6 @@ vim.pack.add({
 	{ src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
 	{ src = "https://github.com/hrsh7th/cmp-buffer" },
 
-	-- Copilot
-	{ src = "https://github.com/CopilotC-Nvim/CopilotChat.nvim" },
 }, { load = function() end })
 
 local lazyload = require("lazyload")
@@ -122,42 +120,6 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 		vim.api.nvim_exec_autocmds("InsertEnter", {})
 	end,
 })
-
--- CopilotChat is reached via <leader>coq and the :CopilotChat* commands mapped
--- in lua/keymaps.lua. Those commands do not exist until the plugin is
--- packadd'ed, so stand in for them and replay the invocation once it is.
-local copilot_cmds = {
-	"CopilotChat",
-	"CopilotChatToggle",
-	"CopilotChatReset",
-	"CopilotChatExplain",
-	"CopilotChatReview",
-	"CopilotChatFix",
-}
-
-local function load_copilot()
-	for _, name in ipairs(copilot_cmds) do
-		pcall(vim.api.nvim_del_user_command, name)
-	end
-	lazyload.ensure("plugins.copilot", { "CopilotChat.nvim" })
-end
-
-for _, name in ipairs(copilot_cmds) do
-	vim.api.nvim_create_user_command(name, function(o)
-		load_copilot()
-		vim.cmd({
-			cmd = name,
-			args = o.fargs,
-			bang = o.bang,
-			range = o.range > 0 and { o.line1, o.line2 } or nil,
-		})
-	end, { nargs = "*", range = true, bang = true })
-end
-
-vim.keymap.set("n", "<leader>coq", function()
-	load_copilot()
-	AskCopilotChat()
-end, { noremap = true })
 
 -- require("plugins._99")
 -- require("plugins.dap")

@@ -143,15 +143,6 @@ keymap("n", "<leader>rj", ":resize -20<CR>", opts)
 keymap("n", "<leader>rh", ":vertical resize +20<CR>", opts)
 keymap("n", "<leader>rl", ":vertical resize -20<CR>", opts)
 
--- Copilot
-keymap("n", "<leader>cod", ":Copilot disable<CR>", opts)
-keymap("n", "<leader>coe", ":Copilot enable<CR>", opts)
-keymap("v", "<leader>coe", ":CopilotChatExplain<CR>", opts)
-keymap("n", "<leader>coc", ":CopilotChatToggle<CR>", opts)
-keymap("n", "<leader>cor", ":CopilotChatReset<CR>", opts)
-keymap("v", "<leader>cor", ":CopilotChatReview<CR>", opts)
-keymap("v", "<leader>cof", ":CopilotChatFix<CR>", opts)
-
 -- Vimwiki
 keymap("v", "<leader>l", [[di[](<Esc>pa)<Esc>f[,a]], opts)
 keymap("n", "<leader>tt", "<Plug>VimwikiToggleListItem", {})

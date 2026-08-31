@@ -8,10 +8,6 @@
       "rev": "e30b7f2008e52442154b66f7c519bfd2f1e32acb",
       "src": "https://github.com/numToStr/Comment.nvim"
     },
-    "CopilotChat.nvim": {
-      "rev": "0b3133ffbb470b1616c47170b544d0b9a3bbcf5b",
-      "src": "https://github.com/CopilotC-Nvim/CopilotChat.nvim"
-    },
     "cmp-buffer": {
       "rev": "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
       "src": "https://github.com/hrsh7th/cmp-buffer"
@@ -93,10 +89,6 @@
     "nvim-web-devicons": {
       "rev": "6e76c5e47e957fbf080b1fdac165c66dbd2e7cfb",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
-    },
-    "octo.nvim": {
-      "rev": "c86a43da3514dbe916eb96ecac4d776890078786",
-      "src": "https://github.com/pwntester/octo.nvim"
     },
     "open-browser.vim": {
       "rev": "7d4c1d8198e889d513a030b5a83faa07606bac27",
