@@ -50,9 +50,6 @@ keymap("n", "<leader>qs", ":source ~/.config/nvim/init.lua<CR>", opts)
 -- Set current file as current dir
 keymap("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", opts)
 
--- Open html file in firefox
-keymap("n", "go", ":silent !firefox <cfile><CR>", opts)
-
 -- Copy file path to register
 keymap("n", "<leader>wp", ':let @" = expand("%")<CR>', opts)
 -- Copy full file path to system clipboard
