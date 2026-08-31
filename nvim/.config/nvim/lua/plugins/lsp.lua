@@ -50,9 +50,12 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- LSP keymaps via LspAttach autocmd
+-- telescope.nvim is deferred, so it is not on 'runtimepath' at startup and a
+-- direct require("telescope.builtin") fails. Go through lua/plugins/telescope.lua,
+-- whose `builtin` proxy packadds and configures telescope on first index.
 local function telescope_builtin(name)
 	return function()
-		require("telescope.builtin")[name]()
+		require("plugins.telescope").builtin[name]()
 	end
 end
 
@@ -70,13 +73,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, opts)
 		vim.keymap.set("n", "gi", telescope_builtin("lsp_implementations"), opts)
 		vim.keymap.set("n", "gr", telescope_builtin("lsp_references"), opts)
-		vim.keymap.set("n", "<leader>f", function()
-			if vim.bo.filetype == "swift" then
-				vim.cmd("silent !swiftformat %")
-			else
-				vim.lsp.buf.format()
-			end
-		end, opts)
+		-- <leader>f is a global mapping, see lua/format.lua
 		vim.keymap.set("n", "ge", function()
 			vim.diagnostic.open_float()
 		end, opts)

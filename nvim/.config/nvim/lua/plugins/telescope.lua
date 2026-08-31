@@ -220,3 +220,11 @@ end, opts)
 keymap("n", "<leader>ga", function()
   vim.lsp.buf.code_action()
 end, opts)
+
+-- Exported so other modules reach telescope through the lazy loader instead of
+-- require()ing it directly -- lua/plugins/lsp.lua uses this from its LspAttach
+-- maps, which are buffer-local and override the global ones above.
+return {
+  load = load,
+  builtin = builtin,
+}
