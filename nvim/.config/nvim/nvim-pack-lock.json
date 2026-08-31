@@ -20,6 +20,10 @@
       "rev": "cbc7b02bb99fae35cb42f514762b89b5126651ef",
       "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
     },
+    "diffview-jj.nvim": {
+      "rev": "7265eb520f187d8f7790e571445ac0b4f36f05fd",
+      "src": "https://github.com/dnaaun/diffview-jj.nvim"
+    },
     "diffview.nvim": {
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
@@ -89,6 +93,10 @@
     "nvim-web-devicons": {
       "rev": "6e76c5e47e957fbf080b1fdac165c66dbd2e7cfb",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "octo.nvim": {
+      "rev": "c86a43da3514dbe916eb96ecac4d776890078786",
+      "src": "https://github.com/pwntester/octo.nvim"
     },
     "open-browser.vim": {
       "rev": "7d4c1d8198e889d513a030b5a83faa07606bac27",

@@ -1,37 +1,67 @@
 -- Harpoon configuration
+--
+-- harpoon is deferred (see lua/plugins.lua). This module only defines keymaps;
+-- the plugin is packadd'ed and configured the first time one is pressed.
 
-local ok, harpoon = pcall(require, "harpoon")
-if not ok then return end
+local lazyload = require("lazyload")
 
-harpoon.setup({
-  settings = {
-    save_on_toggle = true,
-  },
-})
+local configured = false
+
+--- Load and configure harpoon on first use, then return it.
+local function harpoon()
+  if not configured then
+    configured = true
+    lazyload.packadd("harpoon")
+
+    local ok, h = pcall(require, "harpoon")
+    if not ok then return nil end
+
+    h.setup({
+      settings = {
+        save_on_toggle = true,
+      },
+    })
+  end
+
+  local ok, h = pcall(require, "harpoon")
+  if not ok then
+    vim.notify("harpoon is not available", vim.log.levels.WARN)
+    return nil
+  end
+  return h
+end
 
 local keymap = vim.keymap.set
 
 keymap("n", "<leader>hh", function()
-  harpoon:list():add()
+  local h = harpoon()
+  if h then h:list():add() end
 end)
 keymap("n", "<leader>ho", function()
-  harpoon.ui:toggle_quick_menu(harpoon:list())
+  local h = harpoon()
+  if h then h.ui:toggle_quick_menu(h:list()) end
 end)
 keymap("n", "<leader>ha", function()
-  harpoon:list():select(1)
+  local h = harpoon()
+  if h then h:list():select(1) end
 end)
 keymap("n", "<leader>hs", function()
-  harpoon:list():select(2)
+  local h = harpoon()
+  if h then h:list():select(2) end
 end)
 keymap("n", "<leader>hd", function()
-  harpoon:list():select(3)
+  local h = harpoon()
+  if h then h:list():select(3) end
 end)
 keymap("n", "<leader>hf", function()
-  harpoon:list():select(4)
+  local h = harpoon()
+  if h then h:list():select(4) end
 end)
 keymap("n", "<leader>hk", function()
-  harpoon:list():prev()
+  local h = harpoon()
+  if h then h:list():prev() end
 end)
 keymap("n", "<leader>hj", function()
-  harpoon:list():next()
+  local h = harpoon()
+  if h then h:list():next() end
 end)

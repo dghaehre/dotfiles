@@ -4,7 +4,8 @@ vim.pack.add({
 	-- Git
 	{ src = "https://github.com/airblade/vim-gitgutter" },
 	{ src = "https://github.com/tpope/vim-fugitive" },
-	{ src = "https://github.com/sindrets/diffview.nvim" },
+	-- { src = "https://github.com/sindrets/diffview.nvim" },
+	{ src = "https://github.com/dnaaun/diffview-jj.nvim" },
 
 	-- UI/Display
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
@@ -13,7 +14,6 @@ vim.pack.add({
 	-- { src = "https://github.com/nvim-lua/popup.nvim" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	-- { src = "https://github.com/nvim-neotest/nvim-nio" },
-	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	-- { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- should try to make this work..
 	-- { src = "https://github.com/nvim-telescope/telescope-dap.nvim" },
 
@@ -43,9 +43,6 @@ vim.pack.add({
 	-- Testing
 	{ src = "https://github.com/vim-test/vim-test" },
 
-	-- Navigation
-	{ src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
-
 	-- Neo-tree
 	{ src = "https://github.com/MunifTanjim/nui.nvim" },
 	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = "v3.x" },
@@ -54,13 +51,8 @@ vim.pack.add({
 	{ src = "https://github.com/williamboman/mason.nvim" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 
-	-- Completion
-	{ src = "https://github.com/hrsh7th/nvim-cmp" },
-	{ src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
-	{ src = "https://github.com/hrsh7th/cmp-buffer" },
-
-	-- Copilot
-	{ src = "https://github.com/CopilotC-Nvim/CopilotChat.nvim" },
+	-- Telescope, harpoon, completion and Copilot are deferred:
+	-- see the second vim.pack.add() below.
 	-- { src = "https://github.com/ThePrimeagen/99" },
 
 	-- iOS development
@@ -79,12 +71,93 @@ vim.pack.add({
 	{ src = "https://github.com/dghaehre/raja.vim" },
 })
 
-require("plugins.telescope")
+-- Deferred plugins.
+--
+-- `load = function() end` makes vim.pack install and register these but skip
+-- :packadd entirely (vim/pack.lua:800), so they stay off 'runtimepath' and
+-- their plugin/ files are never sourced at startup. lua/lazyload.lua packadds
+-- them on first use.
+--
+-- `{ load = false }` would be a no-op here -- that is already the default while
+-- init.lua is sourcing (vim/pack.lua:1006), so these would still land on
+-- 'runtimepath' and be sourced by the normal startup pass.
+vim.pack.add({
+	-- Telescope
+	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+
+	-- Navigation
+	{ src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
+
+	-- Completion
+	{ src = "https://github.com/hrsh7th/nvim-cmp" },
+	{ src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
+	{ src = "https://github.com/hrsh7th/cmp-buffer" },
+
+	-- Copilot
+	{ src = "https://github.com/CopilotC-Nvim/CopilotChat.nvim" },
+}, { load = function() end })
+
+local lazyload = require("lazyload")
+
 require("plugins.treesitter")
 require("plugins.comment")
-require("plugins.harpoon")
 require("plugins.lsp")
-require("plugins.cmp")
-require("plugins.copilot")
+
+-- These two are cheap now: they only define keymaps. The plugin behind them is
+-- packadd'ed and configured the first time a mapping is actually pressed.
+require("plugins.telescope")
+require("plugins.harpoon")
+
+-- cmp is insert mode only.
+vim.api.nvim_create_autocmd("InsertEnter", {
+	once = true,
+	callback = function()
+		lazyload.ensure("plugins.cmp", { "nvim-cmp", "cmp-nvim-lsp", "cmp-buffer" })
+
+		-- cmp and cmp_nvim_lsp register their own InsertEnter handlers, which
+		-- have just missed the event that triggered this one (cmp_nvim_lsp
+		-- attaches LSP sources from it). Replay it so the first insert session
+		-- behaves like every later one. Safe: this autocmd is `once`, and
+		-- nothing else in the config listens for InsertEnter.
+		vim.api.nvim_exec_autocmds("InsertEnter", {})
+	end,
+})
+
+-- CopilotChat is reached via <leader>coq and the :CopilotChat* commands mapped
+-- in lua/keymaps.lua. Those commands do not exist until the plugin is
+-- packadd'ed, so stand in for them and replay the invocation once it is.
+local copilot_cmds = {
+	"CopilotChat",
+	"CopilotChatToggle",
+	"CopilotChatReset",
+	"CopilotChatExplain",
+	"CopilotChatReview",
+	"CopilotChatFix",
+}
+
+local function load_copilot()
+	for _, name in ipairs(copilot_cmds) do
+		pcall(vim.api.nvim_del_user_command, name)
+	end
+	lazyload.ensure("plugins.copilot", { "CopilotChat.nvim" })
+end
+
+for _, name in ipairs(copilot_cmds) do
+	vim.api.nvim_create_user_command(name, function(o)
+		load_copilot()
+		vim.cmd({
+			cmd = name,
+			args = o.fargs,
+			bang = o.bang,
+			range = o.range > 0 and { o.line1, o.line2 } or nil,
+		})
+	end, { nargs = "*", range = true, bang = true })
+end
+
+vim.keymap.set("n", "<leader>coq", function()
+	load_copilot()
+	AskCopilotChat()
+end, { noremap = true })
+
 -- require("plugins._99")
 -- require("plugins.dap")

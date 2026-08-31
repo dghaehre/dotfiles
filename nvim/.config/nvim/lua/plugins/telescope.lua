@@ -1,57 +1,88 @@
 -- Telescope configuration
+--
+-- telescope.nvim is deferred (see lua/plugins.lua). This module still runs at
+-- startup, but only to define keymaps -- it requires nothing from the plugin.
+-- The plugin is packadd'ed and configured on first use, either through the
+-- `builtin` proxy below or an explicit load().
 
-local ok, telescope = pcall(require, "telescope")
-if not ok then return end
-local ok_actions, actions = pcall(require, "telescope.actions")
-if not ok_actions then return end
-local ok_builtin, builtin = pcall(require, "telescope.builtin")
-if not ok_builtin then return end
+local lazyload = require("lazyload")
 
-telescope.setup({
-  pickers = {
+local configured = false
+
+local function load()
+  if configured then
+    return
+  end
+  configured = true
+
+  lazyload.packadd("telescope.nvim")
+
+  local ok, telescope = pcall(require, "telescope")
+  if not ok then return end
+  local ok_actions, actions = pcall(require, "telescope.actions")
+  if not ok_actions then return end
+
+  telescope.setup({
+    pickers = {
 		live_grep = {
 			theme = "ivy",
 		},
 		find_files = {
 			theme = "ivy",
 		},
-    buffers = {
+      buffers = {
 			theme = "ivy",
-      show_all_buffers = true,
-      sort_lastused = true,
+        show_all_buffers = true,
+        sort_lastused = true,
+        mappings = {
+          i = {
+            ["<c-d>"] = "delete_buffer",
+          },
+          n = {
+            ["<c-d>"] = "delete_buffer",
+          },
+        },
+      },
+    },
+    defaults = {
+      hidden = true,
       mappings = {
         i = {
-          ["<c-d>"] = "delete_buffer",
-        },
-        n = {
-          ["<c-d>"] = "delete_buffer",
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<C-l>"] = actions.select_vertical,
         },
       },
     },
-  },
-  defaults = {
-    hidden = true,
-    mappings = {
-      i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-l>"] = actions.select_vertical,
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = false,
+        override_file_sorter = true,
+        case_mode = "smart_case",
       },
     },
-  },
-  extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = false,
-      override_file_sorter = true,
-      case_mode = "smart_case",
-    },
-  },
-})
+  })
 
--- Load extensions
--- telescope.load_extension("fzf")
--- telescope.load_extension("dap")
+  -- Load extensions
+  -- telescope.load_extension("fzf")
+  -- telescope.load_extension("dap")
+end
+
+-- Indexing this table loads telescope, so every `builtin.foo()` call site below
+-- stays unchanged and triggers the load on first press.
+local builtin = setmetatable({}, {
+  __index = function(_, key)
+    load()
+    local ok, b = pcall(require, "telescope.builtin")
+    if not ok then
+      return function()
+        vim.notify("telescope.nvim is not available", vim.log.levels.WARN)
+      end
+    end
+    return b[key]
+  end,
+})
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
@@ -61,9 +92,11 @@ keymap("n", "<leader>sf", function()
   builtin.find_files()
 end, opts)
 keymap("n", "<leader>scf", function()
+  load()
   builtin.find_files({ cwd = require("telescope.utils").buffer_dir(), hidden = true, no_ignore = true })
 end, opts)
 keymap("n", "<leader>scg", function()
+  load()
   builtin.live_grep({ cwd = require("telescope.utils").buffer_dir(), hidden = true, no_ignore = true })
 end, opts)
 
@@ -145,8 +178,14 @@ keymap("n", "<leader>sdg", function()
 end, opts)
 
 -- Diagnostics and zoxide
-keymap("n", "<leader>se", ":Telescope diagnostics<CR>", opts)
-keymap("n", "<leader>scd", ":Telescope zoxide list<CR>", opts)
+keymap("n", "<leader>se", function()
+  load()
+  vim.cmd("Telescope diagnostics")
+end, opts)
+keymap("n", "<leader>scd", function()
+  load()
+  vim.cmd("Telescope zoxide list")
+end, opts)
 
 -- Vimwiki todos
 keymap("n", "<leader>swt", function()
