@@ -93,6 +93,9 @@ vim.pack.add({
 	{ src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
 	{ src = "https://github.com/hrsh7th/cmp-buffer" },
 
+	-- Diff editor for jj/git, entered only via :DiffEditor
+	{ src = "https://github.com/julienvincent/hunk.nvim" },
+
 }, { load = function() end })
 
 local lazyload = require("lazyload")
@@ -105,6 +108,9 @@ require("plugins.lsp")
 -- packadd'ed and configured the first time a mapping is actually pressed.
 require("plugins.telescope")
 require("plugins.harpoon")
+
+-- Also cheap: defines the :DiffEditor command, nothing else.
+require("plugins.hunk")
 
 -- cmp is insert mode only.
 vim.api.nvim_create_autocmd("InsertEnter", {

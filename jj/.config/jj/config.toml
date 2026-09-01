@@ -19,7 +19,9 @@ pager = ":builtin"
 default-command = "log"
 merge-editor = ":builtin"
 # diff-editor = ":builtin"
-# diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+# hunk.nvim renders the diff itself, so the JJ-INSTRUCTIONS file is just noise.
+diff-instructions = false
 # diff-formatter = ":git"
 
 
