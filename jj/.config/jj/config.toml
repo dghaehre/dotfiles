@@ -1,0 +1,66 @@
+#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+
+[user]
+name = "Daniel"
+email = "dghaehre@gmail.com"
+
+[aliases]
+# It updates the closest bookmark ancestor to point to the current revision, giving me an easy command to type before I jj git push
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
+# updates the bookmark to the previous revision, while tug updates it to the current one. It’s useful to have both versions, since you might be working on the current revision, and so don’t want to push it just yet.
+tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+
+mine = ["bookmark", "list", "-r", "mine()"]
+
+rebase-all = ["rebase", "-s", "mutable()&z+", "-d", "main"]
+
+[ui]
+pager = ":builtin"
+default-command = "log"
+merge-editor = ":builtin"
+# diff-editor = ":builtin"
+# diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+# diff-formatter = ":git"
+
+
+[revset-aliases]
+'bases' = 'dev'
+'downstream(x,y)' = '(x::y) & y'
+'branches' = 'downstream(trunk(), bookmarks()) & mine()'
+'branchesandheads' = 'branches | (heads(trunk()::) & mine())'
+'curbranch' = 'latest(branches::@- & branches)'
+'nextbranch' = 'roots(@:: & branchesandheads)'
+
+# [revsets]
+# log = "@ | bases | branches | curbranch::@ | @::nextbranch | downstream(@, branchesandheads)"
+
+[colors]
+"diff header" = "yellow"
+"diff empty" = "cyan"
+"diff binary" = "cyan"
+"diff file_header" = { bold = true }
+"diff hunk_header" = "cyan"
+"diff removed" = { fg = "red", underline = false }
+"diff added" = { fg = "green", underline = false }
+"diff token" = { underline = false }
+"diff modified" = "cyan"
+"diff untracked" = "magenta"
+"diff renamed" = "cyan"
+"diff copied" = "green"
+"diff access-denied" = { bg = "red" }
+
+# [colors]
+# # Highlight hunks with background
+# "diff removed token" = { bg = "#3b1c1c", fg = "#BF616A", underline = false }
+# "diff added token" = { bg = "#1a2b22", fg = "#E5FFCC", underline = false }
+# [colors]
+# "diff removed token" = { bg = "#3b1c1c", fg = "#FF5F5F", underline = false } # ctermfg=9
+# "diff added token"   = { bg = "#1a2b22", fg = "#AFD7AF", underline = false } # ctermfg=151
+
+# diff-formatter = ["difft", "--color=always", "--tab-width=2", "$left", "$right"]
+# diff-editor = ":builtin"
+# diff-formatter = ["difft", "--color=always", "--tab-width=2", "$left", "$right"]
+# [ui]
+# diff-formatter = ["delta", "--side-by-side", "$left", "$right", "--width=$width"]
+# [merge-tools.delta]
+# diff-args=["--side-by-side", "$left", "$right", "--width=$width"]
