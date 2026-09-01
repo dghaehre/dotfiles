@@ -1,0 +1,139 @@
+[[bindings]]
+key = "ctrl+k"
+action = "ui.preview_scroll_up"
+scope = "ui.preview"
+
+[[bindings]]
+key = "ctrl+j"
+action = "ui.preview_scroll_down"
+scope = "ui.preview"
+
+[[bindings]]
+key = "enter"
+action = "revisions.inline_describe.accept"
+scope = "revisions.inline_describe"
+
+[[bindings]]
+key = "ctrl+j"
+action = "revisions.inline_describe.new_line"
+scope = "revisions.inline_describe"
+
+[[actions]]
+name = "dundre"
+desc = "Trigger dundre-deploy.yml on the selected revision's bookmark and watch it"
+lua = '''
+local cid = context.change_id()
+if not cid or cid == "" then
+  flash({ text = "No revision selected", error = true })
+  return
+end
+local out = jj("log", "-r", cid, "--no-graph", "-T", 'local_bookmarks.map(|b| b.name()).join(" ")')
+local bookmark = (out or ""):match("%S+")
+if not bookmark then
+  flash({ text = "Selected revision has no local bookmark", error = true })
+  return
+end
+local log = string.format("/tmp/dundre-%s.log", bookmark)
+exec_shell(string.format("nohup dundre '%s' >%q 2>&1 & ; echo started, logging to %s", bookmark, log, log))
+'''
+
+[[bindings]]
+action = "dundre"
+key = "ctrl+d"
+scope = "revisions"
+
+[[actions]]
+name = "open_pr"
+desc = "Open the PR for the selected revision's bookmark in the browser"
+lua = '''
+local cid = context.change_id()
+if not cid or cid == "" then
+  flash({ text = "No revision selected", error = true })
+  return
+end
+local out = jj("log", "-r", cid, "--no-graph", "-T", 'local_bookmarks.map(|b| b.name()).join(" ")')
+local bookmark = (out or ""):match("%S+")
+if not bookmark then
+  flash({ text = "Selected revision has no local bookmark", error = true })
+  return
+end
+exec_shell(string.format("gh pr view '%s' --web", bookmark))
+'''
+
+[[bindings]]
+action = "open_pr"
+key = "G"
+scope = "revisions"
+
+[[actions]]
+name = "tug"
+desc = "Move the closest ancestor bookmark up to the selected revision"
+lua = '''
+local cid = context.change_id()
+if not cid or cid == "" then
+  flash({ text = "No revision selected", error = true })
+  return
+end
+local from = "heads(::" .. cid .. "- & bookmarks())"
+local out, err = jj("bookmark", "move", "--from", from, "--to", cid)
+if err then
+  flash({ text = "tug failed: " .. err, error = true })
+  return
+end
+revisions.refresh({ keep_selections = true })
+flash({ text = "Tugged closest bookmark to " .. cid })
+'''
+
+[[bindings]]
+action = "tug"
+key = "t"
+scope = "revisions"
+
+[[actions]]
+name = "edit_file"
+desc = "Open the selected file in neovim"
+lua = '''
+local f = context.file()
+if not f or f == "" then
+  flash({ text = "No file selected", error = true })
+  return
+end
+local safe = "'" .. f:gsub("'", "'\\''") .. "'"
+exec_shell("nvim " .. safe)
+'''
+
+[[bindings]]
+action = "edit_file"
+key = "e"
+scope = "revisions.details"
+
+[[actions]]
+name = "open_in_nvim"
+desc = "Open the selected file in running nvim (tmux sibling pane)"
+lua = '''
+local f = context.file()
+if not f or f == "" then
+  flash({ text = "No file selected", error = true })
+  return
+end
+local safe = "'" .. f:gsub("'", "'\\''") .. "'"
+local cmd = [[
+set window_id (tmux display-message -p -t "$TMUX_PANE" '#{window_id}')
+set runtime (set -q XDG_RUNTIME_DIR; and echo $XDG_RUNTIME_DIR; or echo /tmp)
+set sock "$runtime/nvim-tmux-"(string replace -r '^@' '' $window_id)".sock"
+if not test -S "$sock"
+  echo "No nvim server at $sock" >&2
+  exit 1
+end
+nvim --server "$sock" --remote ]] .. safe .. [[
+
+and tmux display-popup -C
+]]
+exec_shell(cmd)
+'''
+
+[[bindings]]
+action = "open_in_nvim"
+key = "O"
+scope = "revisions.details"
+
