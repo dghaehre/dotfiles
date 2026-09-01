@@ -5,7 +5,12 @@ vim.pack.add({
 	{ src = "https://github.com/airblade/vim-gitgutter" },
 	{ src = "https://github.com/tpope/vim-fugitive" },
 	-- { src = "https://github.com/sindrets/diffview.nvim" },
-	{ src = "https://github.com/dnaaun/diffview-jj.nvim" },
+	-- Pinned: 1f17bff onwards is jj-only and renames every command to Jj*.
+	-- This rev still has both DiffviewOpen (git) and DiffviewOpenJj (jj).
+	{
+		src = "https://github.com/dnaaun/diffview-jj.nvim",
+		version = "7265eb520f187d8f7790e571445ac0b4f36f05fd",
+	},
 
 	-- UI/Display
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },

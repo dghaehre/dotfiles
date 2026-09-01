@@ -98,6 +98,8 @@ keymap("n", "<leader>gP", ":! git push -u origin (git rev-parse --abbrev-ref HEA
 keymap("n", "<leader>gl", ":0Gclog<CR>", opts)
 
 -- Diffview
+-- Un-prefixed names: diffview-jj.nvim is pinned to 7265eb5 (see lua/plugins.lua).
+-- Later revisions went jj-only and renamed everything to Jj*.
 keymap("n", "<leader>gdo", ":DiffviewOpen ", { noremap = true })
 keymap("n", "<leader>gdc", ":DiffviewClose<CR>", opts)
 keymap("n", "<leader>gdt", ":DiffviewToggleFiles<CR>", opts)
