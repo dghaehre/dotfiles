@@ -66,6 +66,62 @@ key = "G"
 scope = "revisions"
 
 [[actions]]
+name = "create_pr"
+desc = "Push the selected revision's bookmark and open a draft PR titled after its description"
+lua = '''
+local function sh_quote(s)
+  return "'" .. s:gsub("'", "'\\''") .. "'"
+end
+
+local cid = context.change_id()
+if not cid or cid == "" then
+  flash({ text = "No revision selected", error = true })
+  return
+end
+local out = jj("log", "-r", cid, "--no-graph", "-T", 'local_bookmarks.map(|b| b.name()).join(" ")')
+local bookmark = (out or ""):match("%S+")
+if not bookmark then
+  flash({ text = "Selected revision has no local bookmark", error = true })
+  return
+end
+
+-- First line of the description is the PR title, the rest becomes the body.
+local lines = split_lines(jj("log", "-r", cid, "--no-graph", "-T", "description") or "", true)
+local title = (lines[1] or ""):gsub("%s+$", "")
+if title == "" then
+  flash({ text = "Selected revision has no description", error = true })
+  return
+end
+local rest = {}
+for i = 2, #lines do
+  rest[#rest + 1] = lines[i]
+end
+local body = table.concat(rest, "\n"):gsub("^%s+", ""):gsub("%s+$", "")
+
+-- C sits next to c (commit) and this both pushes and opens a real PR, so
+-- confirm first. Delete this block for a single-keypress version.
+if choose({ title = 'Push ' .. bookmark .. ' and create draft PR "' .. title .. '"?', options = { "Yes", "No" } }) ~= "Yes" then
+  return
+end
+
+local _, err = jj("git", "push", "--bookmark", bookmark)
+if err then
+  flash({ text = "push failed: " .. err, error = true })
+  return
+end
+
+exec_shell(string.format(
+  "gh pr create --draft --head %s --title %s --body %s && gh pr view %s --web",
+  sh_quote(bookmark), sh_quote(title), sh_quote(body), sh_quote(bookmark)
+))
+'''
+
+[[bindings]]
+action = "create_pr"
+key = "C"
+scope = "revisions"
+
+[[actions]]
 name = "tug"
 desc = "Move the closest ancestor bookmark up to the selected revision"
 lua = '''
