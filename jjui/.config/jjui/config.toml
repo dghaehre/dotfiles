@@ -193,3 +193,67 @@ action = "open_in_nvim"
 key = "O"
 scope = "revisions.details"
 
+
+[[actions]]
+name = "copy_change_id"
+desc = "Copy the selected (or checked) revision's change ID to the clipboard"
+lua = '''
+-- Prefer checked revisions (space toggles selection) so this works for one or many.
+local ids = context.checked_change_ids()
+if not ids or #ids == 0 then
+  local cid = context.change_id()
+  if not cid or cid == "" then
+    flash({ text = "No revision selected", error = true })
+    return
+  end
+  ids = { cid }
+end
+
+-- context gives the shortest unique prefix (what jjui displays), not the full
+-- ID. Resolve via jj: the bare `change_id` template is the full 32 chars,
+-- whereas `change_id.short()` is what we already have. One call for all of them.
+local out, err = jj("log", "-r", table.concat(ids, " | "), "--no-graph", "-T", 'change_id ++ "\n"')
+if err then
+  flash({ text = "Failed to resolve change IDs: " .. err, error = true })
+  return
+end
+
+local full = {}
+for line in (out or ""):gmatch("[^\n]+") do
+  local id = line:match("^%s*(%S+)")
+  if id then
+    full[#full + 1] = id
+  end
+end
+
+-- jj log returns revisions in its own order, so map each selection back to its
+-- full form by prefix rather than trusting positions to line up.
+local resolved = {}
+for _, short in ipairs(ids) do
+  for _, f in ipairs(full) do
+    if f:sub(1, #short) == short then
+      resolved[#resolved + 1] = f
+      break
+    end
+  end
+end
+
+if #resolved == 0 then
+  flash({ text = "Could not resolve change ID", error = true })
+  return
+end
+
+local text = table.concat(resolved, " ")
+local ok, cerr = copy_to_clipboard(text)
+if not ok then
+  flash({ text = "Copy failed: " .. tostring(cerr), error = true })
+  return
+end
+
+flash({ text = #resolved == 1 and ("Copied " .. text) or ("Copied " .. #resolved .. " change IDs") })
+'''
+
+[[bindings]]
+action = "copy_change_id"
+key = "shift+y"
+scope = "revisions"
