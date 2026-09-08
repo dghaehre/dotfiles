@@ -12,7 +12,55 @@ tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
 mine = ["bookmark", "list", "-r", "mine()"]
 
-rebase-all = ["rebase", "-s", "mutable()&z+", "-d", "main"]
+# Fetch, then restack outstanding mutable branches (including their descendants).
+# Based on https://github.com/jj-vcs/jj/discussions/8484.
+sync-main = ["util", "exec", "--", "bash", "-c", '''
+set -euo pipefail
+case "${1-}" in
+  -h|--help)
+    printf '%s\n' 'Usage: jj sync-main [--skip-emptied]' \
+      'Fetch configured remotes and rebase outstanding mutable branch roots onto trunk().' \
+      'With --skip-emptied, abandon changes that become empty during the rebase.'
+    exit 0
+    ;;
+esac
+if (( $# > 1 )) || { (( $# == 1 )) && [[ "$1" != --skip-emptied ]]; }; then
+  printf '%s\n' 'Usage: jj sync-main [--skip-emptied]' >&2
+  exit 2
+fi
+
+# util exec exposes this so jj -R <repo> sync-main works from any directory.
+cd "$JJ_WORKSPACE_ROOT"
+check_trunk() {
+  trunk=$(jj log --no-graph -r 'trunk()' -T 'commit_id ++ "\n"')
+  if [[ -z "$trunk" || "$trunk" == *$'\n'* || "$trunk" != *[!0]* ]]; then
+    printf '%s\n' 'sync-main: trunk() must resolve to exactly one non-root commit; configure it for this repository.' >&2
+    exit 1
+  fi
+}
+check_trunk
+jj git fetch
+check_trunk
+
+# Resolve after fetching, since trunk and already-landed changes may have moved.
+sources="roots($trunk..) & mutable()"
+roots=$(jj log --no-graph -r "$sources" -T 'commit_id ++ "\n"')
+if [[ -n "$roots" ]]; then
+  jj rebase --source "$sources" --onto "$trunk" "$@"
+else
+  printf '%s\n' 'No outstanding mutable branch roots to rebase.'
+fi
+
+# A successful jj rebase can still leave conflicts. Show all remaining mutable
+# conflicts, including any pre-existing ones, rather than claiming a clean sync.
+conflicts=$(jj log --no-graph -r 'mutable() & conflicts()' \
+  -T 'change_id.short() ++ " " ++ description.first_line() ++ "\n"')
+if [[ -n "$conflicts" ]]; then
+  printf '\n%s\n%s\n' 'Sync completed, but unresolved conflicts remain in these mutable changes:' "$conflicts" >&2
+  exit 1
+fi
+printf '%s\n' 'Synced outstanding mutable branches onto trunk().'
+''', "jj-sync-main"]
 
 [ui]
 pager = ":builtin"

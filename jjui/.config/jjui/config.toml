@@ -19,6 +19,20 @@ action = "revisions.inline_describe.new_line"
 scope = "revisions.inline_describe"
 
 [[actions]]
+name = "sync_main"
+desc = "Fetch and rebase outstanding mutable branches onto trunk()"
+lua = '''
+-- Use bash explicitly: the user's interactive shell may be fish.
+exec_shell([[bash -c 'jj sync-main; sync_result=$?; printf "\nPress Enter to return to jjui..."; read -r; exit "$sync_result"']])
+revisions.refresh({ keep_selections = true })
+'''
+
+[[bindings]]
+action = "sync_main"
+key = "shift+f"
+scope = "revisions"
+
+[[actions]]
 name = "dundre"
 desc = "Trigger dundre-deploy.yml on the selected revision's bookmark and watch it"
 lua = '''
