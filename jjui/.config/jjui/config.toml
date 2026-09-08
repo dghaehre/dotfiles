@@ -18,6 +18,12 @@ key = "ctrl+j"
 action = "revisions.inline_describe.new_line"
 scope = "revisions.inline_describe"
 
+# The default binding is alt+n, which terminals commonly reserve for Meta.
+[[bindings]]
+key = "shift+n"
+action = "revisions.open_new_between"
+scope = "revisions"
+
 [[actions]]
 name = "sync_main"
 desc = "Fetch and rebase outstanding mutable branches onto trunk()"
