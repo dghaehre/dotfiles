@@ -257,3 +257,85 @@ flash({ text = #resolved == 1 and ("Copied " .. text) or ("Copied " .. #resolved
 action = "copy_change_id"
 key = "shift+y"
 scope = "revisions"
+
+[[actions]]
+name = "dundre_status"
+desc = "Live-watch (or review) the dundre deploy for the selected revision's bookmark"
+lua = '''
+local function sh_quote(s)
+  return "'" .. s:gsub("'", "'\\''") .. "'"
+end
+
+local cid = context.change_id()
+if not cid or cid == "" then
+  flash({ text = "No revision selected", error = true })
+  return
+end
+local out = jj("log", "-r", cid, "--no-graph", "-T", 'local_bookmarks.map(|b| b.name()).join(" ")')
+local bookmark = (out or ""):match("%S+")
+if not bookmark then
+  flash({ text = "Selected revision has no local bookmark", error = true })
+  return
+end
+
+-- Ask GitHub for the newest run rather than reading /tmp/dundre-<bm>.log: the
+-- log is whatever the last ctrl+d left behind, which may be an older run (or
+-- absent entirely if it was triggered outside jjui).
+--
+-- `gh run watch` streams live but exits instantly on a finished run ("has
+-- already completed with ..."), so it is only used while a run is in flight;
+-- completed runs get the static `gh run view` summary in a pager instead.
+local cmd = [[
+set -l bm ]] .. sh_quote(bookmark) .. [[
+
+set -l log "/tmp/dundre-$bm.log"
+set -l info (gh run list --workflow=dundre-deploy.yml --branch="$bm" --limit=1 --json databaseId,status,conclusion --jq '.[] | "\(.databaseId) \(.status) \(.conclusion)"' 2>/dev/null)
+
+if test -z "$info"
+  begin
+    echo "=== dundre: $bm ==="
+    echo "no runs found on github for this bookmark"
+    echo
+    if test -f $log
+      set -l when (stat -f '%Sm' -t '%Y-%m-%d %H:%M:%S' $log)
+      echo "--- last status block from stale local log ($when) ---"
+      awk '/ · [0-9]+$/ {buf = $0 "\n"; next} {buf = buf $0 "\n"} END {printf "%s", buf}' $log
+    else
+      echo "no local log at $log either"
+    end
+  end | less -R
+else
+  # NOTE: `status` is a reserved variable in fish (last exit code) -- naming
+  # these run_status/run_conclusion avoids silently reading the exit code.
+  set -l parts (string split ' ' $info)
+  set -l run_id $parts[1]
+  set -l run_status $parts[2]
+  set -l run_conclusion $parts[3]
+
+  if test "$run_status" != completed
+    echo "=== dundre: $bm — run $run_id is $run_status, streaming (ctrl+c to stop) ==="
+    gh run watch $run_id
+    echo
+    read -P 'press enter to return to jjui '
+  else
+    begin
+      echo "=== dundre: $bm — run $run_id $run_status/$run_conclusion ==="
+      echo
+      gh run view $run_id --verbose
+      if test "$run_conclusion" != success
+        echo
+        echo "--- logs from failed steps ---"
+        gh run view $run_id --log-failed
+      end
+    end | less -R
+  end
+end
+]]
+
+exec_shell(cmd)
+'''
+
+[[bindings]]
+action = "dundre_status"
+key = "ctrl+g"
+scope = "revisions"
