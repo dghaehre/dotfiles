@@ -4,6 +4,9 @@
 name = "Daniel"
 email = "dghaehre@gmail.com"
 
+[snapshot]
+auto-update-stale = true
+
 [aliases]
 # It updates the closest bookmark ancestor to point to the current revision, giving me an easy command to type before I jj git push
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
