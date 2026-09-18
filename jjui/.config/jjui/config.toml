@@ -18,6 +18,11 @@ key = "ctrl+j"
 action = "revisions.inline_describe.new_line"
 scope = "revisions.inline_describe"
 
+[[bindings]]
+key = "ctrl+e"
+action = "revisions.describe"
+scope = "revisions"
+
 # The default binding is alt+n, which terminals commonly reserve for Meta.
 [[bindings]]
 key = "shift+n"
