@@ -179,7 +179,9 @@ if not f or f == "" then
   flash({ text = "No file selected", error = true })
   return
 end
-local safe = "'" .. f:gsub("'", "'\\''") .. "'"
+local absolute = workspace_file_path(f)
+if not absolute then return end
+local safe = "'" .. absolute:gsub("'", "'\\''") .. "'"
 exec_shell("nvim " .. safe)
 '''
 
@@ -197,7 +199,9 @@ if not f or f == "" then
   flash({ text = "No file selected", error = true })
   return
 end
-local safe = "'" .. f:gsub("'", "'\\''") .. "'"
+local absolute = workspace_file_path(f)
+if not absolute then return end
+local safe = "'" .. absolute:gsub("'", "'\\''") .. "'"
 local cmd = [[
 set window_id (tmux display-message -p -t "$TMUX_PANE" '#{window_id}')
 set runtime (set -q XDG_RUNTIME_DIR; and echo $XDG_RUNTIME_DIR; or echo /tmp)
