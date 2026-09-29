@@ -10,8 +10,9 @@ export KEYTIMEOUT 1
 setenv PAGER 'bat --style=plain'
 setenv REVIEW_BASE 'main'
 fish_add_path ~/.local/bin
-setenv GOPATH (go env GOPATH)
-fish_add_path (go env GOPATH)/bin
+# Go's default GOPATH is ~/go; keep an explicit override from the environment.
+set -q GOPATH; or set -gx GOPATH "$HOME/go"
+fish_add_path "$GOPATH/bin"
 source ~/.config/fish/git.fish
 source ~/.config/fish/jj.fish
 set -ag FZF_DEFAULT_OPTS '--color=bg+:24,gutter:-1'
@@ -410,7 +411,7 @@ end
 
 ##################### Zoxide ####################
 #-----------------------------------------------------#
-if command -v zoxide > /dev/null
+if status is-interactive; and command -v zoxide > /dev/null
   zoxide init --cmd cd fish | source
 end
 
@@ -436,3 +437,9 @@ end
 # if type -q nvm
 #   nvm use lts/gallium > /dev/null
 # end
+
+if status is-interactive
+# >>> jj-navi shell init >>>
+command navi config shell init fish | source
+# <<< jj-navi shell init <<<
+end
