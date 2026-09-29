@@ -42,7 +42,7 @@ check_trunk() {
   fi
 }
 check_trunk
-jj git fetch
+jj git fetch --tracked
 check_trunk
 
 # Resolve after fetching, since trunk and already-landed changes may have moved.
