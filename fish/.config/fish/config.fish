@@ -14,7 +14,6 @@ fish_add_path ~/.local/bin
 set -q GOPATH; or set -gx GOPATH "$HOME/go"
 fish_add_path "$GOPATH/bin"
 source ~/.config/fish/git.fish
-source ~/.config/fish/jj.fish
 set -ag FZF_DEFAULT_OPTS '--color=bg+:24,gutter:-1'
 
 setenv XDG_CONFIG_HOME "$HOME/.config" # Make configs work on macos
@@ -61,7 +60,7 @@ abbr -a test_microphone arecord -vvv -f dat /dev/null
 abbr -a janet-server janet -e '"(import spork/netrepl) (netrepl/server)"'
 # abbr -a lg lazygit
 abbr -a todo rg -e \"- \\[ \\]\" ~/wikis/work/todo.md
-abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
+# abbr -a empty-lsp-log echo "" > ~/.cache/nvim/lsp.log
 # abbr -a ts trans -shell
 
 abbr -a fix-todo cursor-agent "Please look in the staged changes for any TODO comment. Please implement fix for the TODO comment. Be very short and concise. Dont make any other changes than what the TODO comment suggest. Be very sure your implementation is correct, if you need to research the project to be sure please do so."
@@ -279,35 +278,36 @@ end
 ############## Fish Prompt and Colors ####################
 #--------------------------------------------------------#
 function fish_prompt
-	set -l in_is_jj false
-	set -l d $PWD
-	while test -n "$d"
-		if test -d "$d/.jj"
-				set in_is_jj true
-				break
-		end
-		set d (string replace -r '/[^/]*$' '' -- $d)
-end
+    set -l in_is_jj false
+    set -l d $PWD
+    while test -n "$d"
+        if test -d "$d/.jj"
+            set in_is_jj true
+            break
+        end
+        set d (string replace -r '/[^/]*$' '' -- $d)
+    end
 
-	
-  if [ $PWD != $HOME ]
-    set_color blue
-    echo -n (basename $PWD)
-  else
-    set_color blue
-    echo -n '~'
-  end
-  set_color green
-  if test "$in_is_jj" = true
-		printf '%s ' (fish_jj_prompt)
-	else
-		printf '%s ' (__fish_git_prompt)
-	end
-  set_color brblack
-  echo -n '| '
-  set_color normal
+    if [ $PWD != $HOME ]
+        set_color blue
+        echo -n (basename $PWD)
+    else
+        set_color blue
+        echo -n '~'
+    end
+    set_color green
+    if test "$in_is_jj" = true
+        # Read the recorded change without snapshotting files or taking working-copy locks.
+        command jj log --ignore-working-copy --no-pager --no-graph --color=never -r @ \
+            -T 'if(empty, " (jj) ", " (jj *) ")' 2>/dev/null
+        or printf ' (jj ?) '
+    else
+        printf '%s ' (__fish_git_prompt)
+    end
+    set_color brblack
+    echo -n '| '
+    set_color normal
 end
-
 # TODO: show time if there is no context!
 function fish_mode_prompt
   switch $fish_bind_mode
