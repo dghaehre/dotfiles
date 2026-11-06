@@ -288,6 +288,46 @@ key = "shift+y"
 scope = "revisions"
 
 [[actions]]
+name = "copy_change_id_and_file"
+desc = "Copy the selected file's change ID and path to the clipboard"
+lua = '''
+local cid = context.change_id()
+local file = context.file()
+if not cid or cid == "" then
+  flash({ text = "No revision selected", error = true })
+  return
+end
+if not file or file == "" then
+  flash({ text = "No file selected", error = true })
+  return
+end
+
+local out, err = jj("log", "-r", cid, "--no-graph", "-T", "change_id")
+if err then
+  flash({ text = "Failed to resolve change ID: " .. err, error = true })
+  return
+end
+local full = (out or ""):match("^%s*(%S+)")
+if not full then
+  flash({ text = "Could not resolve change ID", error = true })
+  return
+end
+
+local text = full .. " " .. file
+local ok, cerr = copy_to_clipboard(text)
+if not ok then
+  flash({ text = "Copy failed: " .. tostring(cerr), error = true })
+  return
+end
+flash({ text = "Copied " .. text })
+'''
+
+[[bindings]]
+action = "copy_change_id_and_file"
+key = "shift+y"
+scope = "revisions.details"
+
+[[actions]]
 name = "dundre_status"
 desc = "Live-watch (or review) the dundre deploy for the selected revision's bookmark"
 lua = '''

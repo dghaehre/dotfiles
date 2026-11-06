@@ -73,16 +73,22 @@ merge-editor = ":builtin"
 diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 # hunk.nvim renders the diff itself, so the JJ-INSTRUCTIONS file is just noise.
 diff-instructions = false
-# diff-formatter = ":git"
+diff-formatter = "delta"
 
+[revsets]
+log = "builtin_log() ~ ::bookmarks('archive/*') | present(@) | trunk()"
 
 [revset-aliases]
-'bases' = 'dev'
-'downstream(x,y)' = '(x::y) & y'
-'branches' = 'downstream(trunk(), bookmarks()) & mine()'
-'branchesandheads' = 'branches | (heads(trunk()::) & mine())'
-'curbranch' = 'latest(branches::@- & branches)'
-'nextbranch' = 'roots(@:: & branchesandheads)'
+'context' = 'fork_point(@ | trunk())::(@ | trunk())'
+'archives' = "builtin_log() | ~ bookmarks('archive/*') | present(@) | trunk()"
+
+# 'bases' = 'dev'
+# 'downstream(x,y)' = '(x::y) & y'
+# 'branches' = 'downstream(trunk(), bookmarks()) & mine()'
+# 'branch' = 'trunk()..@'
+# 'branchesandheads' = 'branches | (heads(trunk()::) & mine())'
+# 'curbranch' = 'latest(branches::@- & branches)'
+# 'nextbranch' = 'roots(@:: & branchesandheads)'
 
 # [revsets]
 # log = "@ | bases | branches | curbranch::@ | @::nextbranch | downstream(@, branchesandheads)"
